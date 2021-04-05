@@ -131,6 +131,14 @@ require_once(dirname(__FILE__).'/include/tcpdf_static.php');
  * @version 6.2.6
  * @author Nicola Asuni - info@tecnick.com
  */
+
+function EachAlt(&$arr) {
+    $key = key($arr);
+    $result = ($key === null) ? false : [$key, current($arr), 'key' => $key, 'value' => current($arr)];
+    next($arr);
+    return $result;
+}
+
 class TCPDF {
 
 	// Protected properties
@@ -154,7 +162,7 @@ class TCPDF {
 	protected $offsets = array();
 
 	/**
-	 * Array of object IDs for each page.
+	 * Array of object IDs for EachAlt page.
 	 * @protected
 	 */
 	protected $pageobjects = array();
@@ -563,7 +571,7 @@ class TCPDF {
 	protected $header_xobjid = false;
 
 	/**
-	 * If true reset the Header Xobject template at each page
+	 * If true reset the Header Xobject template at EachAlt page
 	 * @protected
 	 */
 	protected $header_xobj_autoreset = false;
@@ -889,7 +897,7 @@ class TCPDF {
 	protected $newpagegroup = array();
 
 	/**
-	 * Array that contains the number of pages in each page group.
+	 * Array that contains the number of pages in EachAlt page group.
 	 * @protected
 	 * @since 3.0.000 (2008-03-27)
 	 */
@@ -973,14 +981,14 @@ class TCPDF {
 	protected $cntmrk = array();
 
 	/**
-	 * Array used to store footer positions of each page.
+	 * Array used to store footer positions of EachAlt page.
 	 * @protected
 	 * @since 3.2.000 (2008-07-01)
 	 */
 	protected $footerpos = array();
 
 	/**
-	 * Array used to store footer length of each page.
+	 * Array used to store footer length of EachAlt page.
 	 * @protected
 	 * @since 4.0.014 (2008-07-29)
 	 */
@@ -1233,7 +1241,7 @@ class TCPDF {
 	protected $cache_file_length = array();
 
 	/**
-	 * Table header content to be repeated on each new page.
+	 * Table header content to be repeated on EachAlt new page.
 	 * @protected
 	 * @since 4.5.030 (2009-03-20)
 	 */
@@ -2076,7 +2084,7 @@ class TCPDF {
 	 * <li>['ArtBox']['lly'] : lower-left y coordinate</li>
 	 * <li>['ArtBox']['urx'] : upper-right x coordinate</li>
 	 * <li>['ArtBox']['ury'] : upper-right y coordinate</li>
-	 * <li>['BoxColorInfo'] :specify the colours and other visual characteristics that should be used in displaying guidelines on the screen for each of the possible page boundaries other than the MediaBox:</li>
+	 * <li>['BoxColorInfo'] :specify the colours and other visual characteristics that should be used in displaying guidelines on the screen for EachAlt of the possible page boundaries other than the MediaBox:</li>
 	 * <li>['BoxColorInfo'][BOXTYPE]['C'] : an array of three numbers in the range 0-255, representing the components in the DeviceRGB colour space.</li>
 	 * <li>['BoxColorInfo'][BOXTYPE]['W'] : the guideline width in default user units</li>
 	 * <li>['BoxColorInfo'][BOXTYPE]['S'] : the guideline style: S = Solid; D = Dashed</li>
@@ -2707,7 +2715,7 @@ class TCPDF {
 
 	/**
 	 * Adjust the internal Cell padding array to take account of the line width.
-	 * @param $brd (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $brd (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @return array of adjustments
 	 * @public
 	 * @since 5.9.000 (2010-10-03)
@@ -2740,7 +2748,7 @@ class TCPDF {
 			$mode = 'normal';
 		}
 		// process borders
-		foreach ($brd as $border => $style) {
+		forEachAlt ($brd as $border => $style) {
 			$line_width = $this->LineWidth;
 			if (is_array($style) AND isset($style['width'])) {
 				// get border width
@@ -2822,7 +2830,7 @@ class TCPDF {
 	}
 
 	/**
-	 * Activates or deactivates page compression. When activated, the internal representation of each page is compressed, which leads to a compression ratio of about 2 for the resulting document. Compression is on by default.
+	 * Activates or deactivates page compression. When activated, the internal representation of EachAlt page is compressed, which leads to a compression ratio of about 2 for the resulting document. Compression is on by default.
 	 * Note: the Zlib extension is required for this feature. If not present, compression will be turned off.
 	 * @param $compress (boolean) Boolean indicating if compression must be enabled.
 	 * @public
@@ -3158,21 +3166,21 @@ class TCPDF {
 			// move reference to unexistent pages (used for page attachments)
 			// adjust outlines
 			$tmpoutlines = $this->outlines;
-			foreach ($tmpoutlines as $key => $outline) {
+			forEachAlt ($tmpoutlines as $key => $outline) {
 				if (!$outline['f'] AND ($outline['p'] > $this->numpages)) {
 					$this->outlines[$key]['p'] = ($outline['p'] + 1);
 				}
 			}
 			// adjust dests
 			$tmpdests = $this->dests;
-			foreach ($tmpdests as $key => $dest) {
+			forEachAlt ($tmpdests as $key => $dest) {
 				if (!$dest['f'] AND ($dest['p'] > $this->numpages)) {
 					$this->dests[$key]['p'] = ($dest['p'] + 1);
 				}
 			}
 			// adjust links
 			$tmplinks = $this->links;
-			foreach ($tmplinks as $key => $link) {
+			forEachAlt ($tmplinks as $key => $link) {
 				if (!$link['f'] AND ($link['p'] > $this->numpages)) {
 					$this->links[$key]['p'] = ($link['p'] + 1);
 				}
@@ -3376,8 +3384,8 @@ class TCPDF {
 	}
 
 	/**
-	 * Set a flag to automatically reset the xobject template used by Header() method at each page.
-	 * @param $val (boolean) set to true to reset Header xobject template at each page, false otherwise.
+	 * Set a flag to automatically reset the xobject template used by Header() method at EachAlt page.
+	 * @param $val (boolean) set to true to reset Header xobject template at EachAlt page, false otherwise.
 	 * @public
 	 */
 	public function setHeaderTemplateAutoreset($val=true) {
@@ -3456,7 +3464,7 @@ class TCPDF {
 		}
 		$this->printTemplate($this->header_xobjid, $x, 0, 0, 0, '', '', false);
 		if ($this->header_xobj_autoreset) {
-			// reset header xobject template at each page
+			// reset header xobject template at EachAlt page
 			$this->header_xobjid = false;
 		}
 	}
@@ -4059,7 +4067,7 @@ class TCPDF {
 		}
 		$w = 0; // total width
 		$wa = array(); // array of characters widths
-		foreach ($sa as $ck => $char) {
+		forEachAlt ($sa as $ck => $char) {
 			// character width
 			$cw = $this->GetCharWidth($char, isset($sa[($ck + 1)]));
 			$wa[] = $cw;
@@ -4512,7 +4520,7 @@ class TCPDF {
 				if (isset($this->CurrentFont['dw'])) {
 					$maxw = max($maxw, $this->CurrentFont['dw']);
 				}
-				foreach ($this->CurrentFont['cw'] as $char => $w) {
+				forEachAlt ($this->CurrentFont['cw'] as $char => $w) {
 					$maxw = max($maxw, $w);
 				}
 				if ($maxw == 0) {
@@ -4642,13 +4650,13 @@ class TCPDF {
 		$fontdata = $this->AddFont($font, $style);
 		$fontinfo = $this->getFontBuffer($fontdata['fontkey']);
 		$uniarr = TCPDF_FONTS::UTF8StringToArray($text, $this->isunicode, $this->CurrentFont);
-		foreach ($uniarr as $k => $chr) {
+		forEachAlt ($uniarr as $k => $chr) {
 			if (!isset($fontinfo['cw'][$chr])) {
 				// this character is missing on the selected font
 				if (isset($subs[$chr])) {
 					// we have available substitutions
 					if (is_array($subs[$chr])) {
-						foreach($subs[$chr] as $s) {
+						forEachAlt($subs[$chr] as $s) {
 							if (isset($fontinfo['cw'][$s])) {
 								$uniarr[$k] = $s;
 								break;
@@ -4838,7 +4846,7 @@ class TCPDF {
 			return;
 		}
 		reset($this->embeddedfiles);
-		foreach ($this->embeddedfiles as $filename => $filedata) {
+		forEachAlt ($this->embeddedfiles as $filename => $filedata) {
 			$data = TCPDF_STATIC::fileGetContents($filedata['file']);
 			if ($data !== FALSE) {
 				$rawsize = strlen($data);
@@ -4876,7 +4884,7 @@ class TCPDF {
 	 * @param $fstroke (int) outline size in user units (false = disable)
 	 * @param $fclip (boolean) if true activate clipping mode (you must call StartTransform() before this function and StopTransform() to stop the clipping tranformation).
 	 * @param $ffill (boolean) if true fills the text
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @param $ln (int) Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL languages)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul>Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
 	 * @param $align (string) Allows to center or align the text. Possible values are:<ul><li>L or empty string: left align (default value)</li><li>C: center</li><li>R: right align</li><li>J: justify</li></ul>
 	 * @param $fill (boolean) Indicates if the cell background must be painted (true) or transparent (false).
@@ -4978,7 +4986,7 @@ class TCPDF {
 	 * @param $w (float) Cell width. If 0, the cell extends up to the right margin.
 	 * @param $h (float) Cell height. Default value: 0.
 	 * @param $txt (string) String to print. Default value: empty string.
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @param $ln (int) Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL languages)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul> Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
 	 * @param $align (string) Allows to center or align the text. Possible values are:<ul><li>L or empty string: left align (default value)</li><li>C: center</li><li>R: right align</li><li>J: justify</li></ul>
 	 * @param $fill (boolean) Indicates if the cell background must be painted (true) or transparent (false).
@@ -5046,7 +5054,7 @@ class TCPDF {
 	 * @param $w (float) Cell width. If 0, the cell extends up to the right margin.
 	 * @param $h (float) Cell height. Default value: 0.
 	 * @param $txt (string) String to print. Default value: empty string.
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @param $ln (int) Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL languages)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul>Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
 	 * @param $align (string) Allows to center or align the text. Possible values are:<ul><li>L or empty string: left align (default value)</li><li>C: center</li><li>R: right align</li><li>J: justify</li></ul>
 	 * @param $fill (boolean) Indicates if the cell background must be painted (true) or transparent (false).
@@ -5442,7 +5450,7 @@ class TCPDF {
 				$xshift = 0; // horizontal shift
 				$ty = (($this->h - $basefonty + (0.2 * $this->FontSize)) * $k);
 				$spw = (($w - $txwidth - $this->cell_padding['L'] - $this->cell_padding['R']) / ($ns?$ns:1));
-				foreach ($uniblock as $uk => $uniarr) {
+				forEachAlt ($uniblock as $uk => $uniarr) {
 					if (($uk % 2) == 0) {
 						// x space to skip
 						if ($spacewidth != 0) {
@@ -5545,7 +5553,7 @@ class TCPDF {
 	 * @param $y (float) Y coordinate.
 	 * @param $w (float) Cell width.
 	 * @param $h (float) Cell height.
-	 * @param $brd (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $brd (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @return string containing cell border code
 	 * @protected
 	 * @see SetLineStyle()
@@ -5589,7 +5597,7 @@ class TCPDF {
 		} else {
 			$mode = 'normal';
 		}
-		foreach ($brd as $border => $style) {
+		forEachAlt ($brd as $border => $style) {
 			if (is_array($style) AND !empty($style)) {
 				// apply border style
 				$prev_style = $this->linestyleWidth.' '.$this->linestyleCap.' '.$this->linestyleJoin.' '.$this->linestyleDash.' '.$this->DrawColor.' ';
@@ -5731,12 +5739,12 @@ class TCPDF {
 
 	/**
 	 * This method allows printing text with line breaks.
-	 * They can be automatic (as soon as the text reaches the right border of the cell) or explicit (via the \n character). As many cells as necessary are output, one below the other.<br />
+	 * They can be automatic (as soon as the text rEachAltes the right border of the cell) or explicit (via the \n character). As many cells as necessary are output, one below the other.<br />
 	 * Text can be aligned, centered or justified. The cell block can be framed and the background painted.
 	 * @param $w (float) Width of cells. If 0, they extend up to the right margin of the page.
 	 * @param $h (float) Cell minimum height. The cell extends automatically if needed.
 	 * @param $txt (string) String to print
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @param $align (string) Allows to center or align the text. Possible values are:<ul><li>L or empty string: left align</li><li>C: center</li><li>R: right align</li><li>J: justification (default value when $ishtml=false)</li></ul>
 	 * @param $fill (boolean) Indicates if the cell background must be painted (true) or transparent (false).
 	 * @param $ln (int) Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right</li><li>1: to the beginning of the next line [DEFAULT]</li><li>2: below</li></ul>
@@ -5925,7 +5933,7 @@ class TCPDF {
 		$border_end = TCPDF_STATIC::getBorderMode($border, $position='end', $this->opencell);
 		$border_middle = TCPDF_STATIC::getBorderMode($border, $position='middle', $this->opencell);
 		// design borders around HTML cells.
-		for ($page = $startpage; $page <= $endpage; ++$page) { // for each page
+		for ($page = $startpage; $page <= $endpage; ++$page) { // for EachAlt page
 			$ccode = '';
 			$this->setPage($page);
 			if ($this->num_columns < 2) {
@@ -5943,7 +5951,7 @@ class TCPDF {
 			}
 			if ($startpage == $endpage) {
 				// single page
-				for ($column = $startcolumn; $column <= $endcolumn; ++$column) { // for each column
+				for ($column = $startcolumn; $column <= $endcolumn; ++$column) { // for EachAlt column
 					$this->selectColumn($column);
 					if ($this->rtl) {
 						$this->x -= $mc_margin['R'];
@@ -5970,9 +5978,9 @@ class TCPDF {
 						$resth -= $h;
 					}
 					$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-				} // end for each column
+				} // end for EachAlt column
 			} elseif ($page == $startpage) { // first page
-				for ($column = $startcolumn; $column < $this->num_columns; ++$column) { // for each column
+				for ($column = $startcolumn; $column < $this->num_columns; ++$column) { // for EachAlt column
 					$this->selectColumn($column);
 					if ($this->rtl) {
 						$this->x -= $mc_margin['R'];
@@ -5989,9 +5997,9 @@ class TCPDF {
 						$resth -= $h;
 					}
 					$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-				} // end for each column
+				} // end for EachAlt column
 			} elseif ($page == $endpage) { // last page
-				for ($column = 0; $column <= $endcolumn; ++$column) { // for each column
+				for ($column = 0; $column <= $endcolumn; ++$column) { // for EachAlt column
 					$this->selectColumn($column);
 					if ($this->rtl) {
 						$this->x -= $mc_margin['R'];
@@ -6012,9 +6020,9 @@ class TCPDF {
 						$resth -= $h;
 					}
 					$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-				} // end for each column
+				} // end for EachAlt column
 			} else { // middle page
-				for ($column = 0; $column < $this->num_columns; ++$column) { // for each column
+				for ($column = 0; $column < $this->num_columns; ++$column) { // for EachAlt column
 					$this->selectColumn($column);
 					if ($this->rtl) {
 						$this->x -= $mc_margin['R'];
@@ -6025,7 +6033,7 @@ class TCPDF {
 					$h = $this->h - $this->y - $this->bMargin;
 					$resth -= $h;
 					$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-				} // end for each column
+				} // end for EachAlt column
 			}
 			if ($cborder OR $fill) {
 				$offsetlen = strlen($ccode);
@@ -6062,7 +6070,7 @@ class TCPDF {
 					$this->setPageBuffer($this->page, $pstart.$ccode.$pend);
 				}
 			}
-		} // end for each page
+		} // end for EachAlt page
 		// restore page regions check
 		$this->check_page_regions = $check_page_regions;
 		// Get end-of-cell Y position
@@ -6111,7 +6119,7 @@ class TCPDF {
 	 * @param $reseth (boolean) if true reset the last cell height (default false).
 	 * @param $autopadding (boolean) if true, uses internal padding and automatically adjust it to account for line width (default true).
 	 * @param $cellpadding (float) Internal cell padding, if empty uses default cell padding.
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @return float Return the minimal height needed for multicell method for printing the $txt param.
 	 * @author Alexander Escalona Fern\E1ndez, Nicola Asuni
 	 * @public
@@ -6231,7 +6239,7 @@ class TCPDF {
 	 * @param $reseth (boolean) if true reset the last cell height (default false).
 	 * @param $autopadding (boolean) if true, uses internal padding and automatically adjust it to account for line width (default true).
 	 * @param $cellpadding (float) Internal cell padding, if empty uses default cell padding.
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @return float Return the minimal height needed for multicell method for printing the $txt param.
 	 * @author Nicola Asuni, Alexander Escalona Fern\E1ndez
 	 * @public
@@ -6343,7 +6351,7 @@ class TCPDF {
 		$nl = 0; //number of lines
 		$linebreak = false;
 		$pc = 0; // previous character
-		// for each character
+		// for EachAlt character
 		while ($i < $nb) {
 			if (($maxh > 0) AND ($this->y > $maxy) ) {
 				break;
@@ -6417,7 +6425,7 @@ class TCPDF {
 				// 173 is SHY (Soft Hypen).
 				// \p{Z} or \p{Separator}: any kind of Unicode whitespace or invisible separator.
 				// \p{Lo} or \p{Other_Letter}: a Unicode letter or ideograph that does not have lowercase and uppercase variants.
-				// \p{Lo} is needed because Chinese characters are packed next to each other without spaces in between.
+				// \p{Lo} is needed because Chinese characters are packed next to EachAlt other without spaces in between.
 				if (($c != 160)
 					AND (($c == 173)
 						OR preg_match($this->re_spaces, TCPDF_FONTS::unichr($c, $this->isunicode))
@@ -6459,7 +6467,7 @@ class TCPDF {
 						$sep = $prevsep;
 						$shy = $prevshy;
 					}
-					// we have reached the end of column
+					// we have rEachAlted the end of column
 					if ($sep == -1) {
 						// check if the line was already started
 						if (($this->rtl AND ($this->x <= ($this->w - $this->rMargin - $this->cell_padding['R'] - $margin['R'] - $chrwidth)))
@@ -6805,7 +6813,7 @@ class TCPDF {
 	 * @param $palign (string) Allows to center or align the image on the current line. Possible values are:<ul><li>L : left align</li><li>C : center</li><li>R : right align</li><li>'' : empty string : left for LTR or right for RTL</li></ul>
 	 * @param $ismask (boolean) true if this image is a mask, false otherwise
 	 * @param $imgmask (mixed) image object returned by this function or false
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @param $fitbox (mixed) If not false scale image dimensions proportionally to fit within the ($w, $h) box. $fitbox can be true or a 2 characters string indicating the image alignment inside the box. The first character indicate the horizontal alignment (L = left, C = center, R = right) the second character indicate the vertical algnment (T = top, M = middle, B = bottom).
 	 * @param $hidden (boolean) If true do not display the image.
 	 * @param $fitonpage (boolean) If true the image is resized to not exceed page dimensions.
@@ -7765,7 +7773,7 @@ class TCPDF {
 			'tsa_timestamp',
 			'tsa_data'
 		);
-		foreach (array_keys(get_object_vars($this)) as $val) {
+		forEachAlt (array_keys(get_object_vars($this)) as $val) {
 			if ($destroyall OR !in_array($val, $preserve)) {
 				if ((!$preserve_objcopy OR ($val != 'objcopy')) AND ($val != 'file_id') AND isset($this->$val)) {
 					unset($this->$val);
@@ -7819,7 +7827,7 @@ class TCPDF {
 	protected function getAllInternalPageNumberAliases() {
 		$basic_alias = array(TCPDF_STATIC::$alias_tot_pages, TCPDF_STATIC::$alias_num_page, TCPDF_STATIC::$alias_group_tot_pages, TCPDF_STATIC::$alias_group_num_page, TCPDF_STATIC::$alias_right_shift);
 		$pnalias = array();
-		foreach($basic_alias as $k => $a) {
+		forEachAlt($basic_alias as $k => $a) {
 			$pnalias[$k] = $this->getInternalPageNumberAliases($a);
 		}
 		return $pnalias;
@@ -7835,8 +7843,8 @@ class TCPDF {
 	 * @protected
 	 */
 	protected function replaceRightShiftPageNumAliases($page, $aliases, $diff) {
-		foreach ($aliases as $type => $alias) {
-			foreach ($alias as $a) {
+		forEachAlt ($aliases as $type => $alias) {
+			forEachAlt ($alias as $a) {
 				// find position of compensation factor
 				$startnum = (strpos($a, ':') + 1);
 				$a = substr($a, 0, $startnum);
@@ -7871,7 +7879,7 @@ class TCPDF {
 	 */
 	protected function setPageBoxTypes($boxes) {
 		$this->page_boxes = array();
-		foreach ($boxes as $box) {
+		forEachAlt ($boxes as $box) {
 			if (in_array($box, TCPDF_STATIC::$pageboxes)) {
 				$this->page_boxes[] = $box;
 			}
@@ -7945,13 +7953,13 @@ class TCPDF {
 				$out .= ' /LastModified '.$this->_datestring(0, $this->doc_modification_timestamp);
 			}
 			$out .= ' /Resources 2 0 R';
-			foreach ($this->page_boxes as $box) {
+			forEachAlt ($this->page_boxes as $box) {
 				$out .= ' /'.$box;
 				$out .= sprintf(' [%F %F %F %F]', $this->pagedim[$n][$box]['llx'], $this->pagedim[$n][$box]['lly'], $this->pagedim[$n][$box]['urx'], $this->pagedim[$n][$box]['ury']);
 			}
 			if (isset($this->pagedim[$n]['BoxColorInfo']) AND !empty($this->pagedim[$n]['BoxColorInfo'])) {
 				$out .= ' /BoxColorInfo <<';
-				foreach ($this->page_boxes as $box) {
+				forEachAlt ($this->page_boxes as $box) {
 					if (isset($this->pagedim[$n]['BoxColorInfo'][$box])) {
 						$out .= ' /'.$box.' <<';
 						if (isset($this->pagedim[$n]['BoxColorInfo'][$box]['C'])) {
@@ -7969,7 +7977,7 @@ class TCPDF {
 						if (isset($this->pagedim[$n]['BoxColorInfo'][$box]['D'])) {
 							$dashes = $this->pagedim[$n]['BoxColorInfo'][$box]['D'];
 							$out .= ' /D [';
-							foreach ($dashes as $dash) {
+							forEachAlt ($dashes as $dash) {
 								$out .= sprintf(' %F', ($dash * $this->k));
 							}
 							$out .= ' ]';
@@ -8028,7 +8036,7 @@ class TCPDF {
 		//Pages root
 		$out = $this->_getobj(1)."\n";
 		$out .= '<< /Type /Pages /Kids [';
-		foreach($this->page_obj_id as $page_obj) {
+		forEachAlt($this->page_obj_id as $page_obj) {
 			$out .= ' '.$page_obj.' 0 R';
 		}
 		$out .= ' ] /Count '.$num_pages.' >>';
@@ -8050,14 +8058,14 @@ class TCPDF {
 		}
 		$out = ' /Annots [';
 		if (isset($this->PageAnnots[$n])) {
-			foreach ($this->PageAnnots[$n] as $key => $val) {
+			forEachAlt ($this->PageAnnots[$n] as $key => $val) {
 				if (!in_array($val['n'], $this->radio_groups)) {
 					$out .= ' '.$val['n'].' 0 R';
 				}
 			}
 			// add radiobutton groups
 			if (isset($this->radiobutton_groups[$n])) {
-				foreach ($this->radiobutton_groups[$n] as $key => $data) {
+				forEachAlt ($this->radiobutton_groups[$n] as $key => $data) {
 					if (isset($data['n'])) {
 						$out .= ' '.$data['n'].' 0 R';
 					}
@@ -8069,7 +8077,7 @@ class TCPDF {
 			$out .= ' '.$this->sig_obj_id.' 0 R';
 		}
 		if (!empty($this->empty_signature_appearance)) {
-			foreach ($this->empty_signature_appearance as $esa) {
+			forEachAlt ($this->empty_signature_appearance as $esa) {
 				if ($esa['page'] == $n) {
 					// set reference for empty signature objects
 					$out .= ' '.$esa['objid'].' 0 R';
@@ -8093,7 +8101,7 @@ class TCPDF {
 		for ($n=1; $n <= $this->numpages; ++$n) {
 			if (isset($this->PageAnnots[$n])) {
 				// set page annotations
-				foreach ($this->PageAnnots[$n] as $key => $pl) {
+				forEachAlt ($this->PageAnnots[$n] as $key => $pl) {
 					$annot_obj_id = $this->PageAnnots[$n][$key]['n'];
 					// create annotation object for grouping radiobuttons
 					if (isset($this->radiobutton_groups[$n][$pl['txt']]) AND is_array($this->radiobutton_groups[$n][$pl['txt']])) {
@@ -8117,7 +8125,7 @@ class TCPDF {
 						$annots .= ' /FT /Btn';
 						$annots .= ' /Kids [';
 						$defval = '';
-						foreach ($this->radiobutton_groups[$n][$pl['txt']] as $key => $data) {
+						forEachAlt ($this->radiobutton_groups[$n][$pl['txt']] as $key => $data) {
 							if (isset($data['kid'])) {
 								$annots .= ' '.$data['kid'].' 0 R';
 								if ($data['def'] !== 'Off') {
@@ -8158,7 +8166,7 @@ class TCPDF {
 					if (isset($pl['opt']['f'])) {
 						$fval = 0;
 						if (is_array($pl['opt']['f'])) {
-							foreach ($pl['opt']['f'] as $f) {
+							forEachAlt ($pl['opt']['f'] as $f) {
 								switch (strtolower($f)) {
 									case 'invisible': {
 										$fval += 1 << 0;
@@ -8223,12 +8231,12 @@ class TCPDF {
 						// appearance stream
 						$annots .= ' /AP <<';
 						if (is_array($pl['opt']['ap'])) {
-							foreach ($pl['opt']['ap'] as $apmode => $apdef) {
+							forEachAlt ($pl['opt']['ap'] as $apmode => $apdef) {
 								// $apmode can be: n = normal; r = rollover; d = down;
 								$annots .= ' /'.strtoupper($apmode);
 								if (is_array($apdef)) {
 									$annots .= ' <<';
-									foreach ($apdef as $apstate => $stream) {
+									forEachAlt ($apdef as $apstate => $stream) {
 										// reference to XObject that define the appearance for this mode-state
 										$apsobjid = $this->_putAPXObject($c, $d, $stream);
 										$annots .= ' /'.$apstate.' '.$apsobjid.' 0 R';
@@ -8257,7 +8265,7 @@ class TCPDF {
 						}
 						if (isset($pl['opt']['bs']['d']) AND (is_array($pl['opt']['bs']['d']))) {
 							$annots .= ' /D [';
-							foreach ($pl['opt']['bs']['d'] as $cord) {
+							forEachAlt ($pl['opt']['bs']['d'] as $cord) {
 								$annots .= ' '.intval($cord);
 							}
 							$annots .= ']';
@@ -8271,7 +8279,7 @@ class TCPDF {
 							$annots .= intval($pl['opt']['border'][2]);
 							if (isset($pl['opt']['border'][3]) AND is_array($pl['opt']['border'][3])) {
 								$annots .= ' [';
-								foreach ($pl['opt']['border'][3] as $dash) {
+								forEachAlt ($pl['opt']['border'][3] as $dash) {
 									$annots .= intval($dash).' ';
 								}
 								$annots .= ']';
@@ -8419,7 +8427,7 @@ class TCPDF {
 							}
 							if (isset($pl['opt']['cl']) AND is_array($pl['opt']['cl'])) {
 								$annots .= ' /CL [';
-								foreach ($pl['opt']['cl'] as $cl) {
+								forEachAlt ($pl['opt']['cl'] as $cl) {
 									$annots .= sprintf('%F ', $cl * $this->k);
 								}
 								$annots .= ']';
@@ -8606,7 +8614,7 @@ class TCPDF {
 								if (is_array($pl['opt']['ff'])) {
 									// array of bit settings
 									$flag = 0;
-									foreach($pl['opt']['ff'] as $val) {
+									forEachAlt($pl['opt']['ff'] as $val) {
 										$flag += 1 << ($val - 1);
 									}
 								} else {
@@ -8620,7 +8628,7 @@ class TCPDF {
 							if (isset($pl['opt']['v'])) {
 								$annots .= ' /V';
 								if (is_array($pl['opt']['v'])) {
-									foreach ($pl['opt']['v'] AS $optval) {
+									forEachAlt ($pl['opt']['v'] AS $optval) {
 										if (is_float($optval)) {
 											$optval = sprintf('%F', $optval);
 										}
@@ -8633,7 +8641,7 @@ class TCPDF {
 							if (isset($pl['opt']['dv'])) {
 								$annots .= ' /DV';
 								if (is_array($pl['opt']['dv'])) {
-									foreach ($pl['opt']['dv'] AS $optval) {
+									forEachAlt ($pl['opt']['dv'] AS $optval) {
 										if (is_float($optval)) {
 											$optval = sprintf('%F', $optval);
 										}
@@ -8646,7 +8654,7 @@ class TCPDF {
 							if (isset($pl['opt']['rv'])) {
 								$annots .= ' /RV';
 								if (is_array($pl['opt']['rv'])) {
-									foreach ($pl['opt']['rv'] AS $optval) {
+									forEachAlt ($pl['opt']['rv'] AS $optval) {
 										if (is_float($optval)) {
 											$optval = sprintf('%F', $optval);
 										}
@@ -8670,7 +8678,7 @@ class TCPDF {
 							}
 							if (isset($pl['opt']['opt']) AND (is_array($pl['opt']['opt'])) AND !empty($pl['opt']['opt'])) {
 								$annots .= ' /Opt [';
-								foreach($pl['opt']['opt'] AS $copt) {
+								forEachAlt($pl['opt']['opt'] AS $copt) {
 									if (is_array($copt)) {
 										$annots .= ' ['.$this->_textstring($copt[0], $annot_obj_id).' '.$this->_textstring($copt[1], $annot_obj_id).']';
 									} else {
@@ -8684,7 +8692,7 @@ class TCPDF {
 							}
 							if (isset($pl['opt']['i']) AND (is_array($pl['opt']['i'])) AND !empty($pl['opt']['i'])) {
 								$annots .= ' /I [';
-								foreach($pl['opt']['i'] AS $copt) {
+								forEachAlt($pl['opt']['i'] AS $copt) {
 									$annots .= intval($copt).' ';
 								}
 								$annots .= ']';
@@ -8719,7 +8727,7 @@ class TCPDF {
 					}
 				}
 			}
-		} // end for each page
+		} // end for EachAlt page
 	}
 
 	/**
@@ -8763,14 +8771,14 @@ class TCPDF {
 	 */
 	protected function _putfonts() {
 		$nf = $this->n;
-		foreach ($this->diffs as $diff) {
+		forEachAlt ($this->diffs as $diff) {
 			//Encodings
 			$this->_newobj();
 			$this->_out('<< /Type /Encoding /BaseEncoding /WinAnsiEncoding /Differences ['.$diff.'] >>'."\n".'endobj');
 		}
 		$mqr = TCPDF_STATIC::get_mqr();
 		TCPDF_STATIC::set_mqr(false);
-		foreach ($this->FontFiles as $file => $info) {
+		forEachAlt ($this->FontFiles as $file => $info) {
 			// search and get font file to embedd
 			$fontfile = TCPDF_FONTS::getFontFullPath($file, $info['fontdir']);
 			if (!TCPDF_STATIC::empty_string($fontfile)) {
@@ -8793,7 +8801,7 @@ class TCPDF {
 					}
 					// merge subset characters
 					$subsetchars = array(); // used chars
-					foreach ($info['fontkeys'] as $fontkey) {
+					forEachAlt ($info['fontkeys'] as $fontkey) {
 						$fontinfo = $this->getFontBuffer($fontkey);
 						$subsetchars += $fontinfo['subsetchars'];
 					}
@@ -8824,7 +8832,7 @@ class TCPDF {
 			}
 		}
 		TCPDF_STATIC::set_mqr($mqr);
-		foreach ($this->fontkeys as $k) {
+		forEachAlt ($this->fontkeys as $k) {
 			//Font objects
 			$font = $this->getFontBuffer($k);
 			$type = $font['type'];
@@ -8882,7 +8890,7 @@ class TCPDF {
 				//Descriptor
 				$this->_newobj();
 				$s = '<</Type /FontDescriptor /FontName /'.$name;
-				foreach ($font['desc'] as $fdk => $fdv) {
+				forEachAlt ($font['desc'] as $fdk => $fdv) {
 					if (is_float($fdv)) {
 						$fdv = sprintf('%F', $fdv);
 					}
@@ -8968,7 +8976,7 @@ class TCPDF {
 		$this->_newobj();
 		$out = '<< /Type /FontDescriptor';
 		$out .= ' /FontName /'.$fontname;
-		foreach ($font['desc'] as $key => $value) {
+		forEachAlt ($font['desc'] as $key => $value) {
 			if (is_float($value)) {
 				$value = sprintf('%F', $value);
 			}
@@ -9026,7 +9034,7 @@ class TCPDF {
 			// convert unicode to cid.
 			$uni2cid = $font['cidinfo']['uni2cid'];
 			$cw = array();
-			foreach ($font['cw'] as $uni => $width) {
+			forEachAlt ($font['cw'] as $uni => $width) {
 				if (isset($uni2cid[$uni])) {
 					$cw[($uni2cid[$uni] + $cidoffset)] = $width;
 				} elseif ($uni < 256) {
@@ -9070,7 +9078,7 @@ class TCPDF {
 		$this->_out($out);
 		$this->_newobj();
 		$s = '<</Type /FontDescriptor /FontName /'.$name;
-		foreach ($font['desc'] as $k => $v) {
+		forEachAlt ($font['desc'] as $k => $v) {
 			if ($k != 'Style') {
 				if (is_float($v)) {
 					$v = sprintf('%F', $v);
@@ -9089,13 +9097,13 @@ class TCPDF {
 	 */
 	protected function _putimages() {
 		$filter = ($this->compress) ? '/Filter /FlateDecode ' : '';
-		foreach ($this->imagekeys as $file) {
+		forEachAlt ($this->imagekeys as $file) {
 			$info = $this->getImageBuffer($file);
 			// set object for alternate images array
 			if ((!$this->pdfa_mode) AND isset($info['altimgs']) AND !empty($info['altimgs'])) {
 				$altoid = $this->_newobj();
 				$out = '[';
-				foreach ($info['altimgs'] as $altimage) {
+				forEachAlt ($info['altimgs'] as $altimage) {
 					if (isset($this->xobjects['I'.$altimage[0]]['n'])) {
 						$out .= ' << /Image '.$this->xobjects['I'.$altimage[0]]['n'].' 0 R';
 						$out .= ' /DefaultForPrinting';
@@ -9217,7 +9225,7 @@ class TCPDF {
 	 * @see startTemplate(), endTemplate(), printTemplate()
 	 */
 	protected function _putxobjects() {
-		foreach ($this->xobjects as $key => $data) {
+		forEachAlt ($this->xobjects as $key => $data) {
 			if (isset($data['outdata'])) {
 				$stream = str_replace($this->epsmarker, '', trim($data['outdata']));
 				$out = $this->_getobj($data['n'])."\n";
@@ -9237,7 +9245,7 @@ class TCPDF {
 					// transparency
 					if (isset($data['extgstates']) AND !empty($data['extgstates'])) {
 						$out .= ' /ExtGState <<';
-						foreach ($data['extgstates'] as $k => $extgstate) {
+						forEachAlt ($data['extgstates'] as $k => $extgstate) {
 							if (isset($this->extgstates[$k]['name'])) {
 								$out .= ' /'.$this->extgstates[$k]['name'];
 							} else {
@@ -9250,7 +9258,7 @@ class TCPDF {
 					if (isset($data['gradients']) AND !empty($data['gradients'])) {
 						$gp = '';
 						$gs = '';
-						foreach ($data['gradients'] as $id => $grad) {
+						forEachAlt ($data['gradients'] as $id => $grad) {
 							// gradient patterns
 							$gp .= ' /p'.$id.' '.$this->gradients[$id]['pattern'].' 0 R';
 							// gradient shadings
@@ -9263,7 +9271,7 @@ class TCPDF {
 				// spot colors
 				if (isset($data['spot_colors']) AND !empty($data['spot_colors'])) {
 					$out .= ' /ColorSpace <<';
-					foreach ($data['spot_colors'] as $name => $color) {
+					forEachAlt ($data['spot_colors'] as $name => $color) {
 						$out .= ' /CS'.$color['i'].' '.$this->spot_colors[$name]['n'].' 0 R';
 					}
 					$out .= ' >>';
@@ -9271,7 +9279,7 @@ class TCPDF {
 				// fonts
 				if (!empty($data['fonts'])) {
 					$out .= ' /Font <<';
-					foreach ($data['fonts'] as $fontkey => $fontid) {
+					forEachAlt ($data['fonts'] as $fontkey => $fontid) {
 						$out .= ' /F'.$fontid.' '.$this->font_obj_ids[$fontkey].' 0 R';
 					}
 					$out .= ' >>';
@@ -9279,10 +9287,10 @@ class TCPDF {
 				// images or nested xobjects
 				if (!empty($data['images']) OR !empty($data['xobjects'])) {
 					$out .= ' /XObject <<';
-					foreach ($data['images'] as $imgid) {
+					forEachAlt ($data['images'] as $imgid) {
 						$out .= ' /I'.$imgid.' '.$this->xobjects['I'.$imgid]['n'].' 0 R';
 					}
-					foreach ($data['xobjects'] as $sub_id => $sub_objid) {
+					forEachAlt ($data['xobjects'] as $sub_id => $sub_objid) {
 						$out .= ' /'.$sub_id.' '.$sub_objid['n'].' 0 R';
 					}
 					$out .= ' >>';
@@ -9320,7 +9328,7 @@ class TCPDF {
 	 * @since 4.0.024 (2008-09-12)
 	 */
 	protected function _putspotcolors() {
-		foreach ($this->spot_colors as $name => $color) {
+		forEachAlt ($this->spot_colors as $name => $color) {
 			$this->_newobj();
 			$this->spot_colors[$name]['n'] = $this->n;
 			$out = '[/Separation /'.str_replace(' ', '#20', $name);
@@ -9341,7 +9349,7 @@ class TCPDF {
 	 */
 	protected function _getxobjectdict() {
 		$out = '';
-		foreach ($this->xobjects as $id => $objid) {
+		forEachAlt ($this->xobjects as $id => $objid) {
 			$out .= ' /'.$id.' '.$objid['n'].' 0 R';
 		}
 		return $out;
@@ -9355,7 +9363,7 @@ class TCPDF {
 		$out = $this->_getobj(2)."\n";
 		$out .= '<< /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]';
 		$out .= ' /Font <<';
-		foreach ($this->fontkeys as $fontkey) {
+		forEachAlt ($this->fontkeys as $fontkey) {
 			$font = $this->getFontBuffer($fontkey);
 			$out .= ' /F'.$font['i'].' '.$font['n'].' 0 R';
 		}
@@ -9366,7 +9374,7 @@ class TCPDF {
 		// layers
 		if (!empty($this->pdflayers)) {
 			$out .= ' /Properties <<';
-			foreach ($this->pdflayers as $layer) {
+			forEachAlt ($this->pdflayers as $layer) {
 				$out .= ' /'.$layer['layer'].' '.$layer['objid'].' 0 R';
 			}
 			$out .= ' >>';
@@ -9375,7 +9383,7 @@ class TCPDF {
 			// transparency
 			if (isset($this->extgstates) AND !empty($this->extgstates)) {
 				$out .= ' /ExtGState <<';
-				foreach ($this->extgstates as $k => $extgstate) {
+				forEachAlt ($this->extgstates as $k => $extgstate) {
 					if (isset($extgstate['name'])) {
 						$out .= ' /'.$extgstate['name'];
 					} else {
@@ -9388,7 +9396,7 @@ class TCPDF {
 			if (isset($this->gradients) AND !empty($this->gradients)) {
 				$gp = '';
 				$gs = '';
-				foreach ($this->gradients as $id => $grad) {
+				forEachAlt ($this->gradients as $id => $grad) {
 					// gradient patterns
 					$gp .= ' /p'.$id.' '.$grad['pattern'].' 0 R';
 					// gradient shadings
@@ -9401,7 +9409,7 @@ class TCPDF {
 		// spot colors
 		if (isset($this->spot_colors) AND !empty($this->spot_colors)) {
 			$out .= ' /ColorSpace <<';
-			foreach ($this->spot_colors as $color) {
+			forEachAlt ($this->spot_colors as $color) {
 				$out .= ' /CS'.$color['i'].' '.$color['n'].' 0 R';
 			}
 			$out .= ' >>';
@@ -9665,7 +9673,7 @@ class TCPDF {
 		}
 		if (!empty($this->efnames)) {
 			$out .= ' /EmbeddedFiles <</Names [';
-			foreach ($this->efnames AS $fn => $fref) {
+			forEachAlt ($this->efnames AS $fn => $fref) {
 				$out .= ' '.$this->_datastring($fn).' '.$fref;
 			}
 			$out .= ' ]>>';
@@ -9721,7 +9729,7 @@ class TCPDF {
 			$lyrobjs = '';
 			$lyrobjs_off = '';
 			$lyrobjs_lock = '';
-			foreach ($this->pdflayers as $layer) {
+			forEachAlt ($this->pdflayers as $layer) {
 				$layer_obj_ref = ' '.$layer['objid'].' 0 R';
 				$lyrobjs .= $layer_obj_ref;
 				if ($layer['view'] === false) {
@@ -9761,18 +9769,18 @@ class TCPDF {
 				$objrefs .= $this->sig_obj_id.' 0 R';
 			}
 			if (!empty($this->empty_signature_appearance)) {
-				foreach ($this->empty_signature_appearance as $esa) {
+				forEachAlt ($this->empty_signature_appearance as $esa) {
 					// set reference for empty signature objects
 					$objrefs .= ' '.$esa['objid'].' 0 R';
 				}
 			}
 			if (!empty($this->form_obj_id)) {
-				foreach($this->form_obj_id as $objid) {
+				forEachAlt($this->form_obj_id as $objid) {
 					$objrefs .= ' '.$objid.' 0 R';
 				}
 			}
 			$out .= ' /Fields ['.$objrefs.']';
-			// It's better to turn off this value and set the appearance stream for each annotation (/AP) to avoid conflicts with signature fields.
+			// It's better to turn off this value and set the appearance stream for EachAlt annotation (/AP) to avoid conflicts with signature fields.
 			if (empty($this->signature_data['approval']) OR ($this->signature_data['approval'] != 'A')) {
 				$out .= ' /NeedAppearances false';
 			}
@@ -9787,7 +9795,7 @@ class TCPDF {
 			if (isset($this->annotation_fonts) AND !empty($this->annotation_fonts)) {
 				$out .= ' /DR <<';
 				$out .= ' /Font <<';
-				foreach ($this->annotation_fonts as $fontkey => $fontid) {
+				forEachAlt ($this->annotation_fonts as $fontkey => $fontid) {
 					$out .= ' /F'.$fontid.' '.$this->font_obj_ids[$fontkey].' 0 R';
 				}
 				$out .= ' >> >>';
@@ -9880,7 +9888,7 @@ class TCPDF {
 		}
 		if (isset($vp['PrintPageRange'])) {
 			$PrintPageRangeNum = '';
-			foreach ($vp['PrintPageRange'] as $k => $v) {
+			forEachAlt ($vp['PrintPageRange'] as $k => $v) {
 				$PrintPageRangeNum .= ' '.($v - 1).'';
 			}
 			$out .= ' /PrintPageRange ['.substr($PrintPageRangeNum,1).']';
@@ -9916,7 +9924,7 @@ class TCPDF {
 		$this->_putresources();
 		// empty signature fields
 		if (!empty($this->empty_signature_appearance)) {
-			foreach ($this->empty_signature_appearance as $key => $esa) {
+			forEachAlt ($this->empty_signature_appearance as $key => $esa) {
 				// widget annotation for empty signature
 				$out = $this->_getobj($esa['objid'])."\n";
 				$out .= '<< /Type /Annot';
@@ -10519,7 +10527,7 @@ class TCPDF {
 					$out .= ' /CFM /'.$this->encryptdata['CF']['CFM'];
 					if ($this->encryptdata['pubkey']) {
 						$out .= ' /Recipients [';
-						foreach ($this->encryptdata['Recipients'] as $rec) {
+						forEachAlt ($this->encryptdata['Recipients'] as $rec) {
 							$out .= ' <'.$rec.'>';
 						}
 						$out .= ' ]';
@@ -10557,7 +10565,7 @@ class TCPDF {
 		if ($this->encryptdata['pubkey']) {
 			if (($this->encryptdata['V'] < 4) AND isset($this->encryptdata['Recipients']) AND !empty($this->encryptdata['Recipients'])) {
 				$out .= ' /Recipients [';
-				foreach ($this->encryptdata['Recipients'] as $rec) {
+				forEachAlt ($this->encryptdata['Recipients'] as $rec) {
 					$out .= ' <'.$rec.'>';
 				}
 				$out .= ' ]';
@@ -10698,7 +10706,7 @@ class TCPDF {
 	protected function _fixAES256Password($password) {
 		$psw = ''; // password to be returned
 		$psw_array = TCPDF_FONTS::utf8Bidi(TCPDF_FONTS::UTF8StringToArray($password, $this->isunicode, $this->CurrentFont), $password, $this->rtl, $this->isunicode, $this->CurrentFont);
-		foreach ($psw_array as $c) {
+		forEachAlt ($psw_array as $c) {
 			$psw .= TCPDF_FONTS::unichr($c, $this->isunicode);
 		}
 		return substr($psw, 0, 127);
@@ -10766,8 +10774,8 @@ class TCPDF {
 			// random 20-byte seed
 			$seed = sha1(TCPDF_STATIC::getRandomSeed(), true);
 			$recipient_bytes = '';
-			foreach ($this->encryptdata['pubkeys'] as $pubkey) {
-				// for each public certificate
+			forEachAlt ($this->encryptdata['pubkeys'] as $pubkey) {
+				// for EachAlt public certificate
 				if (isset($pubkey['p'])) {
 					$pkprotection = TCPDF_STATIC::getUserPermissionCode($pubkey['p'], $this->encryptdata['mode']);
 				} else {
@@ -10803,7 +10811,7 @@ class TCPDF {
 				$hexsignature = current(unpack('H*', $signature));
 				// store signature on recipients array
 				$this->encryptdata['Recipients'][] = $hexsignature;
-				// The bytes of each item in the Recipients array of PKCS#7 objects in the order in which they appear in the array
+				// The bytes of EachAlt item in the Recipients array of PKCS#7 objects in the order in which they appear in the array
 				$recipient_bytes .= $signature;
 			}
 			// calculate encryption key
@@ -11342,7 +11350,7 @@ class TCPDF {
 					$tab = array($style['dash']);
 				}
 				$dash_string = '';
-				foreach ($tab as $i => $v) {
+				forEachAlt ($tab as $i => $v) {
 					if ($i) {
 						$dash_string .= ' ';
 					}
@@ -11528,7 +11536,7 @@ class TCPDF {
 		}
 		if (!empty($border_style)) {
 			$border_style2 = array();
-			foreach ($border_style as $line => $value) {
+			forEachAlt ($border_style as $line => $value) {
 				$length = strlen($line);
 				for ($i = 0; $i < $length; ++$i) {
 					$border_style2[$line[$i]] = $value;
@@ -11614,7 +11622,7 @@ class TCPDF {
 			$this->SetLineStyle($line_style);
 		}
 		$this->_outPoint($x0, $y0);
-		foreach ($segments as $segment) {
+		forEachAlt ($segments as $segment) {
 			list($x1, $y1, $x2, $y2, $x3, $y3) = $segment;
 			$this->_outCurve($x1, $y1, $x2, $y2, $x3, $y3);
 		}
@@ -11726,7 +11734,7 @@ class TCPDF {
 		// total arcs to draw
 		$nc *= (2 * abs($total_angle) / M_PI);
 		$nc = round($nc) + 1;
-		// angle of each arc
+		// angle of EachAlt arc
 		$arcang = ($total_angle / $nc);
 		// center point in PDF coordinates
 		$x0 = $xc;
@@ -11822,7 +11830,7 @@ class TCPDF {
 	 * @param $line_style (array) Line style of polygon. Array with keys among the following:
 	 * <ul>
 	 *	 <li>all: Line style of all lines. Array like for SetLineStyle().</li>
-	 *	 <li>0 to ($np - 1): Line style of each line. Array like for SetLineStyle().</li>
+	 *	 <li>0 to ($np - 1): Line style of EachAlt line. Array like for SetLineStyle().</li>
 	 * </ul>
 	 * If a key is not present or is null, not draws the line. Default value is default line style (empty array).
 	 * @param $fill_color (array) Fill color. Format: array(GREY) or array(R,G,B) or array(C,M,Y,K) or array(C,M,Y,K,SpotColorName). Default value: default color (empty array).
@@ -11840,7 +11848,7 @@ class TCPDF {
 	 * @param $line_style (array) Line style of polygon. Array with keys among the following:
 	 * <ul>
 	 *	 <li>all: Line style of all lines. Array like for SetLineStyle().</li>
-	 *	 <li>0 to ($np - 1): Line style of each line. Array like for SetLineStyle().</li>
+	 *	 <li>0 to ($np - 1): Line style of EachAlt line. Array like for SetLineStyle().</li>
 	 * </ul>
 	 * If a key is not present or is null, not draws the line. Default value is default line style (empty array).
 	 * @param $fill_color (array) Fill color. Format: array(GREY) or array(R,G,B) or array(C,M,Y,K) or array(C,M,Y,K,SpotColorName). Default value: default color (empty array).
@@ -11932,7 +11940,7 @@ class TCPDF {
 	 * @param $line_style (array) Line style of polygon sides. Array with keys among the following:
 	 * <ul>
 	 *	 <li>all: Line style of all sides. Array like for SetLineStyle().</li>
-	 *	 <li>0 to ($ns - 1): Line style of each side. Array like for SetLineStyle().</li>
+	 *	 <li>0 to ($ns - 1): Line style of EachAlt side. Array like for SetLineStyle().</li>
 	 * </ul>
 	 * If a key is not present or is null, not draws the side. Default value is default line style (empty array).
 	 * @param $fill_color (array) Fill color. Format: array(red, green, blue). Default value: default color (empty array).
@@ -11980,7 +11988,7 @@ class TCPDF {
 	 * <ul>
 	 *	 <li>all: Line style of all sides. Array like for
 	 * SetLineStyle().</li>
-	 *	 <li>0 to (n - 1): Line style of each side. Array like for SetLineStyle().</li>
+	 *	 <li>0 to (n - 1): Line style of EachAlt side. Array like for SetLineStyle().</li>
 	 * </ul>
 	 * If a key is not present or is null, not draws the side. Default value is default line style (empty array).
 	 * @param $fill_color (array) Fill color. Format: array(red, green, blue). Default value: default color (empty array).
@@ -12252,7 +12260,7 @@ class TCPDF {
 		}
 		$this->n_dests = $this->_newobj();
 		$out = ' <<';
-		foreach($this->dests as $name => $o) {
+		forEachAlt($this->dests as $name => $o) {
 			$out .= ' /'.$name.' '.sprintf('[%u 0 R /XYZ %F %F null]', $this->page_obj_id[($o['p'])], ($o['x'] * $this->k), ($this->pagedim[$o['p']]['h'] - ($o['y'] * $this->k)));
 		}
 		$out .= ' >>';
@@ -12340,7 +12348,7 @@ class TCPDF {
 		// get sorting columns
 		$outline_p = array();
 		$outline_y = array();
-		foreach ($this->outlines as $key => $row) {
+		forEachAlt ($this->outlines as $key => $row) {
 			$outline_p[$key] = $row['p'];
 			$outline_k[$key] = $key;
 		}
@@ -12363,7 +12371,7 @@ class TCPDF {
 		$this->sortBookmarks();
 		$lru = array();
 		$level = 0;
-		foreach ($this->outlines as $i => $o) {
+		forEachAlt ($this->outlines as $i => $o) {
 			if ($o['l'] > 0) {
 				$parent = $lru[($o['l'] - 1)];
 				//Set parent and last pointers
@@ -12388,7 +12396,7 @@ class TCPDF {
 		//Outline items
 		$n = $this->n + 1;
 		$nltags = '/<br[\s]?\/>|<\/(blockquote|dd|dl|div|dt|h1|h2|h3|h4|h5|h6|hr|li|ol|p|pre|ul|tcpdf|table|tr|td)>/si';
-		foreach ($this->outlines as $i => $o) {
+		forEachAlt ($this->outlines as $i => $o) {
 			$oid = $this->_newobj();
 			// covert HTML title to string
 			$title = preg_replace($nltags, "\n", $o['t']);
@@ -12529,7 +12537,7 @@ class TCPDF {
 			$this->n_js .= ' (EmbeddedJS) '.($this->n + 1).' 0 R';
 		}
 		if (!empty($this->js_objects)) {
-			foreach ($this->js_objects as $key => $val) {
+			forEachAlt ($this->js_objects as $key => $val) {
 				if ($val['onload']) {
 					$this->n_js .= ' (JS'.$key.') '.$key.' 0 R';
 				}
@@ -12547,7 +12555,7 @@ class TCPDF {
 		}
 		// additional Javascript objects
 		if (!empty($this->js_objects)) {
-			foreach ($this->js_objects as $key => $val) {
+			forEachAlt ($this->js_objects as $key => $val) {
 				$out = $this->_getobj($key)."\n".' << /S /JavaScript /JS '.$this->_textstring($val['js'], $key).' >>'."\n".'endobj';
 				$this->_out($out);
 			}
@@ -12576,7 +12584,7 @@ class TCPDF {
 		$k = $this->k;
 		$this->javascript .= sprintf("f".$name."=this.addField('%s','%s',%u,[%F,%F,%F,%F]);", $name, $type, $this->PageNo()-1, $x*$k, ($this->h-$y)*$k+1, ($x+$w)*$k, ($this->h-$y-$h)*$k+1)."\n";
 		$this->javascript .= 'f'.$name.'.textSize='.$this->FontSizePt.";\n";
-		while (list($key, $val) = each($prop)) {
+		while (list($key, $val) = EachAlt($prop)) {
 			if (strcmp(substr($key, -5), 'Color') == 0) {
 				$val = TCPDF_COLORS::_JScolor($val);
 			} else {
@@ -12868,7 +12876,7 @@ class TCPDF {
 		if ($js) {
 			$this->_addfield('listbox', $name, $x, $y, $w, $h, $prop);
 			$s = '';
-			foreach ($values as $value) {
+			forEachAlt ($values as $value) {
 				if (is_array($value)) {
 					$s .= ',[\''.addslashes($value[1]).'\',\''.addslashes($value[0]).'\']';
 				} else {
@@ -12890,7 +12898,7 @@ class TCPDF {
 		$popt['ap'] = array();
 		$popt['ap']['n'] = '/Tx BMC q '.$fontstyle.' ';
 		$text = '';
-		foreach($values as $item) {
+		forEachAlt($values as $item) {
 			if (is_array($item)) {
 				$text .= $item[1]."\n";
 			} else {
@@ -12954,7 +12962,7 @@ class TCPDF {
 		if ($js) {
 			$this->_addfield('combobox', $name, $x, $y, $w, $h, $prop);
 			$s = '';
-			foreach ($values as $value) {
+			forEachAlt ($values as $value) {
 				if (is_array($value)) {
 					$s .= ',[\''.addslashes($value[1]).'\',\''.addslashes($value[0]).'\']';
 				} else {
@@ -12977,7 +12985,7 @@ class TCPDF {
 		$popt['ap'] = array();
 		$popt['ap']['n'] = '/Tx BMC q '.$fontstyle.' ';
 		$text = '';
-		foreach($values as $item) {
+		forEachAlt($values as $item) {
 			if (is_array($item)) {
 				$text .= $item[1]."\n";
 			} else {
@@ -13176,21 +13184,21 @@ class TCPDF {
 				// form action options as on section 12.7.5 of PDF32000_2008.
 				$opt['aa'] = '/D <<';
 				$bmode = array('SubmitForm', 'ResetForm', 'ImportData');
-				foreach ($action AS $key => $val) {
+				forEachAlt ($action AS $key => $val) {
 					if (($key == 'S') AND in_array($val, $bmode)) {
 						$opt['aa'] .= ' /S /'.$val;
 					} elseif (($key == 'F') AND (!empty($val))) {
 						$opt['aa'] .= ' /F '.$this->_datastring($val, $ann_obj_id);
 					} elseif (($key == 'Fields') AND is_array($val) AND !empty($val)) {
 						$opt['aa'] .= ' /Fields [';
-						foreach ($val AS $field) {
+						forEachAlt ($val AS $field) {
 							$opt['aa'] .= ' '.$this->_textstring($field, $ann_obj_id);
 						}
 						$opt['aa'] .= ']';
 					} elseif (($key == 'Flags')) {
 						$ff = 0;
 						if (is_array($val)) {
-							foreach ($val AS $flag) {
+							forEachAlt ($val AS $flag) {
 								switch ($flag) {
 									case 'Include/Exclude': {
 										$ff += 1 << 0;
@@ -13688,7 +13696,7 @@ class TCPDF {
 		if (empty($this->pdflayers)) {
 			return;
 		}
-		foreach ($this->pdflayers as $key => $layer) {
+		forEachAlt ($this->pdflayers as $key => $layer) {
 			 $this->pdflayers[$key]['objid'] = $this->_newobj();
 			 $out = '<< /Type /OCG';
 			 $out .= ' /Name '.$this->_textstring($layer['name'], $this->pdflayers[$key]['objid']);
@@ -13790,7 +13798,7 @@ class TCPDF {
 			return;
 		}
 		// check if this ExtGState already exist
-		foreach ($this->extgstates as $i => $ext) {
+		forEachAlt ($this->extgstates as $i => $ext) {
 			if ($ext['parms'] == $parms) {
 				if ($this->inxobj) {
 					// we are inside an XObject template
@@ -13829,10 +13837,10 @@ class TCPDF {
 	 * @since 3.0.000 (2008-03-27)
 	 */
 	protected function _putextgstates() {
-		foreach ($this->extgstates as $i => $ext) {
+		forEachAlt ($this->extgstates as $i => $ext) {
 			$this->extgstates[$i]['n'] = $this->_newobj();
 			$out = '<< /Type /ExtGState';
-			foreach ($ext['parms'] as $k => $v) {
+			forEachAlt ($ext['parms'] as $k => $v) {
 				if (is_float($v)) {
 					$v = sprintf('%F', $v);
 				} elseif ($v === true) {
@@ -13853,7 +13861,7 @@ class TCPDF {
 	 * (Check the "Entries in a Graphics State Parameter Dictionary" on PDF 32000-1:2008).
 	 * @param $stroking (boolean) If true apply overprint for stroking operations.
 	 * @param $nonstroking (boolean) If true apply overprint for painting operations other than stroking.
-	 * @param $mode (integer) Overprint mode: (0 = each source colour component value replaces the value previously painted for the corresponding device colorant; 1 = a tint value of 0.0 for a source colour component shall leave the corresponding component of the previously painted colour unchanged).
+	 * @param $mode (integer) Overprint mode: (0 = EachAlt source colour component value replaces the value previously painted for the corresponding device colorant; 1 = a tint value of 0.0 for a source colour component shall leave the corresponding component of the previously painted colour unchanged).
 	 * @public
 	 * @since 5.9.152 (2012-03-23)
 	 */
@@ -14019,7 +14027,7 @@ class TCPDF {
 		if (strpos($colors, 'ALLSPOT') !== false) {
 			// expand spot colors
 			$spot_colors = '';
-			foreach ($this->spot_colors as $spot_color_name => $v) {
+			forEachAlt ($this->spot_colors as $spot_color_name => $v) {
 				$spot_colors .= ','.$spot_color_name;
 			}
 			if (!empty($spot_colors)) {
@@ -14050,7 +14058,7 @@ class TCPDF {
 		}
 		$xb = $x;
 		$yb = $y;
-		foreach ($bars as $col) {
+		forEachAlt ($bars as $col) {
 			switch ($col) {
 				// set transition colors
 				case 'A': { // BLACK (GRAYSCALE)
@@ -14175,7 +14183,7 @@ class TCPDF {
 		$crops = array_unique($crops);
 		$dw = ($w / 4); // horizontal space to leave before the intersection point
 		$dh = ($h / 4); // vertical space to leave before the intersection point
-		foreach ($crops as $crop) {
+		forEachAlt ($crops as $crop) {
 			switch ($crop) {
 				case 'T':
 				case 'TOP': {
@@ -14330,7 +14338,7 @@ class TCPDF {
 	 * @param $col2 (array) second color (lower right corner) (RGB components).
 	 * @param $col3 (array) third color (upper right corner) (RGB components).
 	 * @param $col4 (array) fourth color (upper left corner) (RGB components).
-	 * @param $coords (array) <ul><li>for one patch mesh: array(float x1, float y1, .... float x12, float y12): 12 pairs of coordinates (normally from 0 to 1) which specify the Bezier control points that define the patch. First pair is the lower left edge point, next is its right control point (control point 2). Then the other points are defined in the order: control point 1, edge point, control point 2 going counter-clockwise around the patch. Last (x12, y12) is the first edge point's left control point (control point 1).</li><li>for two or more patch meshes: array[number of patches]: arrays with the following keys for each patch: f: where to put that patch (0 = first patch, 1, 2, 3 = right, top and left of precedent patch - I didn't figure this out completely - just try and error ;-) points: 12 pairs of coordinates of the Bezier control points as above for the first patch, 8 pairs of coordinates for the following patches, ignoring the coordinates already defined by the precedent patch (I also didn't figure out the order of these - also: try and see what's happening) colors: must be 4 colors for the first patch, 2 colors for the following patches</li></ul>
+	 * @param $coords (array) <ul><li>for one patch mesh: array(float x1, float y1, .... float x12, float y12): 12 pairs of coordinates (normally from 0 to 1) which specify the Bezier control points that define the patch. First pair is the lower left edge point, next is its right control point (control point 2). Then the other points are defined in the order: control point 1, edge point, control point 2 going counter-clockwise around the patch. Last (x12, y12) is the first edge point's left control point (control point 1).</li><li>for two or more patch meshes: array[number of patches]: arrays with the following keys for EachAlt patch: f: where to put that patch (0 = first patch, 1, 2, 3 = right, top and left of precedent patch - I didn't figure this out completely - just try and error ;-) points: 12 pairs of coordinates of the Bezier control points as above for the first patch, 8 pairs of coordinates for the following patches, ignoring the coordinates already defined by the precedent patch (I also didn't figure out the order of these - also: try and see what's happening) colors: must be 4 colors for the first patch, 2 colors for the following patches</li></ul>
 	 * @param $coords_min (array) minimum value used by the coordinates. If a coordinate's value is smaller than this it will be cut to coords_min. default: 0
 	 * @param $coords_max (array) maximum value used by the coordinates. If a coordinate's value is greater than this it will be cut to coords_max. default: 1
 	 * @param $antialias (boolean) A flag indicating whether to filter the shading function to prevent aliasing artifacts.
@@ -14391,7 +14399,7 @@ class TCPDF {
 			$this->gradients[$n]['stream'] .= chr($patch_array[$i]['f']); //start with the edge flag as 8 bit
 			$count_points = count($patch_array[$i]['points']);
 			for ($j=0; $j < $count_points; ++$j) {
-				//each point as 16 bit
+				//EachAlt point as 16 bit
 				$patch_array[$i]['points'][$j] = (($patch_array[$i]['points'][$j] - $coords_min) / ($coords_max - $coords_min)) * $bpcd;
 				if ($patch_array[$i]['points'][$j] < 0) {
 					$patch_array[$i]['points'][$j] = 0;
@@ -14404,7 +14412,7 @@ class TCPDF {
 			}
 			$count_cols = count($patch_array[$i]['colors']);
 			for ($j=0; $j < $count_cols; ++$j) {
-				//each color component as 8 bit
+				//EachAlt color component as 8 bit
 				$this->gradients[$n]['stream'] .= chr($patch_array[$i]['colors'][$j]['r']);
 				$this->gradients[$n]['stream'] .= chr($patch_array[$i]['colors'][$j]['g']);
 				$this->gradients[$n]['stream'] .= chr($patch_array[$i]['colors'][$j]['b']);
@@ -14497,7 +14505,7 @@ class TCPDF {
 		}
 		$num_stops = count($stops);
 		$last_stop_id = $num_stops - 1;
-		foreach ($stops as $key => $stop) {
+		forEachAlt ($stops as $key => $stop) {
 			$this->gradients[$n]['colors'][$key] = array();
 			// offset represents a location along the gradient vector
 			if (isset($stop['offset'])) {
@@ -14569,7 +14577,7 @@ class TCPDF {
 			return;
 		}
 		$idt = count($this->gradients); //index for transparency gradients
-		foreach ($this->gradients as $id => $grad) {
+		forEachAlt ($this->gradients as $id => $grad) {
 			if (($grad['type'] == 2) OR ($grad['type'] == 3)) {
 				$fc = $this->_newobj();
 				$out = '<<';
@@ -14814,7 +14822,7 @@ class TCPDF {
 	 * @param $useBoundingBox (boolean) specifies whether to position the bounding box (true) or the complete canvas (false) at location (x,y). Default value is true.
 	 * @param $align (string) Indicates the alignment of the pointer next to image insertion relative to image height. The value can be:<ul><li>T: top-right for LTR or top-left for RTL</li><li>M: middle-right for LTR or middle-left for RTL</li><li>B: bottom-right for LTR or bottom-left for RTL</li><li>N: next line</li></ul>
 	 * @param $palign (string) Allows to center or align the image on the current line. Possible values are:<ul><li>L : left align</li><li>C : center</li><li>R : right align</li><li>'' : empty string : left for LTR or right for RTL</li></ul>
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @param $fitonpage (boolean) if true the image is resized to not exceed page dimensions.
 	 * @param $fixoutvals (boolean) if true remove values outside the bounding box.
 	 * @author Valentin Schmidt, Nicola Asuni
@@ -14985,7 +14993,7 @@ class TCPDF {
 					case 'l':
 					case 'L': {
 						// skip values outside bounding box
-						foreach ($chunks as $key => $val) {
+						forEachAlt ($chunks as $key => $val) {
 							if ((($key % 2) == 0) AND (($val < $x1) OR ($val > $x2))) {
 								$skip = true;
 							} elseif ((($key % 2) != 0) AND (($val < $y1) OR ($val > $y2))) {
@@ -15418,7 +15426,7 @@ class TCPDF {
 		$this->SetDrawColorArray($style['fgcolor']);
 		$this->SetTextColorArray($style['fgcolor']);
 		// print bars
-		foreach ($arrcode['bcode'] as $k => $v) {
+		forEachAlt ($arrcode['bcode'] as $k => $v) {
 			$bw = ($v['w'] * $xres);
 			if ($v['t']) {
 				// draw a vertical bar
@@ -15668,10 +15676,10 @@ class TCPDF {
 		// set foreground color
 		$this->SetDrawColorArray($style['fgcolor']);
 		// print barcode cells
-		// for each row
+		// for EachAlt row
 		for ($r = 0; $r < $rows; ++$r) {
 			$xr = $xstart;
-			// for each column
+			// for EachAlt column
 			for ($c = 0; $c < $cols; ++$c) {
 				if ($arrcode['bcode'][$r][$c] == 1) {
 					// draw a single barcode cell
@@ -16250,7 +16258,7 @@ class TCPDF {
 		// extract external CSS files
 		$matches = array();
 		if (preg_match_all('/<link([^\>]*)>/isU', $html, $matches) > 0) {
-			foreach ($matches[1] as $key => $link) {
+			forEachAlt ($matches[1] as $key => $link) {
 				$type = array();
 				if (preg_match('/type[\s]*=[\s]*"text\/css"/', $link, $type)) {
 					$type = array();
@@ -16273,7 +16281,7 @@ class TCPDF {
 		// extract style tags
 		$matches = array();
 		if (preg_match_all('/<style([^\>]*)>([^\<]*)<\/style>/isU', $html, $matches) > 0) {
-			foreach ($matches[1] as $key => $media) {
+			forEachAlt ($matches[1] as $key => $media) {
 				$type = array();
 				preg_match('/media[\s]*=[\s]*"([^"]*)"/', $media, $type);
 				// get 'all' and 'print' media, other media types are discarded
@@ -16539,7 +16547,7 @@ class TCPDF {
 					// get attributes
 					preg_match_all('/([^=\s]*)[\s]*=[\s]*"([^"]*)"/', $element, $attr_array, PREG_PATTERN_ORDER);
 					$dom[$key]['attribute'] = array(); // reset attribute array
-					while (list($id, $name) = each($attr_array[1])) {
+					while (list($id, $name) = EachAlt($attr_array[1])) {
 						$dom[$key]['attribute'][strtolower($name)] = $attr_array[2][$id];
 					}
 					if (!empty($css)) {
@@ -16552,7 +16560,7 @@ class TCPDF {
 						// get style attributes
 						preg_match_all('/([^;:\s]*):([^;]*)/', $dom[$key]['attribute']['style'], $style_array, PREG_PATTERN_ORDER);
 						$dom[$key]['style'] = array(); // reset style attribute array
-						while (list($id, $name) = each($style_array[1])) {
+						while (list($id, $name) = EachAlt($style_array[1])) {
 							// in case of duplicate attribute the last replace the previous
 							$dom[$key]['style'][strtolower($name)] = trim($style_array[2][$id]);
 						}
@@ -16654,7 +16662,7 @@ class TCPDF {
 						// text-decoration
 						if (isset($dom[$key]['style']['text-decoration'])) {
 							$decors = explode(' ', strtolower($dom[$key]['style']['text-decoration']));
-							foreach ($decors as $dec) {
+							forEachAlt ($decors as $dec) {
 								$dec = trim($dec);
 								if (!TCPDF_STATIC::empty_string($dec)) {
 									if ($dec[0] == 'u') {
@@ -16757,7 +16765,7 @@ class TCPDF {
 							}
 						}
 						$cellside = array('L' => 'left', 'R' => 'right', 'T' => 'top', 'B' => 'bottom');
-						foreach ($cellside as $bsk => $bsv) {
+						forEachAlt ($cellside as $bsk => $bsv) {
 							if (isset($dom[$key]['style']['border-'.$bsv])) {
 								$borderstyle = $this->getCSSBorderStyle($dom[$key]['style']['border-'.$bsv]);
 								if (!empty($borderstyle)) {
@@ -16783,7 +16791,7 @@ class TCPDF {
 						} else {
 							$dom[$key]['padding'] = $this->cell_padding;
 						}
-						foreach ($cellside as $psk => $psv) {
+						forEachAlt ($cellside as $psk => $psv) {
 							if (isset($dom[$key]['style']['padding-'.$psv])) {
 								$dom[$key]['padding'][$psk] = $this->getHTMLUnitToUnits($dom[$key]['style']['padding-'.$psv], 0, 'px', false);
 							}
@@ -16794,7 +16802,7 @@ class TCPDF {
 						} else {
 							$dom[$key]['margin'] = $this->cell_margin;
 						}
-						foreach ($cellside as $psk => $psv) {
+						forEachAlt ($cellside as $psk => $psv) {
 							if (isset($dom[$key]['style']['margin-'.$psv])) {
 								$dom[$key]['margin'][$psk] = $this->getHTMLUnitToUnits(str_replace('auto', '0', $dom[$key]['style']['margin-'.$psv]), 0, 'px', false);
 							}
@@ -17080,7 +17088,7 @@ class TCPDF {
 	 * @param $x (float) upper-left corner X coordinate
 	 * @param $y (float) upper-left corner Y coordinate
 	 * @param $html (string) html text to print. Default value: empty string.
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @param $ln (int) Indicates where the current position should go after the call. Possible values are:<ul><li>0: to the right (or left for RTL language)</li><li>1: to the beginning of the next line</li><li>2: below</li></ul>
 Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value: 0.
 	 * @param $fill (boolean) Indicates if the cell background must be painted (true) or transparent (false).
@@ -17103,7 +17111,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 * @param $ln (boolean) if true add a new line after text (default = true)
 	 * @param $fill (boolean) Indicates if the background must be painted (true) or transparent (false).
 	 * @param $reseth (boolean) if true reset the last cell height (default false).
-	 * @param $cell (boolean) if true add the current left (or right for RTL) padding to each Write (default false).
+	 * @param $cell (boolean) if true add the current left (or right for RTL) padding to EachAlt Write (default false).
 	 * @param $align (string) Allows to center or align the text. Possible values are:<ul><li>L : left align</li><li>C : center</li><li>R : right align</li><li>'' : empty string : left for LTR or right for RTL</li></ul>
 	 * @public
 	 */
@@ -17291,7 +17299,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						// restore previous object
 						$this->rollbackTransaction(true);
 						// restore previous values
-						foreach ($this_method_vars as $vkey => $vval) {
+						forEachAlt ($this_method_vars as $vkey => $vval) {
 							$$vkey = $vval;
 						}
 						// disable table header
@@ -17393,7 +17401,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 								$next_pask = 0;
 							}
 							if (isset($this->PageAnnots[$startlinepage])) {
-								foreach ($this->PageAnnots[$startlinepage] as $pak => $pac) {
+								forEachAlt ($this->PageAnnots[$startlinepage] as $pak => $pac) {
 									if ($pak >= $pask) {
 										$this->PageAnnots[$this->page][] = $pac;
 										unset($this->PageAnnots[$startlinepage][$pak]);
@@ -17458,7 +17466,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 									$next_pask = 0;
 								}
 								if (isset($this->PageAnnots[$startlinepage])) {
-									foreach ($this->PageAnnots[$startlinepage] as $pak => $pac) {
+									forEachAlt ($this->PageAnnots[$startlinepage] as $pak => $pac) {
 										if ($pak >= $pask) {
 											$this->PageAnnots[$this->page][] = $pac;
 											unset($this->PageAnnots[$startlinepage][$pak]);
@@ -17682,7 +17690,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 								if ($ns == 0) {
 									$ns = 1;
 								}
-								// calculate additional space to add to each existing space
+								// calculate additional space to add to EachAlt existing space
 								$spacewidth = ($mdiff / ($ns - $no)) * $this->k;
 								if ($this->FontSize <= 0) {
 									$this->FontSize = 1;
@@ -17842,7 +17850,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 									$lmpos = ($this->lMargin + $this->cell_padding['L'] + $this->feps);
 									if ($this->inxobj) {
 										// we are inside an XObject template
-										foreach ($this->xobjects[$this->xobjid]['annotations'] as $pak => $pac) {
+										forEachAlt ($this->xobjects[$this->xobjid]['annotations'] as $pak => $pac) {
 											if (($pac['y'] >= $minstartliney) AND (($pac['x'] * $this->k) >= ($currentxpos - $this->feps)) AND (($pac['x'] * $this->k) <= ($currentxpos + $this->feps))) {
 												if ($cxpos > $lmpos) {
 													$this->xobjects[$this->xobjid]['annotations'][$pak]['x'] += ($spacew / $this->k);
@@ -17854,7 +17862,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 											}
 										}
 									} elseif (isset($this->PageAnnots[$this->page])) {
-										foreach ($this->PageAnnots[$this->page] as $pak => $pac) {
+										forEachAlt ($this->PageAnnots[$this->page] as $pak => $pac) {
 											if (($pac['y'] >= $minstartliney) AND (($pac['x'] * $this->k) >= ($currentxpos - $this->feps)) AND (($pac['x'] * $this->k) <= ($currentxpos + $this->feps))) {
 												if ($cxpos > $lmpos) {
 													$this->PageAnnots[$this->page][$pak]['x'] += ($spacew / $this->k);
@@ -17881,7 +17889,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 									$pmid = preg_replace('/[\\\][\(]/x', '\\#!#OP#!#', $pmid);
 									$pmid = preg_replace('/[\\\][\)]/x', '\\#!#CP#!#', $pmid);
 									if (preg_match_all('/\[\(([^\)]*)\)\]/x', $pmid, $pamatch) > 0) {
-										foreach($pamatch[0] as $pk => $pmatch) {
+										forEachAlt($pamatch[0] as $pk => $pmatch) {
 											$replace = $pamatch[1][$pk];
 											$replace = str_replace('#!#OP#!#', '(', $replace);
 											$replace = str_replace('#!#CP#!#', ')', $replace);
@@ -17928,7 +17936,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						if ($this->inxobj) {
 							// we are inside an XObject template
 							$this->xobjects[$this->xobjid]['outdata'] = $pstart.$pend;
-							foreach ($this->xobjects[$this->xobjid]['annotations'] as $pak => $pac) {
+							forEachAlt ($this->xobjects[$this->xobjid]['annotations'] as $pak => $pac) {
 								if ($pak >= $pask) {
 									$this->xobjects[$this->xobjid]['annotations'][$pak]['x'] += $t_x;
 									$this->xobjects[$this->xobjid]['annotations'][$pak]['y'] -= $yshift;
@@ -17938,7 +17946,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 							$this->setPageBuffer($startlinepage, $pstart.$pend);
 							// shift the annotations and links
 							if (isset($this->PageAnnots[$this->page])) {
-								foreach ($this->PageAnnots[$this->page] as $pak => $pac) {
+								forEachAlt ($this->PageAnnots[$this->page] as $pak => $pac) {
 									if ($pak >= $pask) {
 										$this->PageAnnots[$this->page][$pak]['x'] += $t_x;
 										$this->PageAnnots[$this->page][$pak]['y'] -= $yshift;
@@ -18243,7 +18251,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						}
 						if (isset($dom[$table_el]['rowspans'])) {
 							// update endy and endpage on rowspanned cells
-							foreach ($dom[$table_el]['rowspans'] as $k => $trwsp) {
+							forEachAlt ($dom[$table_el]['rowspans'] as $k => $trwsp) {
 								if ($trwsp['rowspan'] > 0) {
 									if (isset($dom[$trid]['endpage'])) {
 										if (($trwsp['endpage'] == $dom[$trid]['endpage']) AND ($trwsp['endcolumn'] == $dom[$trid]['endcolumn'])) {
@@ -18476,7 +18484,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					// restore previous object
 					$this->rollbackTransaction(true);
 					// restore previous values
-					foreach ($this_method_vars as $vkey => $vval) {
+					forEachAlt ($this_method_vars as $vkey => $vval) {
 						$$vkey = $vval;
 					}
 					if (!empty($dom[$key]['thead'])) {
@@ -18492,7 +18500,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					$undo = false;
 				}
 			}
-		} // end for each $key
+		} // end for EachAlt $key
 		// align the last line
 		if (isset($startlinex)) {
 			$yshift = ($minstartliney - $startliney);
@@ -18611,7 +18619,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				if ($this->inxobj) {
 					// we are inside an XObject template
 					$this->xobjects[$this->xobjid]['outdata'] = $pstart.$pend;
-					foreach ($this->xobjects[$this->xobjid]['annotations'] as $pak => $pac) {
+					forEachAlt ($this->xobjects[$this->xobjid]['annotations'] as $pak => $pac) {
 						if ($pak >= $pask) {
 							$this->xobjects[$this->xobjid]['annotations'][$pak]['x'] += $t_x;
 							$this->xobjects[$this->xobjid]['annotations'][$pak]['y'] -= $yshift;
@@ -18621,7 +18629,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					$this->setPageBuffer($startlinepage, $pstart.$pend);
 					// shift the annotations and links
 					if (isset($this->PageAnnots[$this->page])) {
-						foreach ($this->PageAnnots[$this->page] as $pak => $pac) {
+						forEachAlt ($this->PageAnnots[$this->page] as $pak => $pac) {
 							if ($pak >= $pask) {
 								$this->PageAnnots[$this->page][$pak]['x'] += $t_x;
 								$this->PageAnnots[$this->page][$pak]['y'] -= $yshift;
@@ -18660,7 +18668,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 * Process opening tags.
 	 * @param $dom (array) html dom array
 	 * @param $key (int) current element id
-	 * @param $cell (boolean) if true add the default left (or right if RTL) padding to each new line (default false).
+	 * @param $cell (boolean) if true add the default left (or right if RTL) padding to EachAlt new line (default false).
 	 * @return $dom array
 	 * @protected
 	 */
@@ -19259,7 +19267,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				if (isset($tag['attribute']['opt']) AND !TCPDF_STATIC::empty_string($tag['attribute']['opt'])) {
 					$options = explode('#!NwL!#', $tag['attribute']['opt']);
 					$values = array();
-					foreach ($options as $val) {
+					forEachAlt ($options as $val) {
 						if (strpos($val, '#!TaB!#') !== false) {
 							$opts = explode('#!TaB!#', $val);
 							$values[] = $opts;
@@ -19329,7 +19337,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 * Process closing tags.
 	 * @param $dom (array) html dom array
 	 * @param $key (int) current element id
-	 * @param $cell (boolean) if true add the default left (or right if RTL) padding to each new line (default false).
+	 * @param $cell (boolean) if true add the default left (or right if RTL) padding to EachAlt new line (default false).
 	 * @param $maxbottomliney (int) maximum y value of current line
 	 * @return $dom array
 	 * @protected
@@ -19392,7 +19400,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				}
 				// update row-spanned cells
 				if (isset($dom[$table_el]['rowspans'])) {
-					foreach ($dom[$table_el]['rowspans'] as $k => $trwsp) {
+					forEachAlt ($dom[$table_el]['rowspans'] as $k => $trwsp) {
 						$dom[$table_el]['rowspans'][$k]['rowspan'] -= 1;
 						if ($dom[$table_el]['rowspans'][$k]['rowspan'] == 0) {
 							if (($dom[$table_el]['rowspans'][$k]['endpage'] == $parent['endpage']) AND ($dom[$table_el]['rowspans'][$k]['endcolumn'] == $parent['endcolumn'])) {
@@ -19405,7 +19413,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						}
 					}
 					// report new endy and endpage to the rowspanned cells
-					foreach ($dom[$table_el]['rowspans'] as $k => $trwsp) {
+					forEachAlt ($dom[$table_el]['rowspans'] as $k => $trwsp) {
 						if ($dom[$table_el]['rowspans'][$k]['rowspan'] == 0) {
 							$dom[$table_el]['rowspans'][$k]['endpage'] = max($dom[$table_el]['rowspans'][$k]['endpage'], $dom[($dom[$key]['parent'])]['endpage']);
 							$dom[($dom[$key]['parent'])]['endpage'] = $dom[$table_el]['rowspans'][$k]['endpage'];
@@ -19416,7 +19424,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						}
 					}
 					// update remaining rowspanned cells
-					foreach ($dom[$table_el]['rowspans'] as $k => $trwsp) {
+					forEachAlt ($dom[$table_el]['rowspans'] as $k => $trwsp) {
 						if ($dom[$table_el]['rowspans'][$k]['rowspan'] == 0) {
 							$dom[$table_el]['rowspans'][$k]['endpage'] = $dom[($dom[$key]['parent'])]['endpage'];
 							$dom[$table_el]['rowspans'][$k]['endcolumn'] = $dom[($dom[$key]['parent'])]['endcolumn'];
@@ -19474,10 +19482,10 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				}
 				$default_border = $border;
 				// fix bottom line alignment of last line before page break
-				foreach ($dom[($dom[$key]['parent'])]['trids'] as $j => $trkey) {
+				forEachAlt ($dom[($dom[$key]['parent'])]['trids'] as $j => $trkey) {
 					// update row-spanned cells
 					if (isset($dom[($dom[$key]['parent'])]['rowspans'])) {
-						foreach ($dom[($dom[$key]['parent'])]['rowspans'] as $k => $trwsp) {
+						forEachAlt ($dom[($dom[$key]['parent'])]['rowspans'] as $k => $trwsp) {
 							if (isset($prevtrkey) AND ($trwsp['trid'] == $prevtrkey) AND ($trwsp['mrowspan'] > 0)) {
 								$dom[($dom[$key]['parent'])]['rowspans'][$k]['trid'] = $trkey;
 							}
@@ -19491,7 +19499,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						$dom[$prevtrkey]['endy'] = $pgendy;
 						// update row-spanned cells
 						if (isset($dom[($dom[$key]['parent'])]['rowspans'])) {
-							foreach ($dom[($dom[$key]['parent'])]['rowspans'] as $k => $trwsp) {
+							forEachAlt ($dom[($dom[$key]['parent'])]['rowspans'] as $k => $trwsp) {
 								if (($trwsp['trid'] == $prevtrkey) AND ($trwsp['mrowspan'] >= 0) AND ($trwsp['endpage'] == $dom[$prevtrkey]['endpage'])) {
 									$dom[($dom[$key]['parent'])]['rowspans'][$k]['endy'] = $pgendy;
 									$dom[($dom[$key]['parent'])]['rowspans'][$k]['mrowspan'] = -1;
@@ -19502,17 +19510,17 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					$prevtrkey = $trkey;
 					$table_el = $dom[($dom[$key]['parent'])];
 				}
-				// for each row
+				// for EachAlt row
 				if (count($table_el['trids']) > 0) {
 					unset($xmax);
 				}
-				foreach ($table_el['trids'] as $j => $trkey) {
+				forEachAlt ($table_el['trids'] as $j => $trkey) {
 					$parent = $dom[$trkey];
 					if (!isset($xmax)) {
 						$xmax = $parent['cellpos'][(count($parent['cellpos']) - 1)]['endx'];
 					}
-					// for each cell on the row
-					foreach ($parent['cellpos'] as $k => $cellpos) {
+					// for EachAlt cell on the row
+					forEachAlt ($parent['cellpos'] as $k => $cellpos) {
 						if (isset($cellpos['rowspanid']) AND ($cellpos['rowspanid'] >= 0)) {
 							$cellpos['startx'] = $table_el['rowspans'][($cellpos['rowspanid'])]['startx'];
 							$cellpos['endx'] = $table_el['rowspans'][($cellpos['rowspanid'])]['endx'];
@@ -19549,7 +19557,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						$border_end = TCPDF_STATIC::getBorderMode($border, $position='end', $this->opencell);
 						$border_middle = TCPDF_STATIC::getBorderMode($border, $position='middle', $this->opencell);
 						// design borders around HTML cells.
-						for ($page = $startpage; $page <= $endpage; ++$page) { // for each page
+						for ($page = $startpage; $page <= $endpage; ++$page) { // for EachAlt page
 							$ccode = '';
 							$this->setPage($page);
 							if ($this->num_columns < 2) {
@@ -19568,7 +19576,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 							if ($startpage == $endpage) { // single page
 								$deltacol = 0;
 								$deltath = 0;
-								for ($column = $startcolumn; $column <= $endcolumn; ++$column) { // for each column
+								for ($column = $startcolumn; $column <= $endcolumn; ++$column) { // for EachAlt column
 									$this->selectColumn($column);
 									if ($startcolumn == $endcolumn) { // single column
 										$cborder = $border;
@@ -19601,11 +19609,11 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 										$h = $this->h - $this->y - $this->bMargin;
 									}
 									$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-								} // end for each column
+								} // end for EachAlt column
 							} elseif ($page == $startpage) { // first page
 								$deltacol = 0;
 								$deltath = 0;
-								for ($column = $startcolumn; $column < $this->num_columns; ++$column) { // for each column
+								for ($column = $startcolumn; $column < $this->num_columns; ++$column) { // for EachAlt column
 									$this->selectColumn($column);
 									if ($column == $startcolumn) { // first column
 										$cborder = $border_start;
@@ -19626,11 +19634,11 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 										$h = $this->h - $this->y - $this->bMargin;
 									}
 									$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-								} // end for each column
+								} // end for EachAlt column
 							} elseif ($page == $endpage) { // last page
 								$deltacol = 0;
 								$deltath = 0;
-								for ($column = 0; $column <= $endcolumn; ++$column) { // for each column
+								for ($column = 0; $column <= $endcolumn; ++$column) { // for EachAlt column
 									$this->selectColumn($column);
 									if ($column == $endcolumn) { // end column
 										$cborder = $border_end;
@@ -19648,11 +19656,11 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 										$h = $this->h - $this->y - $this->bMargin;
 									}
 									$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-								} // end for each column
+								} // end for EachAlt column
 							} else { // middle page
 								$deltacol = 0;
 								$deltath = 0;
-								for ($column = 0; $column < $this->num_columns; ++$column) { // for each column
+								for ($column = 0; $column < $this->num_columns; ++$column) { // for EachAlt column
 									$this->selectColumn($column);
 									$cborder = $border_middle;
 									if (isset($this->columns[$column]['th']['\''.$page.'\''])) {
@@ -19661,7 +19669,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 									$this->x += $deltacol;
 									$h = $this->h - $this->y - $this->bMargin;
 									$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-								} // end for each column
+								} // end for EachAlt column
 							}
 							if (!empty($cborder) OR !empty($fill)) {
 								$offsetlen = strlen($ccode);
@@ -19696,10 +19704,10 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 									$this->setPageBuffer($this->page, $pstart.$ccode.$pend);
 								}
 							}
-						} // end for each page
+						} // end for EachAlt page
 						// restore default border
 						$border = $default_border;
-					} // end for each cell on the row
+					} // end for EachAlt cell on the row
 					if (isset($table_el['attribute']['cellspacing'])) {
 						$this->y += $this->getHTMLUnitToUnits($table_el['attribute']['cellspacing'], 1, 'px');
 					} elseif (isset($table_el['border-spacing'])) {
@@ -19875,7 +19883,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 * Add vertical spaces if needed.
 	 * @param $hbz (string) Distance between current y and line bottom.
 	 * @param $hb (string) The height of the break.
-	 * @param $cell (boolean) if true add the default left (or right if RTL) padding to each new line (default false).
+	 * @param $cell (boolean) if true add the default left (or right if RTL) padding to EachAlt new line (default false).
 	 * @param $firsttag (boolean) set to true when the tag is the first.
 	 * @param $lasttag (boolean) set to true when the tag is the last.
 	 * @protected
@@ -19999,7 +20007,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$temp_page_regions = $this->page_regions;
 		$this->page_regions = array();
 		// design borders around HTML cells.
-		for ($page = $startpage; $page <= $endpage; ++$page) { // for each page
+		for ($page = $startpage; $page <= $endpage; ++$page) { // for EachAlt page
 			$ccode = '';
 			$this->setPage($page);
 			if ($this->num_columns < 2) {
@@ -20017,7 +20025,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			}
 			if ($startpage == $endpage) {
 				// single page
-				for ($column = $startcolumn; $column <= $endcolumn; ++$column) { // for each column
+				for ($column = $startcolumn; $column <= $endcolumn; ++$column) { // for EachAlt column
 					$this->selectColumn($column);
 					if ($startcolumn == $endcolumn) { // single column
 						$cborder = $border;
@@ -20035,9 +20043,9 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						$h = $this->h - $this->y - $this->bMargin;
 					}
 					$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-				} // end for each column
+				} // end for EachAlt column
 			} elseif ($page == $startpage) { // first page
-				for ($column = $startcolumn; $column < $this->num_columns; ++$column) { // for each column
+				for ($column = $startcolumn; $column < $this->num_columns; ++$column) { // for EachAlt column
 					$this->selectColumn($column);
 					if ($column == $startcolumn) { // first column
 						$cborder = $border_start;
@@ -20048,9 +20056,9 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						$h = $this->h - $this->y - $this->bMargin;
 					}
 					$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-				} // end for each column
+				} // end for EachAlt column
 			} elseif ($page == $endpage) { // last page
-				for ($column = 0; $column <= $endcolumn; ++$column) { // for each column
+				for ($column = 0; $column <= $endcolumn; ++$column) { // for EachAlt column
 					$this->selectColumn($column);
 					if ($column == $endcolumn) {
 						// end column
@@ -20062,14 +20070,14 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						$h = $this->h - $this->y - $this->bMargin;
 					}
 					$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-				} // end for each column
+				} // end for EachAlt column
 			} else { // middle page
-				for ($column = 0; $column < $this->num_columns; ++$column) { // for each column
+				for ($column = 0; $column < $this->num_columns; ++$column) { // for EachAlt column
 					$this->selectColumn($column);
 					$cborder = $border_middle;
 					$h = $this->h - $this->y - $this->bMargin;
 					$ccode .= $this->getCellCode($w, $h, '', $cborder, 1, '', $fill, '', 0, true)."\n";
-				} // end for each column
+				} // end for EachAlt column
 			}
 			if ($cborder OR $fill) {
 				$offsetlen = strlen($ccode);
@@ -20105,7 +20113,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					$this->cntmrk[$this->page] += $offsetlen;
 				}
 			}
-		} // end for each page
+		} // end for EachAlt page
 		// restore page regions
 		$this->page_regions = $temp_page_regions;
 		if (isset($old_bgcolor)) {
@@ -20934,7 +20942,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		}
 		// adjust outlines
 		$tmpoutlines = $this->outlines;
-		foreach ($tmpoutlines as $key => $outline) {
+		forEachAlt ($tmpoutlines as $key => $outline) {
 			if (!$outline['f']) {
 				if (($outline['p'] >= $topage) AND ($outline['p'] < $frompage)) {
 					$this->outlines[$key]['p'] = ($outline['p'] + 1);
@@ -20945,7 +20953,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		}
 		// adjust dests
 		$tmpdests = $this->dests;
-		foreach ($tmpdests as $key => $dest) {
+		forEachAlt ($tmpdests as $key => $dest) {
 			if (!$dest['f']) {
 				if (($dest['p'] >= $topage) AND ($dest['p'] < $frompage)) {
 					$this->dests[$key]['p'] = ($dest['p'] + 1);
@@ -20956,7 +20964,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		}
 		// adjust links
 		$tmplinks = $this->links;
-		foreach ($tmplinks as $key => $link) {
+		forEachAlt ($tmplinks as $key => $link) {
 			if (!$link['f']) {
 				if (($link['p'] >= $topage) AND ($link['p'] < $frompage)) {
 					$this->links[$key]['p'] = ($link['p'] + 1);
@@ -20969,7 +20977,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$jfrompage = $frompage;
 		$jtopage = $topage;
 		if (preg_match_all('/this\.addField\(\'([^\']*)\',\'([^\']*)\',([0-9]+)/', $this->javascript, $pamatch) > 0) {
-			foreach($pamatch[0] as $pk => $pmatch) {
+			forEachAlt($pamatch[0] as $pk => $pmatch) {
 				$pagenum = intval($pamatch[3][$pk]) + 1;
 				if (($pagenum >= $jtopage) AND ($pagenum < $jfrompage)) {
 					$newpage = ($pagenum + 1);
@@ -21007,7 +21015,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		unset($this->intmrk[$page]);
 		unset($this->bordermrk[$page]);
 		unset($this->cntmrk[$page]);
-		foreach ($this->pageobjects[$page] as $oid) {
+		forEachAlt ($this->pageobjects[$page] as $oid) {
 			if (isset($this->offsets[$oid])){
 				unset($this->offsets[$oid]);
 			}
@@ -21088,7 +21096,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			unset($this->intmrk[$this->numpages]);
 			unset($this->bordermrk[$this->numpages]);
 			unset($this->cntmrk[$this->numpages]);
-			foreach ($this->pageobjects[$this->numpages] as $oid) {
+			forEachAlt ($this->pageobjects[$this->numpages] as $oid) {
 				if (isset($this->offsets[$oid])){
 					unset($this->offsets[$oid]);
 				}
@@ -21123,7 +21131,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$this->page = $this->numpages;
 		// adjust outlines
 		$tmpoutlines = $this->outlines;
-		foreach ($tmpoutlines as $key => $outline) {
+		forEachAlt ($tmpoutlines as $key => $outline) {
 			if (!$outline['f']) {
 				if ($outline['p'] > $page) {
 					$this->outlines[$key]['p'] = $outline['p'] - 1;
@@ -21134,7 +21142,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		}
 		// adjust dests
 		$tmpdests = $this->dests;
-		foreach ($tmpdests as $key => $dest) {
+		forEachAlt ($tmpdests as $key => $dest) {
 			if (!$dest['f']) {
 				if ($dest['p'] > $page) {
 					$this->dests[$key]['p'] = $dest['p'] - 1;
@@ -21145,7 +21153,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		}
 		// adjust links
 		$tmplinks = $this->links;
-		foreach ($tmplinks as $key => $link) {
+		forEachAlt ($tmplinks as $key => $link) {
 			if (!$link['f']) {
 				if ($link['p'] > $page) {
 					$this->links[$key]['p'] = $link['p'] - 1;
@@ -21157,7 +21165,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		// adjust javascript
 		$jpage = $page;
 		if (preg_match_all('/this\.addField\(\'([^\']*)\',\'([^\']*)\',([0-9]+)/', $this->javascript, $pamatch) > 0) {
-			foreach($pamatch[0] as $pk => $pmatch) {
+			forEachAlt($pamatch[0] as $pk => $pmatch) {
 				$pagenum = intval($pamatch[3][$pk]) + 1;
 				if ($pagenum >= $jpage) {
 					$newpage = ($pagenum - 1);
@@ -21229,14 +21237,14 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		}
 		// copy outlines
 		$tmpoutlines = $this->outlines;
-		foreach ($tmpoutlines as $key => $outline) {
+		forEachAlt ($tmpoutlines as $key => $outline) {
 			if ($outline['p'] == $page) {
 				$this->outlines[] = array('t' => $outline['t'], 'l' => $outline['l'], 'x' => $outline['x'], 'y' => $outline['y'], 'p' => $this->page, 'f' => $outline['f'], 's' => $outline['s'], 'c' => $outline['c']);
 			}
 		}
 		// copy links
 		$tmplinks = $this->links;
-		foreach ($tmplinks as $key => $link) {
+		forEachAlt ($tmplinks as $key => $link) {
 			if ($link['p'] == $page) {
 				$this->links[] = array('p' => $this->page, 'y' => $link['y'], 'f' => $link['f']);
 			}
@@ -21294,7 +21302,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$this->SetFont($numbersfont, $fontstyle, $fontsize);
 		$numwidth = $this->GetStringWidth('00000');
 		$maxpage = 0; //used for pages on attached documents
-		foreach ($this->outlines as $key => $outline) {
+		forEachAlt ($this->outlines as $key => $outline) {
 			// check for extra pages (used for attachments)
 			if (($this->page > $page_first) AND ($outline['p'] >= $this->numpages)) {
 				$outline['p'] += ($this->page - $page_first);
@@ -21424,7 +21432,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					$na = TCPDF_STATIC::formatTOCPageNumber(($this->starting_page_number + $np - 1));
 					$nu = TCPDF_FONTS::UTF8ToUTF16BE($na, false, $this->isunicode, $this->CurrentFont);
 					// replace aliases with numbers
-					foreach ($pnalias['u'] as $u) {
+					forEachAlt ($pnalias['u'] as $u) {
 						$sfill = str_repeat($filler, max(0, (strlen($u) - strlen($nu.' '))));
 						if ($this->rtl) {
 							$nr = $nu.TCPDF_FONTS::UTF8ToUTF16BE(' '.$sfill, false, $this->isunicode, $this->CurrentFont);
@@ -21433,7 +21441,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						}
 						$temppage = str_replace($u, $nr, $temppage);
 					}
-					foreach ($pnalias['a'] as $a) {
+					forEachAlt ($pnalias['a'] as $a) {
 						$sfill = str_repeat($filler, max(0, (strlen($a) - strlen($na.' '))));
 						if ($this->rtl) {
 							$nr = $na.' '.$sfill;
@@ -21483,11 +21491,11 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$page_first = $this->getPage();
 		$page_fill_start = false;
 		$page_fill_end = false;
-		// get the font type used for numbers in each template
+		// get the font type used for numbers in EachAlt template
 		$current_font = $this->FontFamily;
-		foreach ($templates as $level => $html) {
+		forEachAlt ($templates as $level => $html) {
 			$dom = $this->getHtmlDomArray($html);
-			foreach ($dom as $key => $value) {
+			forEachAlt ($dom as $key => $value) {
 				if ($value['value'] == '#TOC_PAGE_NUMBER#') {
 					$this->SetFont($dom[($key - 1)]['fontname']);
 					$templates['F'.$level] = $this->isUnicodeFont();
@@ -21496,7 +21504,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		}
 		$this->SetFont($current_font);
 		$maxpage = 0; //used for pages on attached documents
-		foreach ($this->outlines as $key => $outline) {
+		forEachAlt ($this->outlines as $key => $outline) {
 			// get HTML template
 			$row = $templates[$outline['l']];
 			if (TCPDF_STATIC::empty_string($page)) {
@@ -21560,7 +21568,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					$na = TCPDF_STATIC::formatTOCPageNumber(($this->starting_page_number + $np - 1));
 					$nu = TCPDF_FONTS::UTF8ToUTF16BE($na, false, $this->isunicode, $this->CurrentFont);
 					// replace aliases with numbers
-					foreach ($pnalias['u'] as $u) {
+					forEachAlt ($pnalias['u'] as $u) {
 						if ($correct_align) {
 							$sfill = str_repeat($filler, (strlen($u) - strlen($nu.' ')));
 							if ($this->rtl) {
@@ -21573,7 +21581,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 						}
 						$temppage = str_replace($u, $nr, $temppage);
 					}
-					foreach ($pnalias['a'] as $a) {
+					forEachAlt ($pnalias['a'] as $a) {
 						if ($correct_align) {
 							$sfill = str_repeat($filler, (strlen($a) - strlen($na.' ')));
 							if ($this->rtl) {
@@ -21642,7 +21650,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			$this->_destroy(true, true);
 			if ($self) {
 				$objvars = get_object_vars($this->objcopy);
-				foreach ($objvars as $key => $value) {
+				forEachAlt ($objvars as $key => $value) {
 					$this->$key = $value;
 				}
 			}
@@ -22027,8 +22035,8 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		}
 		// get array of characters
 		$unichars = TCPDF_FONTS::UTF8StringToArray($text, $this->isunicode, $this->CurrentFont);
-		// for each char
-		foreach ($unichars as $char) {
+		// for EachAlt char
+		forEachAlt ($unichars as $char) {
 			if ((!$intag) AND (!$skip) AND TCPDF_FONT_DATA::$uni_type[$char] == 'L') {
 				// letter character
 				$word[] = $char;
@@ -22176,7 +22184,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		// extract all font names
 		$fontslist = preg_split('/[,]/', $fontfamily);
 		// find first valid font name
-		foreach ($fontslist as $font) {
+		forEachAlt ($fontslist as $font) {
 			// replace font variations
 			$font = preg_replace('/regular$/', '', $font);
 			$font = preg_replace('/italic$/', 'I', $font);
@@ -22203,7 +22211,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	/**
 	 * Start a new XObject Template.
 	 * An XObject Template is a PDF block that is a self-contained description of any sequence of graphics objects (including path objects, text objects, and sampled images).
-	 * An XObject Template may be painted multiple times, either on several pages or at several locations on the same page and produces the same results each time, subject only to the graphics state at the time it is invoked.
+	 * An XObject Template may be painted multiple times, either on several pages or at several locations on the same page and produces the same results EachAlt time, subject only to the graphics state at the time it is invoked.
 	 * Note: X,Y coordinates will be reset to 0,0.
 	 * @param $w (int) Template width in user units (empty string or zero = page width less margins).
 	 * @param $h (int) Template height in user units (empty string or zero = page height less margins).
@@ -22272,7 +22280,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	/**
 	 * End the current XObject Template started with startTemplate() and restore the previous graphic state.
 	 * An XObject Template is a PDF block that is a self-contained description of any sequence of graphics objects (including path objects, text objects, and sampled images).
-	 * An XObject Template may be painted multiple times, either on several pages or at several locations on the same page and produces the same results each time, subject only to the graphics state at the time it is invoked.
+	 * An XObject Template may be painted multiple times, either on several pages or at several locations on the same page and produces the same results EachAlt time, subject only to the graphics state at the time it is invoked.
 	 * @return int the XObject Template ID in case of success or false in case of error.
 	 * @author Nicola Asuni
 	 * @public
@@ -22294,7 +22302,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 * Print an XObject Template.
 	 * You can print an XObject Template inside the currently opened Template.
 	 * An XObject Template is a PDF block that is a self-contained description of any sequence of graphics objects (including path objects, text objects, and sampled images).
-	 * An XObject Template may be painted multiple times, either on several pages or at several locations on the same page and produces the same results each time, subject only to the graphics state at the time it is invoked.
+	 * An XObject Template may be painted multiple times, either on several pages or at several locations on the same page and produces the same results EachAlt time, subject only to the graphics state at the time it is invoked.
 	 * @param $id (string) The ID of XObject Template to print.
 	 * @param $x (int) X position in user units (empty string = current x position)
 	 * @param $y (int) Y position in user units (empty string = current y position)
@@ -22396,7 +22404,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$this->StopTransform();
 		// add annotations
 		if (!empty($this->xobjects[$id]['annotations'])) {
-			foreach ($this->xobjects[$id]['annotations'] as $annot) {
+			forEachAlt ($this->xobjects[$id]['annotations'] as $annot) {
 				// transform original coordinates
 				$coordlt = TCPDF_STATIC::getTransformationMatrixProduct($tm, array(1, 0, 0, 1, ($annot['x'] * $this->k), (-$annot['y'] * $this->k)));
 				$ax = ($coordlt[4] / $this->k);
@@ -22495,7 +22503,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 * A no-write region is a portion of the page with a rectangular or trapezium shape that will not be covered when writing text or html code.
 	 * A region is always aligned on the left or right side of the page ad is defined using a vertical segment.
 	 * You can set multiple regions for the same page.
-	 * @param $regions (array) array of no-write regions. For each region you can define an array as follow: ('page' => page number or empy for current page, 'xt' => X top, 'yt' => Y top, 'xb' => X bottom, 'yb' => Y bottom, 'side' => page side 'L' = left or 'R' = right). Omit this parameter to remove all regions.
+	 * @param $regions (array) array of no-write regions. For EachAlt region you can define an array as follow: ('page' => page number or empy for current page, 'xt' => X top, 'yt' => Y top, 'xb' => X bottom, 'yb' => Y bottom, 'side' => page side 'L' = left or 'R' = right). Omit this parameter to remove all regions.
 	 * @author Nicola Asuni
 	 * @public
 	 * @since 5.9.003 (2010-10-13)
@@ -22505,7 +22513,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		// empty current regions array
 		$this->page_regions = array();
 		// add regions
-		foreach ($regions as $data) {
+		forEachAlt ($regions as $data) {
 			$this->addPageRegion($data);
 		}
 	}
@@ -22593,7 +22601,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			}
 		}
 		// adjust coordinates and page margins
-		foreach ($this->page_regions as $regid => $regdata) {
+		forEachAlt ($this->page_regions as $regid => $regdata) {
 			if ($regdata['page'] == $this->page) {
 				// check region boundaries
 				if (($y > ($regdata['yt'] - $h)) AND ($y <= $regdata['yb'])) {
@@ -22655,7 +22663,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 * @param $link (mixed) URL or identifier returned by AddLink().
 	 * @param $align (string) Indicates the alignment of the pointer next to image insertion relative to image height. The value can be:<ul><li>T: top-right for LTR or top-left for RTL</li><li>M: middle-right for LTR or middle-left for RTL</li><li>B: bottom-right for LTR or bottom-left for RTL</li><li>N: next line</li></ul> If the alignment is an empty string, then the pointer will be restored on the starting SVG position.
 	 * @param $palign (string) Allows to center or align the image on the current line. Possible values are:<ul><li>L : left align</li><li>C : center</li><li>R : right align</li><li>'' : empty string : left for LTR or right for RTL</li></ul>
-	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for each border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
+	 * @param $border (mixed) Indicates if borders must be drawn around the cell. The value can be a number:<ul><li>0: no border (default)</li><li>1: frame</li></ul> or a string containing some or all of the following characters (in any order):<ul><li>L: left</li><li>T: top</li><li>R: right</li><li>B: bottom</li></ul> or an array of line styles for EachAlt border group - for example: array('LTRB' => array('width' => 2, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => array(0, 0, 0)))
 	 * @param $fitonpage (boolean) if true the image is resized to not exceed page dimensions.
 	 * @author Nicola Asuni
 	 * @since 5.0.000 (2010-05-02)
@@ -22730,7 +22738,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			if (preg_match('/[\s]+viewBox[\s]*=[\s]*"[\s]*([0-9\.\-]+)[\s]+([0-9\.\-]+)[\s]+([0-9\.]+)[\s]+([0-9\.]+)[\s]*"/si', $regs[1], $tmp)) {
 				if (count($tmp) == 5) {
 					array_shift($tmp);
-					foreach ($tmp as $key => $val) {
+					forEachAlt ($tmp as $key => $val) {
 						$view_box[$key] = $this->getHTMLUnitToUnits($val, 0, $this->svgunit, false);
 					}
 					$ox = $view_box[0];
@@ -23034,7 +23042,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$regs = array();
 		if (preg_match('/url\([\s]*\#([^\)]*)\)/si', $svgstyle['clip-path'], $regs)) {
 			$clip_path = $this->svgclippaths[$regs[1]];
-			foreach ($clip_path as $cp) {
+			forEachAlt ($clip_path as $cp) {
 				$this->startSVGElementHandler('clip-path', $cp['name'], $cp['attribs'], $cp['tm']);
 			}
 		}
@@ -23136,7 +23144,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				$gradient['coords'][3] = (($gradient['coords'][3] - $y) / $h);
 				$gradient['coords'][4] /= $w;
 			} elseif ($gradient['mode'] == 'percentage') {
-				foreach($gradient['coords'] as $key => $val) {
+				forEachAlt($gradient['coords'] as $key => $val) {
 					$gradient['coords'][$key] = (intval($val) / 100);
 					if ($val < 0) {
 						$gradient['coords'][$key] = 0;
@@ -23342,7 +23350,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		$minlen = (0.01 / $this->k); // minimum acceptable length (3 point)
 		$firstcmd = true; // used to print first point
 		// draw curve pieces
-		foreach ($paths as $key => $val) {
+		forEachAlt ($paths as $key => $val) {
 			// get curve type
 			$cmd = trim($val[1]);
 			if (strtolower($cmd) == $cmd) {
@@ -23360,7 +23368,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				// get curve parameters
 				$rawparams = preg_split('/([\,\s]+)/si', trim($val[2]));
 				$params = array();
-				foreach ($rawparams as $ck => $cp) {
+				forEachAlt ($rawparams as $ck => $cp) {
 					$params[$ck] = $this->getHTMLUnitToUnits($cp, 0, $this->svgunit, false);
 					if (abs($params[$ck]) < $minlen) {
 						// approximate little values to zero
@@ -23373,7 +23381,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			$y0 = $y;
 			switch (strtoupper($cmd)) {
 				case 'M': { // moveto
-					foreach ($params as $ck => $cp) {
+					forEachAlt ($params as $ck => $cp) {
 						if (($ck % 2) == 0) {
 							$x = $cp + $xoffset;
 						} else {
@@ -23401,7 +23409,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					break;
 				}
 				case 'L': { // lineto
-					foreach ($params as $ck => $cp) {
+					forEachAlt ($params as $ck => $cp) {
 						if (($ck % 2) == 0) {
 							$x = $cp + $xoffset;
 						} else {
@@ -23424,7 +23432,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					break;
 				}
 				case 'H': { // horizontal lineto
-					foreach ($params as $ck => $cp) {
+					forEachAlt ($params as $ck => $cp) {
 						$x = $cp + $xoffset;
 						if ((abs($x0 - $x) >= $minlen) OR (abs($y0 - $y) >= $minlen)) {
 							$this->_outLine($x, $y);
@@ -23440,7 +23448,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					break;
 				}
 				case 'V': { // vertical lineto
-					foreach ($params as $ck => $cp) {
+					forEachAlt ($params as $ck => $cp) {
 						$y = $cp + $yoffset;
 						if ((abs($x0 - $x) >= $minlen) OR (abs($y0 - $y) >= $minlen)) {
 							$this->_outLine($x, $y);
@@ -23456,7 +23464,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					break;
 				}
 				case 'C': { // curveto
-					foreach ($params as $ck => $cp) {
+					forEachAlt ($params as $ck => $cp) {
 						$params[$ck] = $cp;
 						if ((($ck + 1) % 6) == 0) {
 							$x1 = $params[($ck - 5)] + $xoffset;
@@ -23479,7 +23487,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					break;
 				}
 				case 'S': { // shorthand/smooth curveto
-					foreach ($params as $ck => $cp) {
+					forEachAlt ($params as $ck => $cp) {
 						$params[$ck] = $cp;
 						if ((($ck + 1) % 4) == 0) {
 							if (($key > 0) AND ((strtoupper($paths[($key - 1)][1]) == 'C') OR (strtoupper($paths[($key - 1)][1]) == 'S'))) {
@@ -23507,7 +23515,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					break;
 				}
 				case 'Q': { // quadratic Bezier curveto
-					foreach ($params as $ck => $cp) {
+					forEachAlt ($params as $ck => $cp) {
 						$params[$ck] = $cp;
 						if ((($ck + 1) % 4) == 0) {
 							// convert quadratic points to cubic points
@@ -23533,7 +23541,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					break;
 				}
 				case 'T': { // shorthand/smooth quadratic Bezier curveto
-					foreach ($params as $ck => $cp) {
+					forEachAlt ($params as $ck => $cp) {
 						$params[$ck] = $cp;
 						if (($ck % 2) != 0) {
 							if (($key > 0) AND ((strtoupper($paths[($key - 1)][1]) == 'Q') OR (strtoupper($paths[($key - 1)][1]) == 'T'))) {
@@ -23564,7 +23572,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 					break;
 				}
 				case 'A': { // elliptical arc
-					foreach ($params as $ck => $cp) {
+					forEachAlt ($params as $ck => $cp) {
 						$params[$ck] = $cp;
 						if ((($ck + 1) % 7) == 0) {
 							$x0 = $x;
@@ -23661,7 +23669,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				}
 			}
 			$firstcmd = false;
-		} // end foreach
+		} // end forEachAlt
 		if (!empty($op)) {
 			$this->_out($op);
 		}
@@ -23685,7 +23693,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	 * Sets the opening SVG element handler function for the XML parser. (*** TO BE COMPLETED ***)
 	 * @param $parser (resource) The first parameter, parser, is a reference to the XML parser calling the handler.
 	 * @param $name (string) The second parameter, name, contains the name of the element for which this handler is called. If case-folding is in effect for this parser, the element name will be in uppercase letters.
-	 * @param $attribs (array) The third parameter, attribs, contains an associative array with the element's attributes (if any). The keys of this array are the attribute names, the values are the attribute values. Attribute names are case-folded on the same criteria as element names. Attribute values are not case-folded. The original order of the attributes can be retrieved by walking through attribs the normal way, using each(). The first key in the array was the first attribute, and so on.
+	 * @param $attribs (array) The third parameter, attribs, contains an associative array with the element's attributes (if any). The keys of this array are the attribute names, the values are the attribute values. Attribute names are case-folded on the same criteria as element names. Attribute values are not case-folded. The original order of the attributes can be retrieved by walking through attribs the normal way, using EachAlt(). The first key in the array was the first attribute, and so on.
 	 * @param $ctm (array) tranformation matrix for clipping mode (starting transformation matrix).
 	 * @author Nicola Asuni
 	 * @since 5.0.000 (2010-05-02)
@@ -23730,7 +23738,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			// fix style for regular expression
 			$attribs['style'] = ';'.$attribs['style'];
 		}
-		foreach ($prev_svgstyle as $key => $val) {
+		forEachAlt ($prev_svgstyle as $key => $val) {
 			if (in_array($key, TCPDF_IMAGES::$svginheritprop)) {
 				// inherit previous value
 				$svgstyle[$key] = $val;
@@ -24119,7 +24127,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 				$xmax = 0;
 				$ymin = 2147483647;
 				$ymax = 0;
-				foreach ($points as $key => $val) {
+				forEachAlt ($points as $key => $val) {
 					$p[$key] = $this->getHTMLUnitToUnits($val, 0, $this->svgunit, false);
 					if (($key % 2) == 0) {
 						// X coordinate
@@ -24337,7 +24345,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 		if (!empty($attribs['child_elements'])) {
 			$child_elements = $attribs['child_elements'];
 			unset($attribs['child_elements']);
-			foreach($child_elements as $child_element) {
+			forEachAlt($child_elements as $child_element) {
 				if (empty($child_element['attribs']['closing_tag'])) {
 					$this->startSVGElementHandler('child-tag', $child_element['name'], $child_element['attribs']);
 				} else {
@@ -24364,7 +24372,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 			if (end($this->svgdefs) !== FALSE) {
 				$last_svgdefs_id = key($this->svgdefs);
 				if (isset($this->svgdefs[$last_svgdefs_id]['attribs']['child_elements'])) {
-					foreach($this->svgdefs[$last_svgdefs_id]['attribs']['child_elements'] as $child_element) {
+					forEachAlt($this->svgdefs[$last_svgdefs_id]['attribs']['child_elements'] as $child_element) {
 						if (isset($child_element['attribs']['id']) AND ($child_element['name'] == $name)) {
 							$this->svgdefs[$last_svgdefs_id]['attribs']['child_elements'][$child_element['attribs']['id'].'_CLOSE'] = array('name' => $name, 'attribs' => array('closing_tag' => TRUE, 'content' => $this->svgtext));
 							return;
