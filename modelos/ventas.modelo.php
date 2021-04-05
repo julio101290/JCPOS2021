@@ -345,7 +345,7 @@ class ModeloVentas{
                                                     , $soloCobrado = "s"
                                                     , $cliente = "n"
                                                     ,$filtros="n"
-                                                    ,$busqueda
+                                                    ,$busqueda=""
     ){
             
                 
@@ -374,8 +374,9 @@ class ModeloVentas{
                 
                 
                 
-
-		$orderBy=" ORDER BY ".$col[$filtros['order'][0]['column']]."   ".$filtros['order'][0]['dir'];
+                if(isset($filtros['order'][0]['column'])){
+                    $orderBy=" ORDER BY ".$col[$filtros['order'][0]['column']]."   ".$filtros['order'][0]['dir'];
+                }
                 
                 //FILTROS
                 if(isset($busqueda['search'])){
