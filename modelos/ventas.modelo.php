@@ -376,6 +376,8 @@ class ModeloVentas{
                 
                 if(isset($filtros['order'][0]['column'])){
                     $orderBy=" ORDER BY ".$col[$filtros['order'][0]['column']]."   ".$filtros['order'][0]['dir'];
+                }else{
+                    $orderBy="";
                 }
                 
                 //FILTROS
