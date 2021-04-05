@@ -35,7 +35,7 @@
       	
       	</a>
 
-      	  <ul class="nav navbar-nav">
+      	  <ul class="nav navbar-nav hidden-xs">
             
           	<?php
 

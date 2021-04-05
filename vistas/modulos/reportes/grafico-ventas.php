@@ -37,7 +37,7 @@ foreach ($respuesta as $key => $value) {
 		$sumaPagosMes[$key] += $value;
 	}
         
-        var_dump( $arrayVentas);
+        
 
 }
 
