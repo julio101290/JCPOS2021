@@ -69,7 +69,7 @@ $nombreEmpresa=$DatosEmpresa[0]["NombreEmpresa"];
 $direccionEmpresa=$DatosEmpresa[0]["DireccionEmpresa"];
 $RFCEmpresa=$DatosEmpresa[0]["RFC"];
 $TelefonoEmpresa=$DatosEmpresa[0]["Telefono"];
-$CorreoElectronicoEmpresa=$DatosEmpresa[0]["CorreoElectronico"];
+// $CorreoElectronicoEmpresa=$DatosEmpresa[0]["correoElectronico"];
 
 
 //REQUERIMOS LA CLASE TCPDF
@@ -110,8 +110,7 @@ $bloque1 = <<<EOF
 					$RFCEmpresa
 					<br>
 					$TelefonoEmpresa
-					<br>
-					$CorreoElectronicoEmpresa
+					
 				</div>
 
 			</td>
