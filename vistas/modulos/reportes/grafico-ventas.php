@@ -29,12 +29,15 @@ foreach ($respuesta as $key => $value) {
 
 	#Capturamos las ventas
 	$arrayVentas = array($fecha => $value["total"]);
+        
 
 	#Sumamos los pagos que ocurrieron el mismo mes
 	foreach ($arrayVentas as $key => $value) {
 		
 		$sumaPagosMes[$key] += $value;
 	}
+        
+        var_dump( $arrayVentas);
 
 }
 
