@@ -53,7 +53,7 @@ $respuestaCliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valor
 
 //TRAEMOS LA INFORMACIÓN DEL VENDEDOR
 if($valorCliente =1){
-	$respuestaCliente[nombre]= $respuestaVenta["cotizarA"];;
+	$respuestaCliente["nombre"]= $respuestaVenta["cotizarA"];;
 }
 
 $itemVendedor = "id";
