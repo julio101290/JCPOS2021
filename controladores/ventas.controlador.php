@@ -1020,7 +1020,7 @@ class ControladorVentas {
       SUMA TOTAL PAGOS
       ============================================= */
 
-    public function ctrSumaTotalPagos() {
+    static public function ctrSumaTotalPagos() {
 
         $tabla = "ventas";
 
