@@ -132,7 +132,12 @@ require_once(dirname(__FILE__).'/include/tcpdf_static.php');
  * @author Nicola Asuni - info@tecnick.com
  */
 
-
+function each(&$arr) {
+    $key = key($arr);
+    $result = ($key === null) ? false : [$key, current($arr), 'key' => $key, 'value' => current($arr)];
+    next($arr);
+    return $result;
+}
 class TCPDF {
 
 	// Protected properties
