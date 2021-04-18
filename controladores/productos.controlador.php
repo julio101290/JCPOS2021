@@ -35,7 +35,27 @@ class ControladorProductos{
 
 			   	$ruta = "vistas/img/productos/default/anonymous.png";
 
-			   	if(isset($_FILES["nuevaImagen"]["tmp_name"])){
+
+                                
+                                 echo'<script>
+
+						swal({
+							  type: "success",
+							  title: "El producto ha sido guardado correctamente",
+							  showConfirmButton: true,
+							  confirmButtonText: "Cerrar"
+							  }).then(function(result){
+										if (result.value) {
+
+										window.location = "productos";
+
+										}
+									})
+
+						</script>';
+                                 
+                                 return;
+                                if(isset($_FILES["nuevaImagen"]["tmp_name"])){
 
 					list($ancho, $alto) = getimagesize($_FILES["nuevaImagen"]["tmp_name"]);
 
@@ -105,6 +125,8 @@ class ControladorProductos{
 							   "precio_compra" => $_POST["nuevoPrecioCompra"],
 							   "precio_venta" => $_POST["nuevoPrecioVenta"],
 							   "imagen" => $ruta);
+                                
+         
 
 				$respuesta = ModeloProductos::mdlIngresarProducto($tabla, $datos);
 
