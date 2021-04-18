@@ -37,25 +37,8 @@ class ControladorProductos{
 
 
                                 
-                                 echo'<script>
-
-						swal({
-							  type: "'.var_dump($_FILES).'",
-							  title: "El producto ha sido guardado correctamente",
-							  showConfirmButton: true,
-							  confirmButtonText: "Cerrar"
-							  }).then(function(result){
-										if (result.value) {
-
-										window.location = "productos";
-
-										}
-									})
-
-						</script>';
-                                 
-                                 return;
-                                if(isset($_FILES["nuevaImagen"]["tmp_name"])){
+             
+                                if(isset($_FILES["nuevaImagen"]["tmp_name"]) && $_FILES["nuevaImagen"]["tmp_name"]!=""){
 
 					list($ancho, $alto) = getimagesize($_FILES["nuevaImagen"]["tmp_name"]);
 
