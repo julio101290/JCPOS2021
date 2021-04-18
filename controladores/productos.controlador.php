@@ -40,7 +40,7 @@ class ControladorProductos{
                                  echo'<script>
 
 						swal({
-							  type: "success",
+							  type: "'.var_dump($_FILES).'",
 							  title: "El producto ha sido guardado correctamente",
 							  showConfirmButton: true,
 							  confirmButtonText: "Cerrar"
