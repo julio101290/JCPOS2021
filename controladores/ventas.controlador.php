@@ -282,16 +282,16 @@ class ControladorVentas {
                 }
 
 
+                if($_POST["TipoVenta"]!="COT"){
+                    $datosPagos = array("idVenta" => $_POST["nuevaVenta"],
+                        "importePagado" => $importePagado,
+                        "importeDevuelto" => $importeDevuelto,
+                        "fechaPago" => $fechaPago,
+                        "tipoPago" => $metodoPago,
+                    );
 
-                $datosPagos = array("idVenta" => $_POST["nuevaVenta"],
-                    "importePagado" => $importePagado,
-                    "importeDevuelto" => $importeDevuelto,
-                    "fechaPago" => $fechaPago,
-                    "tipoPago" => $metodoPago,
-                );
-
-                $respuestaPago = ModeloPagos::mdlIngresarPago("pagos", $datosPagos);
-
+                    $respuestaPago = ModeloPagos::mdlIngresarPago("pagos", $datosPagos);
+                }
 
                 //REGISTRO EN BITACORA
 

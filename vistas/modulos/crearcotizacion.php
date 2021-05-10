@@ -85,8 +85,10 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                     $valorCliente = $venta["id_cliente"];
 
                     $cliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
-
-                    $porcentajeImpuesto = $venta["impuesto"] * 100 / $venta["neto"];
+                    
+                    if($venta["neto"]>0){
+                        $porcentajeImpuesto = $venta["impuesto"] * 100 / $venta["neto"];
+                    }   
 
 
                 ?>
