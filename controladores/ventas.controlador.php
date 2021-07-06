@@ -267,11 +267,19 @@ class ControladorVentas {
 
 
                 //ASIGNAMOS EL VALOR A LA VARIABLES
-                $importePagado = $_POST["nuevoValorEfectivo"];
+              
                 $importeTotalVenta = $_POST["totalVenta"];
-
-                $fechaPago = $_POST["fechaPago"];
-                $metodoPago = $_POST["nuevoMetodoPago"];
+                
+                
+                if(isset($_POST["fechaPago"])){
+                    $fechaPago = $_POST["fechaPago"];
+                    $metodoPago = $_POST["nuevoMetodoPago"];
+                    $importePagado = $_POST["nuevoValorEfectivo"];
+                }else{
+                     $fechaPago = "";
+                    $metodoPago = "";
+                      $importePagado = 0;
+                }
 
 
                 //LE ASIGNAMOS EL IMPORTE DEVUELTO SI ES QUE LO QUE PAGO EL CLIENTE ES MAYOR AL IMPORTE DE LA VENTA

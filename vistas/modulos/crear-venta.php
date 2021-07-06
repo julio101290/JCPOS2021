@@ -86,7 +86,10 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
                     $cliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
 
-                    $porcentajeImpuesto = $venta["impuesto"] * 100 / $venta["neto"];
+                    
+                    if($venta["neto"]>0){
+                        $porcentajeImpuesto = $venta["impuesto"] * 100 / $venta["neto"];
+                    }
 
 
                 ?>
@@ -1312,6 +1315,24 @@ $(".modal-footer").on("click", ".btnGuardarClienteAjax", function(){
 
   var ajaxCliente= "ajaxCliente";
 
+
+  if($("#nuevoTelefono").val()==""){
+
+      swal({
+              type: "error",
+              title: "¡El cliente no puede ir con los campos vacíos o llevar caracteres especiales!",
+              showConfirmButton: true,
+              confirmButtonText: "Cerrar"
+              }).then(function(result){
+              if (result.value) {
+
+
+
+              }
+            })
+$("#nuevoTelefono").focus();
+    return;
+  }
 
 
   var datos = new FormData();
