@@ -786,7 +786,7 @@ class ModeloVentas{
 				$stmt = Conexion::conectar()->prepare("SELECT * 
 
 
-					FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' and Tipo_Venta='$tipoDocumento'
+					FROM $tabla a WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' and Tipo_Venta='$tipoDocumento'
 
 
 						and ('".$soloPendientePorCobrar."'='n' or  

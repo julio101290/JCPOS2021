@@ -144,8 +144,13 @@ class TablaVentas{
                     }
                       
                       if(date("Y-m-d")>$cotizaciones[$i]["FechaVencimiento"]){
-                           $botones .= "<button class='btn bg-navy ' disabled='true' idVenta='".$cotizaciones[$i]["id"]."'><STRONG>COTIZACION VENCIDA</STRONG></i></button>";
-                        }
+                           if (is_numeric($cotizaciones[$i]["codigoVenta1"])){
+                               
+                                $botones .= "<button class='btn bg-navy' disabled='true' idVenta='".$cotizaciones[$i]['id']."'><STRONG>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VENTA ".$cotizaciones[$i]["codigoVenta1"]."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</STRONG></i></button>";
+                           }else{
+                             $botones .= "<button class='btn bg-navy ' disabled='true' idVenta='".$cotizaciones[$i]["id"]."'><STRONG>COTIZACION VENCIDA</STRONG></i></button>";
+                           }
+                           }
                         else{
                           if (is_numeric($cotizaciones[$i]["codigoVenta1"])){
 

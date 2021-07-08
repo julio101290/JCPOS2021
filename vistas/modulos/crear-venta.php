@@ -1537,7 +1537,7 @@ $(".modal-footer").on("click", ".btnGuardarVentaAjax", function(){
                 console.log("respuesta Venta",respuesta);
 
                 var codigoVenta = respuesta["id"];
-                window.open("extensiones/tcpdf/pdf/factura.php?codigo="+codigoVenta, "_blank");
+                window.open("extensiones/tcpdf/pdf/factura.php?codigo="+UUID, "_blank");
                 window.open("extensiones/impresionTicket/impresionTicket.php?UUID="+UUID, "_blank");
               }
 

@@ -270,14 +270,14 @@ class ControladorVentas {
               
                 $importeTotalVenta = $_POST["totalVenta"];
                 
+                $fechaPago = $_POST["fechaPago"];
+                $metodoPago = $_POST["nuevoMetodoPago"];
                 
-                if(isset($_POST["fechaPago"])){
-                    $fechaPago = $_POST["fechaPago"];
-                    $metodoPago = $_POST["nuevoMetodoPago"];
+                if($_POST["nuevoValorEfectivo"] !="undefined"){
+                    
                     $importePagado = $_POST["nuevoValorEfectivo"];
                 }else{
-                     $fechaPago = "";
-                    $metodoPago = "";
+                
                       $importePagado = 0;
                 }
 
@@ -1157,7 +1157,7 @@ if (isset($_POST["ConsecutivoVenta"])) {
 
 
     // OBTENEMOS EL ULTIMO CONSECUTIVO
-    $consecutivo = $traerConsecutivo->ctrMostrarUltimoFolio("VEN");
+    $consecutivo = ControladorVentas::ctrMostrarUltimoFolio("VEN");
 
     echo json_encode($consecutivo);
 }
