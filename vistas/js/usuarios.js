@@ -43,6 +43,7 @@ $(".nuevaFoto").change(function(){
   			var rutaImagen = event.target.result;
 
   			$(".previsualizar").attr("src", rutaImagen);
+                        $(".previsualizarEditar").attr("src", rutaImagen);
 
   		})
 
