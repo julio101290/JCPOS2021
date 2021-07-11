@@ -1,5 +1,8 @@
 <?php
-
+/* 
+ * 
+ * PARA MAS APOYO SOBRE ESTE CAMBIO VER ESTE VIDEO https://www.youtube.com/watch?v=YfFky-eBh-k
+ */
 if($_SESSION["iniciarSesion"] != "ok"){
 
   echo '<script>
@@ -9,7 +12,6 @@ if($_SESSION["iniciarSesion"] != "ok"){
   </script>';
 
   return;
-
 }
 
 ?>
