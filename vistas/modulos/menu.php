@@ -319,19 +319,7 @@
 					</li>';
 				}
                                 
-                                if("on" == "on"){
-					echo '
-					 <li '.strMenuActivo($_GET["ruta"],"configurarCorreo").'>
-
-						<a href="configurarCorreo">
-
-							<i class="fa fa-envelope-square"></i>
-							<span>Configurar Correo</span>
-
-						</a>
-
-					</li>';
-				}
+     
                                 
                                 
                         if("on"== "on"){	
