@@ -340,7 +340,7 @@
 
 						<a href="actualizar">
 
-							<i class="fa fa-navicon"></i>
+							<i class="fa fa-cloud-download"></i>
 							<span>Actualizar</span>
 
 						</a>
