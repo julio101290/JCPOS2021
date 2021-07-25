@@ -318,6 +318,35 @@
 
 					</li>';
 				}
+                                
+                                if("on" == "on"){
+					echo '
+					 <li '.strMenuActivo($_GET["ruta"],"configurarCorreo").'>
+
+						<a href="configurarCorreo">
+
+							<i class="fa fa-envelope-square"></i>
+							<span>Configurar Correo</span>
+
+						</a>
+
+					</li>';
+				}
+                                
+                                
+                        if("on"== "on"){	
+				echo '
+					 <li '.strMenuActivo($_GET["ruta"],"bitacora").'>
+
+						<a href="bitacora">
+
+							<i class="fa fa-navicon"></i>
+							<span>Bitacora</span>
+
+						</a>
+
+					</li>';
+				}
 
 			if($_SESSION["bitacora"] == "on"){	
 				echo '
