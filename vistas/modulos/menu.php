@@ -338,10 +338,10 @@
 				echo '
 					 <li '.strMenuActivo($_GET["ruta"],"bitacora").'>
 
-						<a href="bitacora">
+						<a href="actualizar">
 
 							<i class="fa fa-navicon"></i>
-							<span>Bitacora</span>
+							<span>Actualizar</span>
 
 						</a>
 
