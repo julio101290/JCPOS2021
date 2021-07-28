@@ -322,7 +322,7 @@
      
                                 
                                 
-                        if("on"== "on"){	
+                        if($_SESSION["actualizar"]== "on"){	
 				echo '
 					 <li '.strMenuActivo($_GET["ruta"],"bitacora").'>
 

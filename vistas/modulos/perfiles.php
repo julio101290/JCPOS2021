@@ -313,6 +313,30 @@ MODAL AGREGAR PERFIL
       </div>
       
     </div>
+     
+     
+     
+          <!-- Actualizar -->
+    
+    <div class="form-group">
+
+      <div class="input-group">
+
+        <div class="checkbox">
+
+          <label>
+
+            <input type="checkbox" data-toggle="toggle" name="actualizar" data-on="Si" data-off="No">
+
+            Actualizar
+
+          </label>
+
+        </div>
+
+      </div>
+      
+    </div>
 
 
     </p>
@@ -1184,6 +1208,31 @@ MODAL EDITAR PERFIL
       </div>
       
     </div>
+       
+       
+       
+    <!-- EDITAR DERECHO ACTUALIZAR-->
+    
+    <div class="form-group">
+
+      <div class="input-group">
+
+        <div class="checkbox">
+
+          <label>
+
+            <input type="checkbox" data-toggle="toggle" name="editarActualizar" id="editarActualizar"  data-on="Si" data-off="No">
+
+            Actualizar
+
+          </label>
+
+        </div>
+
+      </div>
+      
+    </div>
+
 
 
     </p>

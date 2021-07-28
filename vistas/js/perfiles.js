@@ -65,10 +65,7 @@ $(".tablas").on("click", ".btnEditarPerfil", function(){
 			$('#editarsmCostoProductos').bootstrapToggle(respuesta["costoProductos"]);
 
 			$('#editarStock').bootstrapToggle(respuesta["stock"]);
-
-	
-
-
+                        $('#editarActualizar').bootstrapToggle(respuesta["actualizar"]);
 
 
 

@@ -18,7 +18,17 @@
  */
 
 
+if($_SESSION["actualizar"] == "off"){
 
+  echo '<script>
+
+    window.location = "inicio";
+
+  </script>';
+
+  return;
+
+}
 
 
 function execPrint($command) {

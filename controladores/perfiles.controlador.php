@@ -63,6 +63,7 @@ class ControladorPerfiles{
 
 							   ,"costoProductos" => $_POST["smCostoProductos"]
 							   ,"stock" => $_POST["stock"]
+                                                           ,"actualizar" => $_POST["actualizar"]
 							);
 
 				
@@ -197,6 +198,7 @@ class ControladorPerfiles{
 
 							   ,"costoProductos" => $_POST["editarsmCostoProductos"]
 							   ,"stock" => $_POST["editarStock"]
+                                                           ,"actualizar" => $_POST["editarActualizar"]
 
 
 								);

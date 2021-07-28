@@ -13,132 +13,133 @@ class ModeloPerfiles{
 		if($item != null){
 
 			$stmt = Conexion::conectar()->prepare("SELECT perfil
-														 ,descripcion
+                                                                        ,descripcion
 
-														  ,(case when menuConfiguraciones='on' then 'on'
-														  		else 'off' 
-														  		end) as menuConfiguraciones
-														  
-														  ,(case when datosEmpresa='on' then 'on'
-														  		else 'off' 
-														  		end ) as datosEmpresa
-														  
-														  ,(case when usuarios='on' then 'on'
-														  	else 'off'
-														  	end) as usuarios
-														  
-														  ,(case when perfiles='on' then 'on'
-														  		 else 'off'
-														  		 end) as perfiles
-														  
-														  ,(case when configuracionCorreo='on' then 'on' else 'off' 
-														  		end )as configuracionCorreo
+                                                                         ,(case when menuConfiguraciones='on' then 'on'
+                                                                                       else 'off' 
+                                                                                       end) as menuConfiguraciones
 
+                                                                         ,(case when datosEmpresa='on' then 'on'
+                                                                                       else 'off' 
+                                                                                       end ) as datosEmpresa
 
+                                                                         ,(case when usuarios='on' then 'on'
+                                                                               else 'off'
+                                                                               end) as usuarios
 
+                                                                         ,(case when perfiles='on' then 'on'
+                                                                                        else 'off'
+                                                                                        end) as perfiles
 
-												  		  ,(case when clientes='on' then 'on' else 'off' 
-														  		end )as clientes
-
-														  ,(case when productos='on' then 'on' else 'off' 
-														  		 end )as productos
-
-														  ,(case when categorias='on' then 'on' else 'off' 
-														  		  end )as categorias
-
-
-											  		  	,(case when menuCotizaciones='on' then 'on' else 'off' 
-														  		end )as menuCotizaciones
-
-												  		  ,(case when cotizaciones='on' then 'on' else 'off' 
-														  		end )as cotizaciones
-
-														  ,(case when administrarCotizaciones='on' then 'on' else 'off' 
-														  		 end )as administrarCotizaciones
-
-														  ,(case when modificarCotizaciones='on' then 'on' else 'off' 
-														  		  end )as modificarCotizaciones
-
-														  ,(case when eliminarCotizaciones='on' then 'on' else 'off' 
-														  		  end )as eliminarCotizaciones
+                                                                         ,(case when configuracionCorreo='on' then 'on' else 'off' 
+                                                                                       end )as configuracionCorreo
 
 
 
 
+                                                                         ,(case when clientes='on' then 'on' else 'off' 
+                                                                                       end )as clientes
+
+                                                                         ,(case when productos='on' then 'on' else 'off' 
+                                                                                        end )as productos
+
+                                                                         ,(case when categorias='on' then 'on' else 'off' 
+                                                                                         end )as categorias
 
 
-														,(case when menuVentas='on' then 'on' else 'off' 
-														  		 end )as menuVentas
+                                                                       ,(case when menuCotizaciones='on' then 'on' else 'off' 
+                                                                                       end )as menuCotizaciones
 
-														,(case when ventas='on' then 'on' else 'off' 
-														  		  end )as ventas
+                                                                         ,(case when cotizaciones='on' then 'on' else 'off' 
+                                                                                       end )as cotizaciones
 
+                                                                         ,(case when administrarCotizaciones='on' then 'on' else 'off' 
+                                                                                        end )as administrarCotizaciones
 
-											  		  	,(case when administrarVentas='on' then 'on' else 'off' 
-														  		end )as administrarVentas
+                                                                         ,(case when modificarCotizaciones='on' then 'on' else 'off' 
+                                                                                         end )as modificarCotizaciones
 
-												  		  ,(case when modificarVentas='on' then 'on' else 'off' 
-														  		end )as modificarVentas
-
-														  ,(case when eliminarVentas='on' then 'on' else 'off' 
-														  		 end )as eliminarVentas
-
-														  ,(case when facturacionElectronica='on' then 'on' else 'off' 
-														  		  end )as facturacionElectronica
-
-														  ,(case when reportesVentas='on' then 'on' else 'off' 
-														  		  end )as reportesVentas
-
-
-
-
-  												  		  ,(case when cajasSuperiores='on' then 'on' else 'off' 
-														  		end )as cajasSuperiores
-
-														  ,(case when graficoGanancias='on' then 'on' else 'off' 
-														  		 end )as graficoGanancias
-
-														  ,(case when productosMasVendidos='on' then 'on' else 'off' 
-														  		  end )as productosMasVendidos
-
-														  ,(case when productosAgregadosRecientemente='on' then 'on' else 'off' 
-														  		  end )as productosAgregadosRecientemente
-
-
-
-														  ,(case when bitacora='on' then 'on' else 'off' 
-														  		  end )as bitacora
-
-
-														  ,(case when pagos='on' then 'on' else 'off' 
-														  		 end )as pagos
-
-														  ,(case when historicoPagos='on' then 'on' else 'off' 
-														  		  end )as historicoPagos
-
-														  ,(case when imprimirPagos='on' then 'on' else 'off' 
-														  		  end )as imprimirPagos
-
-
-
-														  ,(case when eliminarPagos='on' then 'on' else 'off' 
-														  		  end )as eliminarPagos
-
-
-														  ,(case when costoProductos='on' then 'on' else 'off' 
-														  		  end )as costoProductos
- 														  
- 														  ,(case when stock='on' then 'on' else 'off' 
-														  		  end )as stock
+                                                                         ,(case when eliminarCotizaciones='on' then 'on' else 'off' 
+                                                                                         end )as eliminarCotizaciones
 
 
 
 
 
 
-													FROM $tabla 
+                                                                       ,(case when menuVentas='on' then 'on' else 'off' 
+                                                                                        end )as menuVentas
 
-													WHERE $item = :$item");
+                                                                       ,(case when ventas='on' then 'on' else 'off' 
+                                                                                         end )as ventas
+
+
+                                                                       ,(case when administrarVentas='on' then 'on' else 'off' 
+                                                                                       end )as administrarVentas
+
+                                                                         ,(case when modificarVentas='on' then 'on' else 'off' 
+                                                                                       end )as modificarVentas
+
+                                                                         ,(case when eliminarVentas='on' then 'on' else 'off' 
+                                                                                        end )as eliminarVentas
+
+                                                                         ,(case when facturacionElectronica='on' then 'on' else 'off' 
+                                                                                         end )as facturacionElectronica
+
+                                                                         ,(case when reportesVentas='on' then 'on' else 'off' 
+                                                                                         end )as reportesVentas
+
+
+
+
+                                                                         ,(case when cajasSuperiores='on' then 'on' else 'off' 
+                                                                                       end )as cajasSuperiores
+
+                                                                         ,(case when graficoGanancias='on' then 'on' else 'off' 
+                                                                                        end )as graficoGanancias
+
+                                                                         ,(case when productosMasVendidos='on' then 'on' else 'off' 
+                                                                                         end )as productosMasVendidos
+
+                                                                         ,(case when productosAgregadosRecientemente='on' then 'on' else 'off' 
+                                                                                         end )as productosAgregadosRecientemente
+
+
+
+                                                                         ,(case when bitacora='on' then 'on' else 'off' 
+                                                                                         end )as bitacora
+
+
+                                                                         ,(case when pagos='on' then 'on' else 'off' 
+                                                                                        end )as pagos
+
+                                                                         ,(case when historicoPagos='on' then 'on' else 'off' 
+                                                                                         end )as historicoPagos
+
+                                                                         ,(case when imprimirPagos='on' then 'on' else 'off' 
+                                                                                         end )as imprimirPagos
+
+
+
+                                                                         ,(case when eliminarPagos='on' then 'on' else 'off' 
+                                                                                         end )as eliminarPagos
+
+
+                                                                         ,(case when costoProductos='on' then 'on' else 'off' 
+                                                                                         end )as costoProductos
+
+                                                                         ,(case when stock='on' then 'on' else 'off' 
+                                                                                         end )as stock
+
+
+                                                                        ,(case when actualizar='on' then 'on' else 'off' 
+                                                                                         end ) as actualizar
+
+
+
+                                                               FROM $tabla 
+
+                                                               WHERE $item = :$item");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -149,124 +150,127 @@ class ModeloPerfiles{
 		}else{
 
 			$stmt = Conexion::conectar()->prepare("SELECT perfil
-														  ,descripcion
-														  
-														  ,(case when menuConfiguraciones='on' then 'on'
-														  		else 'off' 
-														  		end) as menuConfiguraciones
-														  
-														  ,(case when datosEmpresa='on' then 'on'
-														  		else 'off' 
-														  		end ) as datosEmpresa
-														  
-														  ,(case when usuarios='on' then 'on'
-														  	else 'off'
-														  	end) as usuarios
-														  
-														  ,(case when perfiles='on' then 'on'
-														  		 else 'off'
-														  		 end) as perfiles
-														  
-														  ,(case when configuracionCorreo='on' then 'on' else 'off' 
-														  		end )as configuracionCorreo
+                                                                    ,descripcion
+
+                                                                    ,(case when menuConfiguraciones='on' then 'on'
+                                                                                  else 'off' 
+                                                                                  end) as menuConfiguraciones
+
+                                                                    ,(case when datosEmpresa='on' then 'on'
+                                                                                  else 'off' 
+                                                                                  end ) as datosEmpresa
+
+                                                                    ,(case when usuarios='on' then 'on'
+                                                                          else 'off'
+                                                                          end) as usuarios
+
+                                                                    ,(case when perfiles='on' then 'on'
+                                                                                   else 'off'
+                                                                                   end) as perfiles
+
+                                                                    ,(case when configuracionCorreo='on' then 'on' else 'off' 
+                                                                                  end )as configuracionCorreo
 
 
 
-												  		  ,(case when clientes='on' then 'on' else 'off' 
-														  		end )as clientes
+                                                                    ,(case when clientes='on' then 'on' else 'off' 
+                                                                                  end )as clientes
 
-														  ,(case when productos='on' then 'on' else 'off' 
-														  		 end )as productos
+                                                                    ,(case when productos='on' then 'on' else 'off' 
+                                                                                   end )as productos
 
-														  ,(case when categorias='on' then 'on' else 'off' 
-														  		  end )as categorias
-
-
-											  		  	,(case when menuCotizaciones='on' then 'on' else 'off' 
-														  		end )as menuCotizaciones
-
- 												  		  ,(case when cotizaciones='on' then 'on' else 'off' 
-														  		end )as cotizaciones
-
-														  ,(case when administrarCotizaciones='on' then 'on' else 'off' 
-														  		 end )as administrarCotizaciones
-
-														  ,(case when modificarCotizaciones='on' then 'on' else 'off' 
-														  		  end )as modificarCotizaciones
-
-														  ,(case when eliminarCotizaciones='on' then 'on' else 'off' 
-														  		  end )as eliminarCotizaciones
-
-														
+                                                                    ,(case when categorias='on' then 'on' else 'off' 
+                                                                                    end )as categorias
 
 
-														,(case when menuVentas='on' then 'on' else 'off' 
-														  		 end )as menuVentas
+                                                                  ,(case when menuCotizaciones='on' then 'on' else 'off' 
+                                                                                  end )as menuCotizaciones
 
-														,(case when ventas='on' then 'on' else 'off' 
-														  		  end )as ventas
+                                                                    ,(case when cotizaciones='on' then 'on' else 'off' 
+                                                                                  end )as cotizaciones
 
+                                                                    ,(case when administrarCotizaciones='on' then 'on' else 'off' 
+                                                                                   end )as administrarCotizaciones
 
-											  		  	,(case when administrarVentas='on' then 'on' else 'off' 
-														  		end )as administrarVentas
+                                                                    ,(case when modificarCotizaciones='on' then 'on' else 'off' 
+                                                                                    end )as modificarCotizaciones
 
-												  		  ,(case when modificarVentas='on' then 'on' else 'off' 
-														  		end )as modificarVentas
-
-														  ,(case when eliminarVentas='on' then 'on' else 'off' 
-														  		 end )as eliminarVentas
-
-														  ,(case when facturacionElectronica='on' then 'on' else 'off' 
-														  		  end )as facturacionElectronica
-
-														  ,(case when reportesVentas='on' then 'on' else 'off' 
-														  		  end )as reportesVentas
+                                                                    ,(case when eliminarCotizaciones='on' then 'on' else 'off' 
+                                                                                    end )as eliminarCotizaciones
 
 
 
-												  		  ,(case when cajasSuperiores='on' then 'on' else 'off' 
-														  		end )as cajasSuperiores
 
-														  ,(case when graficoGanancias='on' then 'on' else 'off' 
-														  		 end )as graficoGanancias
+                                                                  ,(case when menuVentas='on' then 'on' else 'off' 
+                                                                                   end )as menuVentas
 
-														  ,(case when productosMasVendidos='on' then 'on' else 'off' 
-														  		  end )as productosMasVendidos
-
-														  ,(case when productosAgregadosRecientemente='on' then 'on' else 'off' 
-														  		  end )as productosAgregadosRecientemente
-
-														  ,(case when bitacora='on' then 'on' else 'off' 
-														  		  end )as bitacora
+                                                                  ,(case when ventas='on' then 'on' else 'off' 
+                                                                                    end )as ventas
 
 
-														  ,(case when bitacora='on' then 'on' else 'off' 
-														  		  end )as bitacora
+                                                                  ,(case when administrarVentas='on' then 'on' else 'off' 
+                                                                                  end )as administrarVentas
 
+                                                                    ,(case when modificarVentas='on' then 'on' else 'off' 
+                                                                                  end )as modificarVentas
 
-														  ,(case when pagos='on' then 'on' else 'off' 
-														  		 end )as pagos
+                                                                    ,(case when eliminarVentas='on' then 'on' else 'off' 
+                                                                                   end )as eliminarVentas
 
-														  ,(case when historicoPagos='on' then 'on' else 'off' 
-														  		  end )as historicoPagos
+                                                                    ,(case when facturacionElectronica='on' then 'on' else 'off' 
+                                                                                    end )as facturacionElectronica
 
-														  ,(case when imprimirPagos='on' then 'on' else 'off' 
-														  		  end )as imprimirPagos
+                                                                    ,(case when reportesVentas='on' then 'on' else 'off' 
+                                                                                    end )as reportesVentas
 
 
 
-														  ,(case when eliminarPagos='on' then 'on' else 'off' 
-														  		  end )as eliminarPagos
+                                                                    ,(case when cajasSuperiores='on' then 'on' else 'off' 
+                                                                                  end )as cajasSuperiores
+
+                                                                    ,(case when graficoGanancias='on' then 'on' else 'off' 
+                                                                                   end )as graficoGanancias
+
+                                                                    ,(case when productosMasVendidos='on' then 'on' else 'off' 
+                                                                                    end )as productosMasVendidos
+
+                                                                    ,(case when productosAgregadosRecientemente='on' then 'on' else 'off' 
+                                                                                    end )as productosAgregadosRecientemente
+
+                                                                    ,(case when bitacora='on' then 'on' else 'off' 
+                                                                                    end )as bitacora
 
 
-														  ,(case when costoProductos='on' then 'on' else 'off' 
-														  		  end )as costoProductos
+                                                                    ,(case when bitacora='on' then 'on' else 'off' 
+                                                                                    end )as bitacora
 
-									  		  			  ,(case when stock='on' then 'on' else 'off' 
-														  		  end )as stock
-														  		
-												   FROM 
-												   $tabla");
+
+                                                                    ,(case when pagos='on' then 'on' else 'off' 
+                                                                                   end )as pagos
+
+                                                                    ,(case when historicoPagos='on' then 'on' else 'off' 
+                                                                                    end )as historicoPagos
+
+                                                                    ,(case when imprimirPagos='on' then 'on' else 'off' 
+                                                                                    end )as imprimirPagos
+
+
+
+                                                                    ,(case when eliminarPagos='on' then 'on' else 'off' 
+                                                                                    end )as eliminarPagos
+
+
+                                                                    ,(case when costoProductos='on' then 'on' else 'off' 
+                                                                                    end )as costoProductos
+
+                                                                    ,(case when stock='on' then 'on' else 'off' 
+                                                                                    end )as stock
+                                                                                    
+                                                                    ,(case when actualizar='on' then 'on' else 'off' 
+                                                                                         end ) as actualizar
+
+                                                     FROM 
+                                                     $tabla");
 
 			$stmt -> execute();
 
@@ -289,87 +293,88 @@ class ModeloPerfiles{
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(descripcion
 																
-																,menuConfiguraciones
-																,datosEmpresa
-																,usuarios
-																,perfiles
-																,configuracionCorreo
+                                                                        ,menuConfiguraciones
+                                                                        ,datosEmpresa
+                                                                        ,usuarios
+                                                                        ,perfiles
+                                                                        ,configuracionCorreo
 
-																,clientes
-																,productos
-																,categorias
+                                                                        ,clientes
+                                                                        ,productos
+                                                                        ,categorias
 
-																,menuCotizaciones
-																,cotizaciones
-																,administrarCotizaciones
-																,modificarCotizaciones
-																,eliminarCotizaciones
-
-
-																,menuVentas
-																,ventas
-																,administrarVentas
-																,modificarVentas
-																,eliminarVentas
-																,facturacionElectronica
-																,reportesVentas
-
-																,cajasSuperiores
-																,graficoGanancias
-																,productosMasVendidos
-																,productosAgregadosRecientemente			
-																,bitacora	
-
-																,pagos
-																,historicoPagos
-																,imprimirPagos			
-																,eliminarPagos	
-																,costoProductos	
-																,stock	
+                                                                        ,menuCotizaciones
+                                                                        ,cotizaciones
+                                                                        ,administrarCotizaciones
+                                                                        ,modificarCotizaciones
+                                                                        ,eliminarCotizaciones
 
 
+                                                                        ,menuVentas
+                                                                        ,ventas
+                                                                        ,administrarVentas
+                                                                        ,modificarVentas
+                                                                        ,eliminarVentas
+                                                                        ,facturacionElectronica
+                                                                        ,reportesVentas
 
-																) 
-														VALUES (:descripcion
-																
-																,:menuConfiguraciones
-																,:datosEmpresa
-																,:usuarios
-																,:perfiles
-																,:configuracionCorreo
+                                                                        ,cajasSuperiores
+                                                                        ,graficoGanancias
+                                                                        ,productosMasVendidos
+                                                                        ,productosAgregadosRecientemente			
+                                                                        ,bitacora	
 
-																,:clientes
-																,:productos
-																,:categorias
+                                                                        ,pagos
+                                                                        ,historicoPagos
+                                                                        ,imprimirPagos			
+                                                                        ,eliminarPagos	
+                                                                        ,costoProductos	
+                                                                        ,stock	
+                                                                        ,actualizar
 
-																,:menuCotizaciones
-																,:cotizaciones
-																,:administrarCotizaciones
-																,:modificarCotizaciones
-																,:eliminarCotizaciones
 
-																,:menuVentas
-																,:ventas
-																,:administrarVentas
-																,:modificarVentas
-																,:eliminarVentas
-																,:facturacionElectronica
-																,:reportesVentas
+                                                                        ) 
+                                                        VALUES (:descripcion
 
-																,:cajasSuperiores
-																,:graficoGanancias
-																,:productosMasVendidos
-																,:productosAgregadosRecientemente	
-																,:bitacora
+                                                                        ,:menuConfiguraciones
+                                                                        ,:datosEmpresa
+                                                                        ,:usuarios
+                                                                        ,:perfiles
+                                                                        ,:configuracionCorreo
 
-																,:pagos
-																,:historicoPagos
-																,:imprimirPagos	
-																,:eliminarPagos	
-																,:costoProductos	
-																,:stock
+                                                                        ,:clientes
+                                                                        ,:productos
+                                                                        ,:categorias
 
-															)");
+                                                                        ,:menuCotizaciones
+                                                                        ,:cotizaciones
+                                                                        ,:administrarCotizaciones
+                                                                        ,:modificarCotizaciones
+                                                                        ,:eliminarCotizaciones
+
+                                                                        ,:menuVentas
+                                                                        ,:ventas
+                                                                        ,:administrarVentas
+                                                                        ,:modificarVentas
+                                                                        ,:eliminarVentas
+                                                                        ,:facturacionElectronica
+                                                                        ,:reportesVentas
+
+                                                                        ,:cajasSuperiores
+                                                                        ,:graficoGanancias
+                                                                        ,:productosMasVendidos
+                                                                        ,:productosAgregadosRecientemente	
+                                                                        ,:bitacora
+
+                                                                        ,:pagos
+                                                                        ,:historicoPagos
+                                                                        ,:imprimirPagos	
+                                                                        ,:eliminarPagos	
+                                                                        ,:costoProductos	
+                                                                        ,:stock
+                                                                        ,:actualizar
+
+                                                                )");
 
 		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 		
@@ -410,6 +415,7 @@ class ModeloPerfiles{
 		$stmt->bindParam(":eliminarPagos", $datos["eliminarPagos"], PDO::PARAM_STR);
 		$stmt->bindParam(":costoProductos", $datos["costoProductos"], PDO::PARAM_STR);
 		$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
+                $stmt->bindParam(":actualizar", $datos["actualizar"], PDO::PARAM_STR);
 
 
 		if($stmt->execute()){
@@ -435,49 +441,50 @@ class ModeloPerfiles{
 	static public function mdlEditarPerfil($tabla, $datos){
 	
 		$stmt = Conexion::conectar()->prepare("UPDATE $tabla 
-												SET descripcion = :descripcion
-													
-													,menuConfiguraciones = :menuConfiguraciones
-													,datosEmpresa = :datosEmpresa
-													,usuarios = :usuarios
-													,perfiles = :perfiles
-													,configuracionCorreo = :configuracionCorreo
+                                                            SET descripcion = :descripcion
 
-													,clientes= :clientes
-													,productos= :productos
-													,categorias= :categorias
+                                                                    ,menuConfiguraciones = :menuConfiguraciones
+                                                                    ,datosEmpresa = :datosEmpresa
+                                                                    ,usuarios = :usuarios
+                                                                    ,perfiles = :perfiles
+                                                                    ,configuracionCorreo = :configuracionCorreo
 
-													,menuCotizaciones= :menuCotizaciones
-													,cotizaciones= :cotizaciones
-													,administrarCotizaciones= :administrarCotizaciones
-													,modificarCotizaciones= :modificarCotizaciones
-													,eliminarCotizaciones= :eliminarCotizaciones
+                                                                    ,clientes= :clientes
+                                                                    ,productos= :productos
+                                                                    ,categorias= :categorias
 
-													,menuVentas= :menuVentas
-													,ventas= :ventas
-													,administrarVentas= :administrarVentas
-													,modificarVentas= :modificarVentas
-													,eliminarVentas= :eliminarVentas
-													,facturacionElectronica= :facturacionElectronica
-													,reportesVentas= :reportesVentas
+                                                                    ,menuCotizaciones= :menuCotizaciones
+                                                                    ,cotizaciones= :cotizaciones
+                                                                    ,administrarCotizaciones= :administrarCotizaciones
+                                                                    ,modificarCotizaciones= :modificarCotizaciones
+                                                                    ,eliminarCotizaciones= :eliminarCotizaciones
 
-													,cajasSuperiores= :cajasSuperiores
-													,graficoGanancias= :graficoGanancias
-													,productosMasVendidos= :productosMasVendidos
-													,productosAgregadosRecientemente= :productosAgregadosRecientemente
-													,bitacora= :bitacora
+                                                                    ,menuVentas= :menuVentas
+                                                                    ,ventas= :ventas
+                                                                    ,administrarVentas= :administrarVentas
+                                                                    ,modificarVentas= :modificarVentas
+                                                                    ,eliminarVentas= :eliminarVentas
+                                                                    ,facturacionElectronica= :facturacionElectronica
+                                                                    ,reportesVentas= :reportesVentas
+
+                                                                    ,cajasSuperiores= :cajasSuperiores
+                                                                    ,graficoGanancias= :graficoGanancias
+                                                                    ,productosMasVendidos= :productosMasVendidos
+                                                                    ,productosAgregadosRecientemente= :productosAgregadosRecientemente
+                                                                    ,bitacora= :bitacora
 
 
-													,pagos= :pagos
-													,historicoPagos= :historicoPagos
-													,imprimirPagos= :imprimirPagos
-													,eliminarPagos= :eliminarPagos
+                                                                    ,pagos= :pagos
+                                                                    ,historicoPagos= :historicoPagos
+                                                                    ,imprimirPagos= :imprimirPagos
+                                                                    ,eliminarPagos= :eliminarPagos
 
-													,costoProductos= :costoProductos
-													,stock= :stock
+                                                                    ,costoProductos= :costoProductos
+                                                                    ,stock= :stock
+                                                                    ,actualizar= :actualizar
 
-												WHERE perfil = :perfil"
-												);
+                                                            WHERE perfil = :perfil"
+                                                            );
 
 		
 		$stmt -> bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
@@ -519,6 +526,7 @@ class ModeloPerfiles{
 		$stmt->bindParam(":eliminarPagos", $datos["eliminarPagos"], PDO::PARAM_STR);
 		$stmt->bindParam(":costoProductos", $datos["costoProductos"], PDO::PARAM_STR);
 		$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
+                $stmt->bindParam(":actualizar", $datos["actualizar"], PDO::PARAM_STR);
 
 
 		if($stmt -> execute()){

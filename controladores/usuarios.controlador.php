@@ -56,6 +56,7 @@ class ControladorUsuarios{
 						$_SESSION["perfiles"] = $acceso["perfiles"];
 						$_SESSION["configuracionCorreo"] = $acceso["configuracionCorreo"];
 						$_SESSION["bitacora"] = $acceso["bitacora"];
+                                                $_SESSION["actualizar"] = $acceso["actualizar"];
 
 						//DERECHOS CATALOGOS
 						$_SESSION["clientes"] = $acceso["clientes"];
