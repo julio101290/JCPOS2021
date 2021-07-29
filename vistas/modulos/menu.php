@@ -99,7 +99,7 @@
 
 				<a href="#">
 
-					<i class="fa fa-list-ul"></i>
+					<i class="fa fa-cart-plus"></i>
 					
 					<span>Ventas</span>
 					

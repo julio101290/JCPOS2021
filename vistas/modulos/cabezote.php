@@ -38,29 +38,40 @@
         <ul class="nav navbar-nav hidden-xs">
 
             <?php
-            if ($_SESSION["administrarVentas"] == "on") {
-                echo '<li><a href="ventas">Administrar Ventas <span class="sr-only">(current)</span></a></li>';
+            
+            
+            //COTIZACIONES
+            
+            if ($_SESSION["administrarCotizaciones"] == "on") {
+                echo '<li> <a href="administrarcotizaciones"><i class="fa fa-tty"></i>  Administrar Cotizaciones<span class="sr-only">(current)</span></a></li>';
             }
+            
+            
+            if ($_SESSION["administrarVentas"] == "on") {
+                echo '<li> <a href="ventas"> <i class="fa  fa-cart-plus"></i>  Administrar Ventas<span class="sr-only">(current)</span></a></li>';
+            }
+            
+            
             ?>
 
 
 
 
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Catálogos <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-plus-square"></i> Catálogos <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
 
 <?php
 if ($_SESSION["categorias"] == "on") {
-    echo '<li><a href="categorias">Categorias</a></li>';
+    echo '<li><a href="categorias"><i class="fa fa-th"></i> Categorias</a></li>';
 }
 
 if ($_SESSION["productos"] == "on") {
-    echo '<li><a href="productos">Productos</a></li>';
+    echo '<li><a href="productos"><i class="fa fa-product-hunt"></i> Productos</a></li>';
 }
 
 if ($_SESSION["clientes"] == "on") {
-    echo '<li><a href="clientes">Clientes</a></li>';
+    echo '<li><a href="clientes"><i class="fa fa-users"></i> Clientes</a></li>';
 }
 ?>
                     <!-- <li class="divider"></li>-->
