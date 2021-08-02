@@ -164,7 +164,8 @@ CUERPO DOCUMENTO
     /*=============================================
     CONTENIDO
     =============================================*/
-    /*
+   
+   /* 
         if (!strpos($_SERVER["REQUEST_URI"],'&')){
         if(!isset($_GET["ruta"]) ){
             $_GET["ruta"] = str_replace("/", "",$_SERVER['PATH_INFO']);
@@ -178,8 +179,8 @@ CUERPO DOCUMENTO
 
         }
     }
-     */
-
+     
+   */
     if(isset($_GET["ruta"])){
 
       if($_GET["ruta"] == "inicio" ||
@@ -200,6 +201,8 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "facturacionElectronica" ||
          $_GET["ruta"] == "perfiles" ||
          $_GET["ruta"] == "ventasProductos" ||
+         $_GET["ruta"] == "cambiarContra" ||
+         $_GET["ruta"] == "actualizar" ||
 
          $_GET["ruta"] == "salir"){
 
