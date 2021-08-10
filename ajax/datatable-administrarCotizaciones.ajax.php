@@ -104,7 +104,8 @@ class TablaVentas{
                      $botones .= "<button class='btn btn-danger btnEliminarVenta' required data-toggle='tooltip' data-placement='top' title='Eliminar' idVenta='".$cotizaciones[$i]["id"]."''><i class='fa fa-times'></i></button>";
 
                     }
-
+                    
+                    $respuestaCliente = ModeloClientes::mdlMostrarClientes("clientes", "id", $cotizaciones[$i]["id_cliente"]);
                   
                     
                     $botones= "<div class='btn-group'>";

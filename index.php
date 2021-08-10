@@ -1,4 +1,8 @@
 <?php
+require_once "configuracion.php";
+require 'modelos/generales.modelo.php';
+$clases = ModeloGenerales::mdlMostrarTabla("clases", "clase", "");
+
 
 require_once "controladores/plantilla.controlador.php";
 require_once "controladores/usuarios.controlador.php";

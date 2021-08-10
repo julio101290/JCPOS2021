@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2020 a las 18:09:27
--- Versión del servidor: 10.4.13-MariaDB
--- Versión de PHP: 7.4.8
+-- Servidor: localhost
+-- Tiempo de generación: 10-08-2021 a las 18:38:39
+-- Versión del servidor: 10.4.17-MariaDB
+-- Versión de PHP: 7.4.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -196,6 +196,17 @@ INSERT INTO `categorias` (`id`, `categoria`, `fecha`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `clases`
+--
+
+CREATE TABLE `clases` (
+  `id` int(11) NOT NULL,
+  `clase` varchar(250) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `clientes`
 --
 
@@ -371,18 +382,19 @@ CREATE TABLE `perfiles` (
   `imprimirPagos` varchar(3) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `eliminarPagos` varchar(3) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `costoProductos` varchar(5) COLLATE utf8_spanish2_ci DEFAULT NULL,
-  `stock` varchar(5) COLLATE utf8_spanish2_ci DEFAULT NULL
+  `stock` varchar(5) COLLATE utf8_spanish2_ci DEFAULT NULL,
+  `actualizar` varchar(5) COLLATE utf8_spanish2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `perfiles`
 --
 
-INSERT INTO `perfiles` (`perfil`, `descripcion`, `menuConfiguraciones`, `datosEmpresa`, `usuarios`, `perfiles`, `configuracionCorreo`, `clientes`, `productos`, `categorias`, `cotizaciones`, `administrarCotizaciones`, `modificarCotizaciones`, `eliminarCotizaciones`, `menuCotizaciones`, `menuVentas`, `ventas`, `administrarVentas`, `modificarVentas`, `eliminarVentas`, `facturacionElectronica`, `reportesVentas`, `cajasSuperiores`, `graficoGanancias`, `productosMasVendidos`, `productosAgregadosRecientemente`, `bitacora`, `pagos`, `historicoPagos`, `imprimirPagos`, `eliminarPagos`, `costoProductos`, `stock`) VALUES
-(1, 'Administrador', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', NULL, 'on'),
-(3, 'Especial', 'on', 'on', 'on', 'on', 'on', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, 'Vendedor', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'on', 'on', 'on', 'on', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(23, 'prueba', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `perfiles` (`perfil`, `descripcion`, `menuConfiguraciones`, `datosEmpresa`, `usuarios`, `perfiles`, `configuracionCorreo`, `clientes`, `productos`, `categorias`, `cotizaciones`, `administrarCotizaciones`, `modificarCotizaciones`, `eliminarCotizaciones`, `menuCotizaciones`, `menuVentas`, `ventas`, `administrarVentas`, `modificarVentas`, `eliminarVentas`, `facturacionElectronica`, `reportesVentas`, `cajasSuperiores`, `graficoGanancias`, `productosMasVendidos`, `productosAgregadosRecientemente`, `bitacora`, `pagos`, `historicoPagos`, `imprimirPagos`, `eliminarPagos`, `costoProductos`, `stock`, `actualizar`) VALUES
+(1, 'Administrador', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', 'on', NULL, 'on', NULL),
+(3, 'Especial', 'on', 'on', 'on', 'on', 'on', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', 'off', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'Vendedor', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'on', 'on', 'on', 'on', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(23, 'prueba', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -495,7 +507,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `intentos`) VALUES
-(1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, 'vistas/img/usuarios/admin/489.jpg', 1, '2020-11-28 23:28:15', '2020-04-27 20:20:56', 1),
+(1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, 'vistas/img/usuarios/admin/489.jpg', 1, '2021-08-10 10:05:53', '2020-04-27 20:20:56', 1),
 (60, 'asd', 'asd', '$2a$07$asxx54ahjppf45sd87a5aurxwsuKZ45wFSbiNfdS6xl.3y0E2/122', 4, '', 1, '2020-05-12 14:53:50', '2020-04-27 20:29:34', NULL),
 (61, 'ddd', 'ddd', '$2a$07$asxx54ahjppf45sd87a5au9qtysTmqpbi0CLW8d4EUxFv9d7FCNLi', 1, '', NULL, NULL, '2020-07-18 18:45:03', NULL);
 
@@ -1343,7 +1355,7 @@ CREATE TABLE `vw_vista_productos` (
 --
 DROP TABLE IF EXISTS `vw_vista_productos`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_vista_productos`  AS  select `z`.`id` AS `id`,`z`.`codigo` AS `codigo`,`z`.`id_cliente` AS `id_cliente`,`z`.`id_vendedor` AS `id_vendedor`,`z`.`impuesto` AS `impuesto`,`z`.`neto` AS `neto`,`z`.`total` AS `total`,`z`.`metodo_pago` AS `metodo_pago`,`z`.`fecha` AS `fecha`,`z`.`Tipo_Venta` AS `Tipo_Venta`,`z`.`fechaVencimiento` AS `fechaVencimiento`,`z`.`Observaciones` AS `Observaciones`,replace(json_extract(`z`.`rec`,'$.renglon'),'"','') AS `renglonProducto`,replace(json_extract(`z`.`rec`,'$.id'),'"','') AS `idProducto`,replace(json_extract(`z`.`rec`,'$.descripcion'),'"','') AS `descripcionProducto`,replace(json_extract(`z`.`rec`,'$.cantidad'),'"','') AS `cantidadProducto`,replace(json_extract(`z`.`rec`,'$.precio'),'"','') AS `precioProducto`,replace(json_extract(`z`.`rec`,'$.total'),'"','') AS `totalProducto` from (select `t`.`id` AS `id`,`t`.`codigo` AS `codigo`,`t`.`id_cliente` AS `id_cliente`,`t`.`id_vendedor` AS `id_vendedor`,`t`.`productos` AS `productos`,`t`.`impuesto` AS `impuesto`,`t`.`neto` AS `neto`,`t`.`total` AS `total`,`t`.`metodo_pago` AS `metodo_pago`,`t`.`fecha` AS `fecha`,`t`.`tipo_venta` AS `Tipo_Venta`,`t`.`FechaVencimiento` AS `fechaVencimiento`,`t`.`Observaciones` AS `Observaciones`,json_extract(`t`.`productos`,concat('$[',`x`.`renglon`,']')) AS `rec` from (`ventas` `t` join (select 0 AS `renglon` union all select 1 AS `1` union all select 2 AS `2` union all select 3 AS `3` union all select 4 AS `4` union all select 5 AS `5` union all select 6 AS `6` union all select 7 AS `7` union all select 8 AS `8` union all select 9 AS `9`) `x` on(json_extract(`t`.`productos`,concat('$[',`x`.`renglon`,']')) is not null))) `z` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_vista_productos`  AS SELECT `z`.`id` AS `id`, `z`.`codigo` AS `codigo`, `z`.`id_cliente` AS `id_cliente`, `z`.`id_vendedor` AS `id_vendedor`, `z`.`impuesto` AS `impuesto`, `z`.`neto` AS `neto`, `z`.`total` AS `total`, `z`.`metodo_pago` AS `metodo_pago`, `z`.`fecha` AS `fecha`, `z`.`Tipo_Venta` AS `Tipo_Venta`, `z`.`fechaVencimiento` AS `fechaVencimiento`, `z`.`Observaciones` AS `Observaciones`, replace(json_extract(`z`.`rec`,'$.renglon'),'"','') AS `renglonProducto`, replace(json_extract(`z`.`rec`,'$.id'),'"','') AS `idProducto`, replace(json_extract(`z`.`rec`,'$.descripcion'),'"','') AS `descripcionProducto`, replace(json_extract(`z`.`rec`,'$.cantidad'),'"','') AS `cantidadProducto`, replace(json_extract(`z`.`rec`,'$.precio'),'"','') AS `precioProducto`, replace(json_extract(`z`.`rec`,'$.total'),'"','') AS `totalProducto` FROM (select `t`.`id` AS `id`,`t`.`codigo` AS `codigo`,`t`.`id_cliente` AS `id_cliente`,`t`.`id_vendedor` AS `id_vendedor`,`t`.`productos` AS `productos`,`t`.`impuesto` AS `impuesto`,`t`.`neto` AS `neto`,`t`.`total` AS `total`,`t`.`metodo_pago` AS `metodo_pago`,`t`.`fecha` AS `fecha`,`t`.`tipo_venta` AS `Tipo_Venta`,`t`.`FechaVencimiento` AS `fechaVencimiento`,`t`.`Observaciones` AS `Observaciones`,json_extract(`t`.`productos`,concat('$[',`x`.`renglon`,']')) AS `rec` from (`ventas` `t` join (select 0 AS `renglon` union all select 1 AS `1` union all select 2 AS `2` union all select 3 AS `3` union all select 4 AS `4` union all select 5 AS `5` union all select 6 AS `6` union all select 7 AS `7` union all select 8 AS `8` union all select 9 AS `9`) `x` on(json_extract(`t`.`productos`,concat('$[',`x`.`renglon`,']')) is not null))) AS `z` ;
 
 --
 -- Índices para tablas volcadas
