@@ -23,7 +23,7 @@ class TablaClientes{
     	$request=$_REQUEST;
 
 
-	   	$renglones = ModeloClientes::mdlMostrarNumRegistros($request);
+	$renglones = ModeloClientes::mdlMostrarNumRegistros($request);
     	$totalRenglones=$renglones["contador"];
 
 

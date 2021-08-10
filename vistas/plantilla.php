@@ -165,7 +165,7 @@ CUERPO DOCUMENTO
     CONTENIDO
     =============================================*/
    
-   /* 
+  /*
         if (!strpos($_SERVER["REQUEST_URI"],'&')){
         if(!isset($_GET["ruta"]) ){
             $_GET["ruta"] = str_replace("/", "",$_SERVER['PATH_INFO']);
@@ -202,6 +202,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "perfiles" ||
          $_GET["ruta"] == "ventasProductos" ||
          $_GET["ruta"] == "cambiarContra" ||
+         $_GET["ruta"] == "bodegas" ||
          $_GET["ruta"] == "actualizar" ||
 
          $_GET["ruta"] == "salir"){
@@ -248,6 +249,7 @@ CUERPO DOCUMENTO
 <script src="vistas/js/correo.js"></script>
 <script src="vistas/js/perfiles.js"></script>
 <script src="vistas/js/bitacora.js"></script>
+<script src="vistas/js/bodegas.js"></script>
 
 
 </body>

@@ -136,13 +136,30 @@ class ModeloClientes{
 	    if(isset($valor['search'])){
 			$buscar=$valor['search']['value'];
 			$busquedaGeneral="and  ( 
-										id
-										like '%".$buscar."%'
+                                                    id
+                                                    like '%".$buscar."%'
 
-										or
+                                                    or
 
-										descripcion
-										like '%".$buscar."%'										
+                                                    nombre
+                                                    like '%".$buscar."%'	
+
+                                                    or
+
+                                                    documento
+                                                    like '%".$buscar."%'
+                                                    or
+
+                                                    email
+                                                    like '%".$buscar."%'
+                                                    or
+
+                                                    telefono
+                                                    like '%".$buscar."%'
+                                                    or
+
+                                                    fecha_nacimiento
+                                                    like '%".$buscar."%'
 							)
 
 									";
@@ -170,8 +187,9 @@ class ModeloClientes{
 		$stmt = Conexion::conectar()->prepare("SELECT * 
 											FROM clientes
 											where 1=1
-											
-
+											$busquedaGeneral
+                                                                                        $orderBy   
+                                                                                       $limit
 											");
 
 		$stmt -> execute();

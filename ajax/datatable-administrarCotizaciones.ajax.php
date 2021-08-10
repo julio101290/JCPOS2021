@@ -158,7 +158,7 @@ class TablaVentas{
                           }
                           else{
 
-                              $botones .= "<button class='btn bg-navy btnCrearVentaCotizacion' idVenta='".$cotizaciones[$i]["id"]."'><STRONG>GENERAR VENTA</STRONG></i></button>";
+                              $botones .= "<button class='btn bg-navy btnCrearVentaCotizacion' idVenta='".$cotizaciones[$i]["UUID"]."'><STRONG>GENERAR VENTA</STRONG></i></button>";
                           }
 
                         }
