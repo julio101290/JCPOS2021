@@ -97,13 +97,17 @@ class ModeloCategorias{
 
 		$stmt -> bindParam(":id", $datos, PDO::PARAM_INT);
 
-		if($stmt -> execute()){
+		try 
+                {
+                    $stmt -> execute();
 
-			return "ok";
+                    return "ok";
 		
-		}else{
+		}
+                
+                catch(Exception $e ){
 
-			return "error";	
+			return $e->getMessage();	
 
 		}
 

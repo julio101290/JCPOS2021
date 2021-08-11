@@ -174,7 +174,28 @@ class ControladorCategorias{
 								})
 
 					</script>';
-			}
+			}else{
+                            
+                            
+                            
+				echo'<script>
+
+					swal({
+						  type: "error",
+						  title: "'.$respuesta.'",
+						  showConfirmButton: true,
+						  confirmButtonText: "Cerrar"
+						  }).then(function(result){
+									if (result.value) {
+
+									window.location = "categorias";
+
+									}
+								})
+
+					</script>';
+                            
+                        }
 		}
 		
 	}
