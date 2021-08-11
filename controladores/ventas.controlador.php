@@ -106,22 +106,7 @@ class ControladorVentas {
 
                 //VALIDA CUANDO VALOR1B SEA 0 Y EL TIPO DE VENTA SEA B
                 if ($valor1b < 0 && $_POST["TipoVenta"] == "VEN") {
-                    echo'<script>
-
-						swal({
-							  type: "error",
-							  title: "La cantidad que se quiere vender es superior al stock",
-							  showConfirmButton: true,
-							  confirmButtonText: "Cerrar"
-							  }).then(function(result){
-										if (result.value) {
-
-										window.location = "ventas";
-
-										}
-									})
-
-						</script>';
+                    echo'La cantidad que se quiere vender es superior al stock';
 
                     return;
                 }
@@ -129,22 +114,7 @@ class ControladorVentas {
 
             if ($contadorProducto == 0) {
 
-                echo'<script>
-
-				swal({
-					  type: "error",
-					  title: "La venta no se ha ejecuta si no hay productos",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar"
-					  }).then(function(result){
-								if (result.value) {
-
-								window.location = "ventas";
-
-								}
-							})
-
-				</script>';
+                echo'La venta no se ha ejecuta si no hay productos';
 
                 return;
             }
@@ -177,22 +147,7 @@ class ControladorVentas {
 
 
                     if ($valor1b < 0) {
-                        echo'<script>
-
-							swal({
-								  type: "error",
-								  title: "La cantidad que se quiere vender es superior al stock",
-								  showConfirmButton: true,
-								  confirmButtonText: "Cerrar"
-								  }).then(function(result){
-											if (result.value) {
-
-											window.location = "ventas";
-
-											}
-										})
-
-							</script>';
+                        echo'La cantidad que se quiere vender es superior al stock';
 
                         return;
                     }

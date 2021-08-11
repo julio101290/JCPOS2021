@@ -1561,7 +1561,7 @@ $(".modal-footer").on("click", ".btnGuardarVentaAjax", function(){
           }else{
           swal({
               type: "error",
-              title: "¡Error al guardar la venta!",
+              title: respuesta,
               showConfirmButton: true,
               confirmButtonText: "Cerrar"
               }).then(function(result){

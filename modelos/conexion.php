@@ -16,6 +16,8 @@ class Conexion {
             $link = new PDO("mysql:host=".BD_HOST.";dbname=".BD_NOMBRE."",
                     BD_USUARIO,
                    BD_CONTRA);
+            
+
         } catch (PDOException $e) {
 
 
