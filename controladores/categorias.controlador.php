@@ -151,7 +151,7 @@ class ControladorCategorias{
 
 		if(isset($_GET["idCategoria"])){
 
-			$tabla ="Categorias";
+			$tabla ="categorias";
 			$datos = $_GET["idCategoria"];
 
 			$respuesta = ModeloCategorias::mdlBorrarCategoria($tabla, $datos);
