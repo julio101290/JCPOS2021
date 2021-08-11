@@ -2,6 +2,10 @@
 
 include_once "../configuracion.php";
 
+include_once "../../../configuracion.php";
+
+include_once "../../configuracion.php";
+
 class Conexion {
 
     static public function conectar() {
