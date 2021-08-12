@@ -80,6 +80,10 @@ if ($_SESSION["clientes"] == "on") {
                     <!-- <li><a href="#">One more separated link</a></li>-->
                 </ul>
             </li>
+            
+            <?php
+        echo '<li> <a href="acercaDe"><i class="fa fa-info-circle"></i>  Acerca de<span class="sr-only">(current)</span></a></li>';     
+            ?>
         </ul>
 
         <!-- perfil de usuario -->
