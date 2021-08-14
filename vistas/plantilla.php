@@ -204,6 +204,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "cambiarContra" ||
          $_GET["ruta"] == "bodegas" ||
          $_GET["ruta"] == "actualizar" ||
+         $_GET["ruta"] == "acercaDe" ||
 
          $_GET["ruta"] == "salir"){
 
