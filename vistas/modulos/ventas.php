@@ -667,7 +667,6 @@ $(".tablaPagos").on("click", ".btnEliminarPago", function(){
 
 
 
-
 $(document).ready(function() {
 
 
@@ -681,7 +680,7 @@ $(document).ready(function() {
         $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
     }
     
-     console.log( $(this).val());
+     console.log( $_GET["fechaInicial"]);
    $('.AdministrarVentas').DataTable().destroy();
 
   if(isset($_GET["pendientePorCobrar"])){

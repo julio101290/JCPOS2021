@@ -901,12 +901,12 @@ class ModeloVentas{
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla 
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla a
 				WHERE fecha like '%$fechaFinal%' and tipo_venta='COT' $busquedaGeneral 
 				$SorderBy
 				$limit");
 
-			$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
+			//$stmt -> bindParam(":fecha", $fechaFinal, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
@@ -924,12 +924,12 @@ class ModeloVentas{
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' $busquedaGeneral $orderBy $limit");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla a WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' $busquedaGeneral $orderBy $limit");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' $busquedaGeneral $orderBy $limit");
+				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla a WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' $busquedaGeneral $orderBy $limit");
 
 			}
 		
