@@ -165,13 +165,18 @@
                                     <div class="box-header with-border">
                                         <h4 class="box-title">
                                             <a data-toggle="collapse" data-parent="#accordion2" href="#collapseThree2" class="collapsed" aria-expanded="false">
-                                               AUN POR CONFIRMAR
+                                               Jose Luis Venegas
                                             </a>
                                         </h4>
                                     </div>
                                     <div id="collapseThree2" class="panel-collapse collapse" aria-expanded="false">
                                         <div class="box-body">
                                             
+                                             WEB:  <a href="http://www.joshecreativo.com/">http://www.joshecreativo.com/</a>
+                                          <br>
+                                          Facebook: <a href=https://www.facebook.com/joshecreativo/">https://www.facebook.com/joshecreativo/</a>
+                                          <br>
+                                            INSTAGRAM:@joshecreativo
                                         </div>
                                     </div>
                                 </div>
