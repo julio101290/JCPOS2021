@@ -576,8 +576,8 @@ class ModeloVentas{
                             $stmt = Conexion::conectar()->prepare("SELECT * 
 
                                                                 FROM $tabla a 
-                                                                WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' 
-                                                                and Tipo_Venta='$tipoDocumento'
+                                                                WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' 
+                                                                and a.Tipo_Venta='$tipoDocumento'
                                                                 and ('".$soloPendientePorCobrar."'='n' or a.total-0.01>
                                                                     (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
                                                                     from pagos p where a.codigo=p.idVenta)
@@ -593,9 +593,11 @@ class ModeloVentas{
                                                                     and ('".$cliente."'='n' 
                                                                             or ifnull(a.id_cliente,0)='".$cliente."'
 
-                                                                    $busquedaGeneral
+                                                                                                                       )
+                                                                                                                       
+$busquedaGeneral
                                                                     $orderBy
-                                                                    $limit                                                        )
+                                                                    $limit     
 
 					");
 
