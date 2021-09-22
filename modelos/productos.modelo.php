@@ -35,12 +35,12 @@ class ModeloProductos{
 		$stmt = null;
 
 	}
-        
-        
+
+
 	static public function mdlMostrarProductosServerSide($tabla, $item, $valor, $orden){
 
                 $limit="LIMIT ".$valor['start']."  ,".$valor['length'];
-                
+
                 $col =array(
 		    0   =>  '1',
 		    1   =>  '5',
@@ -55,10 +55,10 @@ class ModeloProductos{
 			);
 
 		$orderBy=" ORDER BY ".$col[$valor['order'][0]['column']]."   ".$valor['order'][0]['dir'];
-               
+
         if(isset($valor['search'])){
 			$buscar=$valor['search']['value'];
-			$busquedaGeneral="and  ( 
+			$busquedaGeneral="and  (
 										id
 										like '%".$buscar."%'
 
@@ -70,7 +70,7 @@ class ModeloProductos{
 										or
 
 										codigo
-										like '%".$buscar."%'										
+										like '%".$buscar."%'
 							)
 
 									";
@@ -85,7 +85,7 @@ class ModeloProductos{
 
                 return $stmt -> fetchAll();
 
-		
+
 
 		$stmt -> close();
 
@@ -95,30 +95,30 @@ class ModeloProductos{
 
 
 
-        
-        
+
+
     /*=============================================
 	MOSTRAR PRODUCTOS NUMERO DE REGISTROS
 	=============================================*/
 
 	static public function mdlMostrarNumRegistros($valor){
 
-	
+
             $buscar=$valor['search']['value'];
-                        
-			$stmt = Conexion::conectar()->prepare("SELECT count(id) as totalRenglones FROM productos 
+
+			$stmt = Conexion::conectar()->prepare("SELECT count(id) as totalRenglones FROM productos
                                  where (descripcion like '%$buscar%'
                                         or codigo like '%$buscar%'
                                         or id like '%$buscar%'
-                                        )   
-                              
+                                        )
+
                                 ");
 
 			$stmt -> execute();
 
 			return $stmt -> fetch();
 
-		
+
 
 		$stmt -> close();
 
@@ -150,7 +150,7 @@ class ModeloProductos{
 
 			$arr=$stmt->errorInfo();
 			return $arr[2];
-		
+
 		}
 
 		$stmt->close();
@@ -163,13 +163,14 @@ class ModeloProductos{
 	=============================================*/
 	static public function mdlEditarProducto($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla 
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla
 													SET id_categoria = :id_categoria
 														, descripcion = :descripcion
 														, imagen = :imagen
 														, stock = :stock
 														, precio_compra = :precio_compra
-														, precio_venta = :precio_venta 
+														, precio_venta = :precio_venta
+														, codigo = :codigo
 														WHERE id = :id");
 
 		$stmt->bindParam(":id_categoria", $datos["id_categoria"], PDO::PARAM_INT);
@@ -179,6 +180,7 @@ class ModeloProductos{
 		$stmt->bindParam(":precio_compra", $datos["precio_compra"], PDO::PARAM_STR);
 		$stmt->bindParam(":precio_venta", $datos["precio_venta"], PDO::PARAM_STR);
 		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_STR);
+		$stmt->bindParam(":codigo", $datos["codigo"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
@@ -187,7 +189,7 @@ class ModeloProductos{
 		}else{
 
 			return "error";
-		
+
 		}
 
 		$stmt->close();
@@ -208,10 +210,10 @@ class ModeloProductos{
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 
@@ -235,10 +237,10 @@ class ModeloProductos{
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 
@@ -251,7 +253,7 @@ class ModeloProductos{
 
 	/*=============================================
 	MOSTRAR SUMA VENTAS
-	=============================================*/	
+	=============================================*/
 
 	static public function mdlMostrarSumaVentas($tabla){
 
@@ -272,7 +274,7 @@ class ModeloProductos{
 	INICIAR TRANSACCION
 	=============================================*/
 
-	static public function mdlTransaccion(){	
+	static public function mdlTransaccion(){
 
 		$stmt = Conexion::conectar()->prepare("START TRANSACTION;;");
 
@@ -287,7 +289,7 @@ class ModeloProductos{
 	 COMMIT
 	=============================================*/
 
-	static public function mdlCommit(){	
+	static public function mdlCommit(){
 
 		$stmt = Conexion::conectar()->prepare("COMMIT;");
 
@@ -307,7 +309,7 @@ class ModeloProductos{
 	INICIAR ROLLBACK
 	=============================================*/
 
-	static public function mdlRollback(){	
+	static public function mdlRollback(){
 
 		$stmt = Conexion::conectar()->prepare("ROLLBACK;");
 
