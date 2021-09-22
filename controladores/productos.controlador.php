@@ -25,9 +25,39 @@ class ControladorProductos{
 		if(isset($_POST["nuevaDescripcion"])){
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevaDescripcion"]) &&
-			   preg_match('/^[0-9]+$/', $_POST["nuevoStock"]) &&	
+			   preg_match('/^[0-9]+$/', $_POST["nuevoStock"]) &&
 			   preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioCompra"]) &&
 			   preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioVenta"])){
+
+
+
+					 // VERIFICA SI EXITE CODIGO
+
+					 $existe = ModeloProductos::mdlMostrarProductos("productos","codigo",$_POST["nuevoCodigo"],"desc");
+
+
+
+					 if($existe!=false){
+
+						 echo'<script>
+
+							 swal({
+									 type: "error",
+									 title: "¡Este código ya esta registrado!",
+									 showConfirmButton: true,
+									 confirmButtonText: "Cerrar"
+									 }).then(function(result){
+									 if (result.value) {
+
+									 // window.location = "productos";
+
+									 }
+								 })
+
+							 </script>';
+
+						 return;
+					 }
 
 		   		/*=============================================
 				VALIDAR IMAGEN
@@ -36,8 +66,8 @@ class ControladorProductos{
 			   	$ruta = "vistas/img/productos/default/anonymous.png";
 
 
-                                
-             
+
+
                                 if(isset($_FILES["nuevaImagen"]["tmp_name"]) && $_FILES["nuevaImagen"]["tmp_name"]!=""){
 
 					list($ancho, $alto) = getimagesize($_FILES["nuevaImagen"]["tmp_name"]);
@@ -67,7 +97,7 @@ class ControladorProductos{
 
 						$ruta = "vistas/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".jpg";
 
-						$origen = imagecreatefromjpeg($_FILES["nuevaImagen"]["tmp_name"]);						
+						$origen = imagecreatefromjpeg($_FILES["nuevaImagen"]["tmp_name"]);
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
@@ -87,7 +117,7 @@ class ControladorProductos{
 
 						$ruta = "vistas/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".png";
 
-						$origen = imagecreatefrompng($_FILES["nuevaImagen"]["tmp_name"]);						
+						$origen = imagecreatefrompng($_FILES["nuevaImagen"]["tmp_name"]);
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
@@ -108,8 +138,8 @@ class ControladorProductos{
 							   "precio_compra" => $_POST["nuevoPrecioCompra"],
 							   "precio_venta" => $_POST["nuevoPrecioVenta"],
 							   "imagen" => $ruta);
-                                
-         
+
+
 
 				$respuesta = ModeloProductos::mdlIngresarProducto($tabla, $datos);
 
@@ -176,7 +206,7 @@ class ControladorProductos{
 		if(isset($_POST["editarDescripcion"])){
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarDescripcion"]) &&
-			   preg_match('/^[0-9]+$/', $_POST["editarStock"]) &&	
+			   preg_match('/^[0-9]+$/', $_POST["editarStock"]) &&
 			   preg_match('/^[0-9.]+$/', $_POST["editarPrecioCompra"]) &&
 			   preg_match('/^[0-9.]+$/', $_POST["editarPrecioVenta"])){
 
@@ -209,10 +239,10 @@ class ControladorProductos{
 
 					}else{
 
-						mkdir($directorio, 0755);	
-					
+						mkdir($directorio, 0755);
+
 					}
-					
+
 					/*=============================================
 					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
 					=============================================*/
@@ -227,7 +257,7 @@ class ControladorProductos{
 
 						$ruta = "vistas/img/productos/".$_POST["editarCodigo"]."/".$aleatorio.".jpg";
 
-						$origen = imagecreatefromjpeg($_FILES["editarImagen"]["tmp_name"]);						
+						$origen = imagecreatefromjpeg($_FILES["editarImagen"]["tmp_name"]);
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
@@ -247,7 +277,7 @@ class ControladorProductos{
 
 						$ruta = "vistas/img/productos/".$_POST["editarCodigo"]."/".$aleatorio.".png";
 
-						$origen = imagecreatefrompng($_FILES["editarImagen"]["tmp_name"]);						
+						$origen = imagecreatefrompng($_FILES["editarImagen"]["tmp_name"]);
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
@@ -371,7 +401,7 @@ class ControladorProductos{
 
 				</script>';
 
-			}		
+			}
 		}
 
 
@@ -411,7 +441,6 @@ if(isset($_POST["crearProducto"])){
 	$respuesta=$crearProducto -> ctrCrearProducto();
 
 	echo $respuesta;
-  
+
 
 }
-
