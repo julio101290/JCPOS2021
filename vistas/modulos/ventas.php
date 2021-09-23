@@ -26,19 +26,19 @@ if($xml){
 <div class="content-wrapper">
 
   <section class="content-header">
-    
+
     <h1>
-      
+
       Administrar ventas
-    
+
     </h1>
 
     <ol class="breadcrumb">
-      
+
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
+
       <li class="active">Administrar ventas</li>
-    
+
     </ol>
 
   </section>
@@ -48,11 +48,11 @@ if($xml){
     <div class="box">
 
       <div class="box-header with-border">
-  
+
         <a href="crear-venta">
 
           <button class="btn btn-primary">
-            
+
             Agregar venta
 
           </button>
@@ -60,18 +60,18 @@ if($xml){
         </a>
 
          <button type="button" class="btn btn-default pull-right" id="daterange-btn">
-           
+
             <span>
-              <i class="fa fa-calendar"></i> 
+              <i class="fa fa-calendar"></i>
 
               <?php
 
                 if(isset($_GET["fechaInicial"])){
 
                   echo $_GET["fechaInicial"]." - ".$_GET["fechaFinal"];
-                
+
                 }else{
-                 
+
                   echo 'Rango de fecha';
 
                 }
@@ -84,7 +84,7 @@ if($xml){
          </button>
 
       </div>
-     
+
       <div hidden>
         <input type="text" class="form-control input-lg" id="nuevoTotalVenta" name="nuevoTotalVenta" placeholder="00000"  hidden>
 
@@ -92,26 +92,27 @@ if($xml){
       </div>
 
       <div class="box-body">
-        
+
        <table class="table table-bordered table-striped dt-responsive AdministrarVentas" width="100%" id="tablaVentas" name="tablaVentas" style="font-size: 10px">
-         
+
         <thead>
-         
+
          <tr>
-           
-          
-           <th  width="15px">Código factura</th>
+
+
+           <th  width="15px">ID</th>
+           <th  width="15px">Codigo Factura</th>
            <th  width="15px">Cliente</th>
            <th>Vendedor</th>
            <th>Forma de pago</th>
            <th>Neto</th>
-           <th>Total</th> 
-           <th>Total Pagado</th> 
-           <th>Saldo</th> 
+           <th>Total</th>
+           <th>Total Pagado</th>
+           <th>Saldo</th>
            <th>Fecha</th>
            <th>Acciones</th>
 
-         </tr> 
+         </tr>
 
         </thead>
 
@@ -125,7 +126,7 @@ if($xml){
           }else{
             $pendientePorCobrar ="n";
           }
-          
+
           if(isset($_GET["soloCobrado"])){
 
             $soloCobrado = $_GET["soloCobrado"];
@@ -152,13 +153,14 @@ if($xml){
             $fechaFinal = null;
 
           }
-         
+
 
         ?>
-               
+
         </tbody>
          <tfoot>
           <tr>
+            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -179,7 +181,7 @@ if($xml){
       $eliminarVenta -> ctrEliminarVenta();
 
       ?>
-       
+
 
       </div>
 
@@ -197,7 +199,7 @@ MODAL METODO DE PAGO
 ======================================-->
 
 <div id="modalMetodoDePago" class="modal fade metodoPago"  role="dialog">
-  
+
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -231,10 +233,10 @@ MODAL METODO DE PAGO
 
             <!--=====================================
                 FECHA
-                ======================================--> 
+                ======================================-->
                <div class="form-group">
                <div class="input-group date" data-provide="datepicker"  data-date-format="yyyy/mm/dd">
-                  
+
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
@@ -250,18 +252,18 @@ MODAL METODO DE PAGO
                 ======================================-->
 
                 <div class="form-group row">
-                  
+
                   <div class="col-xs-4" style="padding-right:0px">
-                    
+
                      <div class="input-group">
-                  
+
                       <select class="form-control" id="nuevoMetodoPago" name="nuevoMetodoPago" required>
-                        
+
                         <option value="Efectivo">Efectivo</option>
                         <option value="Tarjeta De Credito">Tarjeta Crédito</option>
-                        <option value="Tarjeta De Debito">Tarjeta Débito</option>    
-                        <option value="Venta a Credito">Venta a Crédito</option>                 
-                      </select>    
+                        <option value="Tarjeta De Debito">Tarjeta Débito</option>
+                        <option value="Venta a Credito">Venta a Crédito</option>
+                      </select>
 
                     </div>
 
@@ -293,13 +295,13 @@ MODAL METODO DE PAGO
 
           //$guardarPago = new ControladorPagos();
           //$guardarPago-> ctrCrearPago();
-          
+
         ?>
 
 
       </form>
 
-       
+
     </div>
 
   </div>
@@ -315,7 +317,7 @@ MODAL HISTORICO DE PAGOS
 ======================================-->
 
 <div id="modalHistoricoDePagos" class="modal fade historicoPagos"  role="dialog">
-  
+
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -346,11 +348,11 @@ MODAL HISTORICO DE PAGOS
           ======================================-->
 
          <table class="table table-bordered table-striped dt-responsive tablaPagos" width="100%">
-         
+
         <thead>
-         
+
          <tr>
-           
+
            <th style="width:10px">ID Pago</th>
            <th>Fecha de pago </th>
            <th>Metodo de Pago </th>
@@ -359,12 +361,12 @@ MODAL HISTORICO DE PAGOS
 
            <th>Acciones</th>
 
-         </tr> 
+         </tr>
 
         </thead>
 
         <tbody>
-          
+
           <tr>
             <td>1</td>
             <td>9000</td>
@@ -374,18 +376,18 @@ MODAL HISTORICO DE PAGOS
             <td>
 
               <div class="btn-group">
-                  
+
                 <button class="btn btn-warning"><i class="fa fa-pencil"></i></button>
 
                 <button class="btn btn-danger"><i class="fa fa-times"></i></button>
 
-              </div>  
+              </div>
 
             </td>
 
           </tr>
 
-          
+
 
         </tbody>
 
@@ -412,7 +414,7 @@ MODAL HISTORICO DE PAGOS
 
           $guardarPago = new ControladorPagos();
           $guardarPago-> ctrCrearPago();
-          
+
         ?>
 
 
@@ -425,7 +427,7 @@ MODAL HISTORICO DE PAGOS
         $eliminarPago -> ctrEliminarPago();
 
       ?>
-       
+
     </div>
 
   </div>
@@ -434,7 +436,7 @@ MODAL HISTORICO DE PAGOS
 
 
 <script type="text/javascript">
-  
+
 var restante=0;
 var idVenta=0;
   /*=============================================
@@ -459,7 +461,7 @@ $(".AdministrarVentas").on("click", ".btnAbonar", function(){
 GUARDAR PAGO AJAX
 =============================================*/
 $(".modal-footer").on("click", ".btnGuardarPagoAjax", function(){
-  
+
   //MANDAMOS LOS DATOS A GUARDAR
   var codigoVenta= $("#codigoVenta").val();
   var nuevoValorEfectivo= $("#nuevoValorEfectivo").val();
@@ -491,10 +493,10 @@ $(".modal-footer").on("click", ".btnGuardarPagoAjax", function(){
         processData: false,
         //dataType:"json",
         success:function(respuesta){
-       
+
           console.log(respuesta);
           if (respuesta.match(/correctamente.*/)){
-              
+
 
 
 
@@ -510,7 +512,7 @@ $(".modal-footer").on("click", ".btnGuardarPagoAjax", function(){
 
                 }
             })
-                  
+
           }else{
           swal({
               type: "error",
@@ -524,8 +526,8 @@ $(".modal-footer").on("click", ".btnGuardarPagoAjax", function(){
 
               }
             })
-            
-              
+
+
             }
 
         }
@@ -557,7 +559,7 @@ $(".AdministrarVentas").on("click", ".btnMostrarPagos", function(){
 
 function cargaHistoricos(idVenta = '0',)
   {
-   
+
    console.log("idVenta",idVenta);
 
 
@@ -586,9 +588,9 @@ function cargaHistoricos(idVenta = '0',)
       "sSearch":         "Buscar:",
       "sUrl":            "",
       "sInfoThousands":  ",",
-      
-     
-      
+
+
+
 
       "sLoadingRecords": "Cargando...",
       "oPaginate": {
@@ -615,8 +617,8 @@ function cargaHistoricos(idVenta = '0',)
     }
 
    });
-  
- 
+
+
 
   }
 
@@ -657,7 +659,7 @@ $(".tablaPagos").on("click", ".btnEliminarPago", function(){
         confirmButtonText: 'Si, borrar el pago!'
       }).then(function(result){
         if (result.value) {
-          
+
             window.location = "index.php?ruta=ventas&idPagoEliminar="+idPagoEliminar;
         }
 
@@ -674,12 +676,12 @@ $(document).ready(function() {
 
     var parts = window.location.search.substr(1).split("&");
     var $_GET = {};
-    
+
     for (var i = 0; i < parts.length; i++) {
         var temp = parts[i].split("=");
         $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
     }
-    
+
      console.log( $_GET["fechaInicial"]);
    $('.AdministrarVentas').DataTable().destroy();
 
@@ -688,7 +690,7 @@ $(document).ready(function() {
   }else{
     var pendientePorCobrar ="n";
   }
-  
+
   if(isset($_GET["soloCobrado"])){
 
     var soloCobrado = $_GET["soloCobrado"];
@@ -697,7 +699,7 @@ $(document).ready(function() {
   }
 
 
- 
+
 
   if(isset($_GET["pendientes"])){
     var pendientes = $_GET["pendientes"];
@@ -761,7 +763,7 @@ $('#daterange-btn').daterangepicker(
     var fechaFinal = end.format('YYYY-MM-DD');
 
     var capturarRango = $("#daterange-btn span").html();
-   
+
     localStorage.setItem("capturarRango", capturarRango);
 
     window.location = "index.php?ruta=ventas&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
@@ -792,7 +794,7 @@ $(".daterangepicker.opensleft .ranges li").on("click", function(){
   if(textoHoy == "Hoy"){
 
     var d = new Date();
-    
+
     var dia = d.getDate();
     var mes = d.getMonth()+1;
     var año = d.getFullYear();
@@ -823,7 +825,7 @@ $(".daterangepicker.opensleft .ranges li").on("click", function(){
     mes = ("0"+mes).slice(-2);
 
     var fechaInicial = año+"-"+mes+"-"+dia;
-    var fechaFinal = año+"-"+mes+"-"+dia; 
+    var fechaFinal = año+"-"+mes+"-"+dia;
 
       localStorage.setItem("capturarRango", "Hoy");
 
@@ -836,7 +838,7 @@ $(".daterangepicker.opensleft .ranges li").on("click", function(){
 </script>
 
 <style type="text/css">
-  
+
 
   thead input {
         width: 100%;

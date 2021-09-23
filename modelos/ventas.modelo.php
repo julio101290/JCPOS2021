@@ -12,11 +12,11 @@ class ModeloVentas{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * 
-													   ,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+			$stmt = Conexion::conectar()->prepare("SELECT *
+													   ,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where b.codigo=p.idVenta)	as importePagado
 													FROM $tabla b
-													WHERE $item = :$item 
+													WHERE $item = :$item
 													ORDER BY id ASC");
 
 			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
@@ -27,8 +27,8 @@ class ModeloVentas{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * 
-														,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+			$stmt = Conexion::conectar()->prepare("SELECT *
+														,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where b.codigo=p.idVenta)	as importePagado
 													FROM $tabla b
 													ORDER BY id ASC");
@@ -38,7 +38,7 @@ class ModeloVentas{
 			return $stmt -> fetchAll();
 
 		}
-		
+
 		$stmt -> close();
 
 		$stmt = null;
@@ -89,7 +89,7 @@ class ModeloVentas{
 														,cotizarA
 														,plazoEntrega
 
-													  
+
 													FROM $tabla b
 													WHERE codigo = :codigo
 													and tipo_venta = :tipo_venta
@@ -104,8 +104,8 @@ class ModeloVentas{
 
 		}
 
-		
-		
+
+
 		$stmt -> close();
 
 		$stmt = null;
@@ -121,10 +121,10 @@ class ModeloVentas{
 
 		if($cotizacion != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * 
-													FROM ventas 
+			$stmt = Conexion::conectar()->prepare("SELECT *
+													FROM ventas
 													WHERE UUID = :UUID
-			
+
 													");
 
 			$stmt -> bindParam(":UUID", $cotizacion, PDO::PARAM_STR);
@@ -133,7 +133,7 @@ class ModeloVentas{
 
 			return $stmt -> fetch();
 
-	
+
 		}
 
 	}
@@ -146,8 +146,8 @@ class ModeloVentas{
 		static public function mdlMostrarUltimoFolio($tipoVenta){
 
 
-			$stmt = Conexion::conectar()->prepare("SELECT ifnull(max(codigo),0) as UltimoFolio 
-													FROM ventas 
+			$stmt = Conexion::conectar()->prepare("SELECT ifnull(max(codigo),0) as UltimoFolio
+													FROM ventas
 													where Tipo_Venta=:$tipoVenta
 													ORDER BY id asc");
 
@@ -190,7 +190,7 @@ class ModeloVentas{
 			, UUID
 
 
-			) 
+			)
 			VALUES (:codigo
 			, :id_cliente
 			, :id_vendedor
@@ -238,8 +238,8 @@ class ModeloVentas{
 			$arr = $stmt ->errorInfo();
 			$arr[3]="ERROR";
 			return $arr[2];
-		
-		
+
+
 		}
 
 		$stmt->close();
@@ -253,22 +253,22 @@ class ModeloVentas{
 
 	static public function mdlEditarVenta($tabla, $datos){
 
-		
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla 
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla
 												SET  id_cliente = :id_cliente
 												, id_vendedor = :id_vendedor
 												, productos = :productos
 												, impuesto = :impuesto
 												, neto = :neto
 												, total= :total
-												, metodo_pago = :metodo_pago 
+												, metodo_pago = :metodo_pago
 
-												, Tipo_Venta = :tipo_venta 
-												, FechaVencimiento =:FechaVencimiento 
+												, Tipo_Venta = :tipo_venta
+												, FechaVencimiento =:FechaVencimiento
 												, cotizarA = :CotizarA
-												, Observaciones = :Observaciones  
-												, plazoEntrega = :plazoEntrega 
-												, fecha = :fecha 
+												, Observaciones = :Observaciones
+												, plazoEntrega = :plazoEntrega
+												, fecha = :fecha
 												WHERE id = :id");
 
 
@@ -282,7 +282,7 @@ class ModeloVentas{
 		$stmt->bindParam(":neto", $datos["neto"], PDO::PARAM_STR);
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
 		$stmt->bindParam(":metodo_pago", $datos["metodo_pago"], PDO::PARAM_STR);
-		
+
 		$stmt->bindParam(":tipo_venta", $datos["tipoVenta"], PDO::PARAM_STR);
 		$stmt->bindParam(":FechaVencimiento", $datos["FechaVencimiento"], PDO::PARAM_STR);
 		$stmt->bindParam(":Observaciones", $datos["Observaciones"], PDO::PARAM_STR);
@@ -298,7 +298,7 @@ class ModeloVentas{
 			$arr = $stmt ->errorInfo();
 			$arr[3]="ERROR";
 			return $arr[2];
-		
+
 		}
 
 		$stmt->close();
@@ -319,10 +319,10 @@ class ModeloVentas{
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 
@@ -332,10 +332,10 @@ class ModeloVentas{
 
 	}
 
-	
+
 	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
 	static public function mdlRangoFechasVentas($tabla
                                                     , $fechaInicial
@@ -347,8 +347,8 @@ class ModeloVentas{
                                                     ,$filtros="n"
                                                     ,$busqueda=""
     ){
-            
-                
+
+
                 // LIMITANTES
                 if(isset($filtros['start'])){
 			$limit="LIMIT ".$filtros['start']."  ,".$filtros['length'];
@@ -371,35 +371,40 @@ class ModeloVentas{
 		    10   =>  '1',
 
 			);
-                
-                
-                
+
+
+
                 if(isset($filtros['order'][0]['column'])){
                     $orderBy=" ORDER BY ".$col[$filtros['order'][0]['column']]."   ".$filtros['order'][0]['dir'];
                 }else{
                     $orderBy="";
                 }
-                
+
                 //FILTROS
                 if(isset($busqueda['search'])){
 			$buscar=$busqueda['search']['value'];
-			$busquedaGeneral="and  ( 
-										(select b.nombre from clientes b where b.id=a.id_cliente) 
+			$busquedaGeneral="and  (
+										(select b.nombre from clientes b where b.id=a.id_cliente)
 										like '%".$buscar."%'
 
 										or
 
-										(select b.documento from clientes b where b.id=a.id_cliente) 
+										(select b.documento from clientes b where b.id=a.id_cliente)
 										like '%".$buscar."%'
 
-										or 
+										or
 
 										a.codigo like '%".$buscar."%'
 
-										
+										or
+
+										a.id like '%".$buscar."%'
+
+
+
 									)
 
-								
+
 
 									";
 		}
@@ -411,7 +416,7 @@ class ModeloVentas{
 
 
 
-			$stmt = Conexion::conectar()->prepare("SELECT * 
+			$stmt = Conexion::conectar()->prepare("SELECT *
                                                                     ,(
 
                                                                                     case when a.Tipo_Venta='COT' then
@@ -421,26 +426,26 @@ class ModeloVentas{
                                                                                                             'GENERAR VENTA'
                                                                                             end
 
-                                                                                    end	
+                                                                                    end
                                                                                             ) as codigoVenta1
 
-                                                                       ,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+                                                                       ,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
                                                                     from pagos p where a.codigo=p.idVenta)	as importePagado
 
                                                                     FROM $tabla a
                                                                     where Tipo_Venta='".$tipoDocumento."'
 
 
-                                                                            and ('".$soloPendientePorCobrar."'='n' or  
+                                                                            and ('".$soloPendientePorCobrar."'='n' or
                                                                             a.total-0.01>
-                                                                    (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+                                                                    (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
                                                                     from pagos p where a.codigo=p.idVenta)
 
                                                                     )
 
-                                                                    and ('".$soloCobrado."'='n' or  
+                                                                    and ('".$soloCobrado."'='n' or
 
-                                                                            (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+                                                                            (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
                                                                     from pagos p where a.codigo=p.idVenta)>0.1
 
                                                                     )
@@ -458,7 +463,7 @@ class ModeloVentas{
 
 			$stmt -> execute();
 
-			return $stmt -> fetchAll();	
+			return $stmt -> fetchAll();
 
 
 		}else if($fechaInicial == $fechaFinal){
@@ -466,7 +471,7 @@ class ModeloVentas{
 
 			$fechaFinal = new DateTime($fechaFinal);
 			$fechaFinal = $fechaFinal->format("Y-m-d");
-			$stmt = Conexion::conectar()->prepare("SELECT * 
+			$stmt = Conexion::conectar()->prepare("SELECT *
                                                             ,(
 
                                                             case when a.Tipo_Venta='COT' then
@@ -476,26 +481,26 @@ class ModeloVentas{
                                                                                     'GENERAR VENTA'
                                                                     end
 
-                                                            end	
+                                                            end
                                                             ) as codigoVenta1
 
-                                                       ,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+                                                       ,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
                                                     from pagos p where a.codigo=p.idVenta)	as importePagado
 
                                                     FROM $tabla a
                                                     WHERE fecha like '%".$fechaFinal."%' and Tipo_Venta='$tipoDocumento'
 
 
-                                                    and ('".$soloPendientePorCobrar."'='n' or  
+                                                    and ('".$soloPendientePorCobrar."'='n' or
                                                     a.total-0.01>
-                                            (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+                                            (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
                                             from pagos p where a.codigo=p.idVenta)
 
                                             )
 
-                                            and ('".$soloCobrado."'='n' or  
+                                            and ('".$soloCobrado."'='n' or
 
-                                                    (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+                                                    (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
                                             from pagos p where a.codigo=p.idVenta)>0
 
                                             )
@@ -528,7 +533,7 @@ class ModeloVentas{
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * 
+				$stmt = Conexion::conectar()->prepare("SELECT *
                                                                             ,(
 
                                                                             case when a.Tipo_Venta='COT' then
@@ -538,23 +543,23 @@ class ModeloVentas{
                                                                                                     'GENERAR VENTA'
                                                                                     end
 
-                                                                            end	
+                                                                            end
                                                                             ) as codigoVenta1
                                                                     FROM $tabla  a
-                                                                    WHERE a.fecha 
-                                                                    BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' 
+                                                                    WHERE a.fecha
+                                                                    BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
                                                                     and a.Tipo_Venta='$tipoDocumento'
 
-                                                                            and ('".$soloPendientePorCobrar."'='n' or  
+                                                                            and ('".$soloPendientePorCobrar."'='n' or
                                                                     a.total-0.01>
-                                                            (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+                                                            (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
                                                             from pagos p where a.codigo=p.idVenta)
 
                                                             )
 
-                                                            and ('".$soloCobrado."'='n' or  
+                                                            and ('".$soloCobrado."'='n' or
 
-                                                                    (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+                                                                    (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
                                                             from pagos p where a.codigo=p.idVenta)>0
 
                                                             )
@@ -565,7 +570,7 @@ class ModeloVentas{
 
                                                             )
                                                             $busquedaGeneral
-                                                            $orderBy      
+                                                            $orderBy
                                                             $limit
 
                                                             ");
@@ -573,36 +578,36 @@ class ModeloVentas{
 			}else{
 
 
-                            $stmt = Conexion::conectar()->prepare("SELECT * 
+                            $stmt = Conexion::conectar()->prepare("SELECT *
 
-                                                                FROM $tabla a 
-                                                                WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinal' 
+                                                                FROM $tabla a
+                                                                WHERE a.fecha BETWEEN '$fechaInicial' AND '$fechaFinal'
                                                                 and a.Tipo_Venta='$tipoDocumento'
                                                                 and ('".$soloPendientePorCobrar."'='n' or a.total-0.01>
-                                                                    (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+                                                                    (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
                                                                     from pagos p where a.codigo=p.idVenta)
 
                                                                     )
 
-                                                                    and ('".$soloCobrado."'='n' or  
+                                                                    and ('".$soloCobrado."'='n' or
 
-                                                                            (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+                                                                            (select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
                                                                     from pagos p where a.codigo=p.idVenta)>0
 
                                                                     )
-                                                                    and ('".$cliente."'='n' 
+                                                                    and ('".$cliente."'='n'
                                                                             or ifnull(a.id_cliente,0)='".$cliente."'
 
                                                                                                                        )
-                                                                                                                       
+
 $busquedaGeneral
                                                                     $orderBy
-                                                                    $limit     
+                                                                    $limit
 
 					");
 
 			}
-		
+
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -616,7 +621,7 @@ $busquedaGeneral
 
 	/*=============================================
 	RANGO FECHAS PRODUCTO
-	=============================================*/	
+	=============================================*/
 
 	static public function mdlRangoFechasVentasProducto($tabla
 													, $fechaInicial
@@ -632,7 +637,7 @@ $busquedaGeneral
 
 
 
-			$stmt = Conexion::conectar()->prepare("SELECT * 
+			$stmt = Conexion::conectar()->prepare("SELECT *
 													,(
 
 															case when a.Tipo_Venta='COT' then
@@ -641,32 +646,32 @@ $busquedaGeneral
 																		else
 																		'GENERAR VENTA'
 																end
-																
-															end	
+
+															end
 																) as codigoVenta1
 
-													   ,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+													   ,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where a.codigo=p.idVenta)	as importePagado
 
 													FROM $tabla a
 													where Tipo_Venta='".$tipoDocumento."'
 
 
-														and ('".$soloPendientePorCobrar."'='n' or  
+														and ('".$soloPendientePorCobrar."'='n' or
 														a.total-0.01>
-													(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+													(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where a.codigo=p.idVenta)
 
 													)
 
-													and ('".$soloCobrado."'='n' or  
-														
-														(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+													and ('".$soloCobrado."'='n' or
+
+														(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where a.codigo=p.idVenta)>0.1
 
 													)
 
-									
+
 
 													and ('".$cliente."'='n' or ifnull(a.id_cliente,0)='".$cliente."'
 
@@ -675,7 +680,7 @@ $busquedaGeneral
 
 			$stmt -> execute();
 
-			return $stmt -> fetchAll();	
+			return $stmt -> fetchAll();
 
 
 		}else if($fechaInicial == $fechaFinal){
@@ -683,7 +688,7 @@ $busquedaGeneral
 
 			$fechaFinal = new DateTime($fechaFinal);
 			$fechaFinal = $fechaFinal->format("Y-m-d");
-			$stmt = Conexion::conectar()->prepare("SELECT * 
+			$stmt = Conexion::conectar()->prepare("SELECT *
 															,(
 
 															case when a.Tipo_Venta='COT' then
@@ -692,32 +697,32 @@ $busquedaGeneral
 																		else
 																		'GENERAR VENTA'
 																end
-																
-															end	
+
+															end
 															) as codigoVenta1
 
-														   ,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+														   ,(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          													from pagos p where a.codigo=p.idVenta)	as importePagado
 
 														FROM $tabla a
 														WHERE fecha like '%".$fechaFinal."%' and Tipo_Venta='$tipoDocumento'
 
 
-														and ('".$soloPendientePorCobrar."'='n' or  
+														and ('".$soloPendientePorCobrar."'='n' or
 														a.total-0.01>
-													(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+													(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where a.codigo=p.idVenta)
 
 													)
 
-													and ('".$soloCobrado."'='n' or  
-														
-														(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+													and ('".$soloCobrado."'='n' or
+
+														(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where a.codigo=p.idVenta)>0
 
 													)
 
-									
+
 
 													and ('".$cliente."'='n' or ifnull(a.id_cliente,0)='".$cliente."'
 
@@ -742,7 +747,7 @@ $busquedaGeneral
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * 
+				$stmt = Conexion::conectar()->prepare("SELECT *
 															,(
 
 															case when a.Tipo_Venta='COT' then
@@ -751,29 +756,29 @@ $busquedaGeneral
 																		else
 																		'GENERAR VENTA'
 																end
-																
-															end	
+
+															end
 															) as codigoVenta1
 														FROM $tabla  a
-														WHERE a.fecha 
-														BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' 
+														WHERE a.fecha
+														BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
 														and a.Tipo_Venta='$tipoDocumento'
 
-															and ('".$soloPendientePorCobrar."'='n' or  
+															and ('".$soloPendientePorCobrar."'='n' or
 														a.total-0.01>
-													(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+													(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where a.codigo=p.idVenta)
 
 													)
 
-													and ('".$soloCobrado."'='n' or  
-														
-														(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+													and ('".$soloCobrado."'='n' or
+
+														(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where a.codigo=p.idVenta)>0
 
 													)
 
-									
+
 
 													and ('".$cliente."'='n' or ifnull(a.id_cliente,0)='".$cliente."'
 
@@ -785,27 +790,27 @@ $busquedaGeneral
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * 
+				$stmt = Conexion::conectar()->prepare("SELECT *
 
 
 					FROM $tabla a WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' and Tipo_Venta='$tipoDocumento'
 
 
-						and ('".$soloPendientePorCobrar."'='n' or  
+						and ('".$soloPendientePorCobrar."'='n' or
 														a.total-0.01>
-													(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+													(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where a.codigo=p.idVenta)
 
 													)
 
-													and ('".$soloCobrado."'='n' or  
-														
-														(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0) 
+													and ('".$soloCobrado."'='n' or
+
+														(select ifnull(sum(importePagado-ifnull(importeDevuelto,0)),0)
          												from pagos p where a.codigo=p.idVenta)>0
 
 													)
 
-									
+
 
 													and ('".$cliente."'='n' or ifnull(a.id_cliente,0)='".$cliente."'
 
@@ -814,7 +819,7 @@ $busquedaGeneral
 					");
 
 			}
-		
+
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -826,11 +831,11 @@ $busquedaGeneral
 
 		/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
 	static public function mdlRangoFechasVentasCotizaciones($tabla, $fechaInicial, $fechaFinal,$filtros, $limitar="S"){
 
-		
+
              // LIMITANTES
                 if(isset($filtros['start'])){
                     if($limitar=="S"){
@@ -842,29 +847,29 @@ $busquedaGeneral
 		else{
 			$limit="";
 		}
-                
+
             // BUSQUEDA
-                
+
             //FILTROS
                 if(isset($filtros['search'])){
 			$buscar=$filtros['search']['value'];
-			$busquedaGeneral="and  ( 
-										(select b.nombre from clientes b where b.id=a.id_cliente) 
+			$busquedaGeneral="and  (
+										(select b.nombre from clientes b where b.id=a.id_cliente)
 										like '%".$buscar."%'
 
 										or
 
-										(select b.documento from clientes b where b.id=a.id_cliente) 
+										(select b.documento from clientes b where b.id=a.id_cliente)
 										like '%".$buscar."%'
 
-										or 
+										or
 
 										a.codigo like '%".$buscar."%'
 
-										
+
 									)
 
-								
+
 
 									";
 		}
@@ -885,26 +890,26 @@ $busquedaGeneral
 		    8   =>  '12',
 		    9   =>  '1',
 			);
-                
-                
-                
+
+
+
 
 		$orderBy=" order by  ".$col[$filtros['order'][0]['column']]."   ".$filtros['order'][0]['dir'];
-                
-                
+
+
         if($fechaInicial == null){
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla a where tipo_venta='COT' $busquedaGeneral  $orderBy  $limit  ");
 
 			$stmt -> execute();
 
-			return $stmt -> fetchAll();	
+			return $stmt -> fetchAll();
 
 
 		}else if($fechaInicial == $fechaFinal){
 
 			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla a
-				WHERE fecha like '%$fechaFinal%' and tipo_venta='COT' $busquedaGeneral 
+				WHERE fecha like '%$fechaFinal%' and tipo_venta='COT' $busquedaGeneral
 				$SorderBy
 				$limit");
 
@@ -934,7 +939,7 @@ $busquedaGeneral
 				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla a WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' $busquedaGeneral $orderBy $limit");
 
 			}
-		
+
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -947,7 +952,7 @@ $busquedaGeneral
 	SUMAR EL TOTAL DE VENTAS
 	=============================================*/
 
-	static public function mdlSumaTotalVentas($tabla){	
+	static public function mdlSumaTotalVentas($tabla){
 
 		$stmt = Conexion::conectar()->prepare("SELECT SUM(neto) as total FROM $tabla where tipo_venta='VEN' ");
 
@@ -963,7 +968,7 @@ $busquedaGeneral
 	SUMAR EL TOTAL DE PAGOS
 	=============================================*/
 
-	static public function mdlSumaTotalPagos($tabla){	
+	static public function mdlSumaTotalPagos($tabla){
 
 		$stmt = Conexion::conectar()->prepare("SELECT sum(importePagado-importeDevuelto) as totalPagado FROM pagos");
 
@@ -980,7 +985,7 @@ $busquedaGeneral
 	INICIAR TRANSACCION
 	=============================================*/
 
-	static public function mdlTransaccion(){	
+	static public function mdlTransaccion(){
 
 		$stmt = Conexion::conectar()->prepare("START TRANSACTION;;");
 
@@ -995,7 +1000,7 @@ $busquedaGeneral
 	 COMMIT
 	=============================================*/
 
-	static public function mdlCommit(){	
+	static public function mdlCommit(){
 
 		$stmt = Conexion::conectar()->prepare("COMMIT;");
 
@@ -1011,7 +1016,7 @@ $busquedaGeneral
 	INICIAR ROLLBACK
 	=============================================*/
 
-	static public function mdlRollback(){	
+	static public function mdlRollback(){
 
 		$stmt = Conexion::conectar()->prepare("ROLLBACK;");
 
@@ -1022,5 +1027,5 @@ $busquedaGeneral
 
 	}
 
-	
+
 }

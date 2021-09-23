@@ -12,7 +12,7 @@ class TablaVentas{
 
     /*=============================================
      MOSTRAR LA TABLA DE VENTAS
-    =============================================*/ 
+    =============================================*/
 
     public function mostrarTablaVentas($columnas,$filtros,$busqueda){
 
@@ -25,7 +25,7 @@ class TablaVentas{
         $cliente = $this->cliente;
         $fechaInicial = $this->fechaInicial;
         $fechaFinal = $this->fechaFinal;
-       
+
 
 
 
@@ -36,33 +36,33 @@ class TablaVentas{
                                                     , $soloCobrado
                                                     , $pendientes
                                                     , $cliente
-                                                    , "n" 
+                                                    , "n"
                                                     ,$busqueda
                                                   );
 
     $totalRenglones=count($renglones);
 
 
-	
-										
+
+
     $ventas = ControladorVentas::ctrRangoFechasVentas($fechaInicial
                                                     , $fechaFinal
                                                     , "VEN"
                                                     , $pendientePorCobrar
                                                     , $soloCobrado
                                                     , $cliente
-                                                    , $filtros  
+                                                    , $filtros
                                                     , $busqueda
                                                   );
 
- 		
+
   		if(count($ventas) == 0){
 
   			echo '{"data": []}';
 
 		  	return;
-  		}	
-		
+  		}
+
 
       if(isset($filtros["draw"])){
         $filtros2["draw"]=$filtros["draw"];
@@ -100,7 +100,7 @@ class TablaVentas{
 
                     $restante=$ventas[$i]["total"] - $ventas[$i]["importePagado"];
 
-   
+
                     if($_SESSION["pagos"] == "on"){
 
                       if($restante<=0){
@@ -116,20 +116,21 @@ class TablaVentas{
 
                     }
 
-                
+
                     if($_SESSION["historicoPagos"] == "on"){
 
                       $botones .=  "<button type='button' class='btn bg-maroon btnMostrarPagos' data-toggle='modal' data-target='#modalHistoricoDePagos' data-dismiss='modal' idCodigo='".$ventas[$i]["codigo"]."'  restante='".$restante."' required data-toggle='tooltip' data-placement='top' title='Ver Historico de pagos'><i class='fa fa-search'></i> </button>";
 
                     }
-                    
-                    
+
+
                     $cliente = ModeloClientes::mdlMostrarClientes("clientes", "id", $ventas[$i]["id_cliente"]);
                     $vendedor = ModeloUsuarios::mdlMostrarUsuarios("usuarios", "id", $ventas[$i]["id_vendedor"]);
 
 
                     $datosJson .='[
                                 "'.$ventas[$i]["id"].'",
+                                "'.$ventas[$i]["codigo"].'",
                                 "'.$cliente["nombre"].'",
                                 "'.$vendedor["nombre"].'",
                                 "'.$ventas[$i]["metodo_pago"].'",
@@ -147,10 +148,10 @@ class TablaVentas{
 
 		  $datosJson = substr($datosJson, 0, -1);
 
-		 $datosJson .=   '] 
+		 $datosJson .=   ']
 
 		 }';
-		
+
 		echo $datosJson;
 
 
@@ -160,8 +161,8 @@ class TablaVentas{
 }
 
 /*=============================================
-ACTIVAR TABLA 
-=============================================*/ 
+ACTIVAR TABLA
+=============================================*/
 
 $activarVentas= new TablaVentas();
 
@@ -174,13 +175,13 @@ $activarVentas= new TablaVentas();
           }else{
             $activarVentas -> pendientePorCobrar="n";
           }
-          
+
           if(isset($_POST["soloCobrado"])){
             $activarVentas -> soloCobrado=$_POST["soloCobrado"];
           }else{
             $activarVentas -> soloCobrado= "n";
           }
-          
+
 
 
           if(isset($_POST["pendientes"])){
@@ -211,7 +212,7 @@ $activarVentas= new TablaVentas();
             $activarVentas -> fechaInicial=null;
             $activarVentas -> fechaFinal=null;
 
-         
+
 
           }
 
@@ -222,7 +223,3 @@ $busqueda=$_REQUEST;
 $columnas="";
 
 $activarVentas -> mostrarTablaVentas($columnas,$request,$busqueda);
-
-
-
-
