@@ -45,6 +45,100 @@ class ModeloVentas{
 
 	}
 
+
+
+	/*=============================================
+	MOSTRAR VENTAS POR COMPRADOR
+	=============================================*/
+
+	static public function mdlMostrarVentasVendedor($datos){
+
+
+		$fechaInicial = $datos["fechaInicial"];
+		$fechaFinal = $datos["fechaFinal"];
+		$conFecha = $datos["conFecha"];
+
+
+		$query = "select b.nombre
+					,sum(a.total) as total
+				from ventas a
+					,usuarios b
+
+				   where a.id_vendedor = b.id";
+
+		if ($conFecha=="SI"){
+			$query .="			and a.fecha BETWEEN :fechaInicial and :fechaFinal";
+		}
+
+
+			$query .="		   group by b.nombre";
+
+
+			$stmt = Conexion::conectar()->prepare($query);
+
+			if ($conFecha=="SI"){
+				$stmt -> bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
+				$stmt -> bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
+			}
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+
+			$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+
+	/*=============================================
+	MOSTRAR VENTAS POR COMPRADOR
+	=============================================*/
+
+	static public function mdlMostrarVentasComprador($datos){
+
+
+		$fechaInicial = $datos["fechaInicial"];
+		$fechaFinal = $datos["fechaFinal"];
+		$conFecha = $datos["conFecha"];
+
+
+		$query = "select b.nombre
+					,sum(a.total) as total
+				from ventas a
+					,clientes b
+
+				   where a.id_cliente = b.id";
+
+		if ($conFecha=="SI"){
+			$query .="			and a.fecha BETWEEN :fechaInicial and :fechaFinal";
+		}
+
+
+			$query .="		   group by b.nombre";
+
+
+			$stmt = Conexion::conectar()->prepare($query);
+
+			if ($conFecha=="SI"){
+				$stmt -> bindParam(":fechaInicial", $fechaInicial, PDO::PARAM_STR);
+				$stmt -> bindParam(":fechaFinal", $fechaFinal, PDO::PARAM_STR);
+			}
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+
+			$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+
 	/*=============================================
 	GENERA UUID
 	=============================================*/

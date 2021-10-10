@@ -1,42 +1,18 @@
 <?php
 
-$item = null;
-$valor = null;
+if(isset($_GET["fechaInicial"])){
 
-$ventas = ControladorVentas::ctrMostrarVentas($item, $valor);
-$usuarios = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+  $variables["fechaInicial"] =  $_GET["fechaInicial"];
+  $variables["fechaFinal"] =  $_GET["fechaFinal"] ;
+  $variables["conFecha"] =  "SI" ;
 
-$arrayVendedores = array();
-$arraylistaVendedores = array();
-
-foreach ($ventas as $key => $valueVentas) {
-
-  foreach ($usuarios as $key => $valueUsuarios) {
-
-    if($valueUsuarios["id"] == $valueVentas["id_vendedor"]){
-
-        #Capturamos los vendedores en un array
-        array_push($arrayVendedores, $valueUsuarios["nombre"]);
-
-        #Capturamos las nombres y los valores netos en un mismo array
-        $arraylistaVendedores = array($valueUsuarios["nombre"] => $valueVentas["neto"]);
-
-         #Sumamos los netos de cada vendedor
-
-        foreach ($arraylistaVendedores as $key => $value) {
-
-            $sumaTotalVendedores[$key] += $value;
-
-         }
-
-    }
-  
-  }
-
+}else{
+  $variables["fechaInicial"] =  "19900101";
+  $variables["fechaFinal"] =  "19900101";
+  $variables["conFecha"] =  "NO" ;
 }
 
-#Evitamos repetir nombre
-$noRepetirNombres = array_unique($arrayVendedores);
+$ventasComprador = ModeloVentas::mdlMostrarVentasVendedor($variables);
 
 ?>
 
@@ -46,17 +22,17 @@ VENDEDORES
 ======================================-->
 
 <div class="box box-success">
-	
+
 	<div class="box-header with-border">
-    
+
     	<h3 class="box-title">Vendedores</h3>
-  
+
   	</div>
 
   	<div class="box-body">
-  		
+
 		<div class="chart-responsive">
-			
+
 			<div class="chart" id="bar-chart1" style="height: 300px;"></div>
 
 		</div>
@@ -66,7 +42,7 @@ VENDEDORES
 </div>
 
 <script>
-	
+
 //BAR CHART
 var bar = new Morris.Bar({
   element: 'bar-chart1',
@@ -74,10 +50,11 @@ var bar = new Morris.Bar({
   data: [
 
   <?php
-    
-    foreach($noRepetirNombres as $value){
 
-      echo "{y: '".$value."', a: '".$sumaTotalVendedores[$value]."'},";
+    foreach ($ventasComprador as $key => $value) {
+
+
+      echo "{y: '".$value["nombre"]."', a: '".$value["total"]."'},";
 
     }
 
