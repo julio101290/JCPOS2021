@@ -6,7 +6,7 @@ SUBIENDO LA FOTO DEL USUARIO
 $(".nuevaFoto").change(function(){
 
 	var imagen = this.files[0];
-	
+
 	/*=============================================
   	VALIDAMOS EL FORMATO DE LA IMAGEN SEA JPG O PNG
   	=============================================*/
@@ -56,7 +56,7 @@ EDITAR USUARIO
 $(".tablas").on("click", ".btnEditarUsuario", function(){
 
 	var idUsuario = $(this).attr("idUsuario");
-	
+
 	var datos = new FormData();
 	datos.append("idUsuario", idUsuario);
 
@@ -70,7 +70,9 @@ $(".tablas").on("click", ".btnEditarUsuario", function(){
 		processData: false,
 		dataType: "json",
 		success: function(respuesta){
-			
+
+			console.log(respuesta);
+
 			$("#editarNombre").val(respuesta["nombre"]);
 			$("#editarUsuario").val(respuesta["usuario"]);
 			$("#editarPerfil").val(respuesta["perfil"]);
@@ -87,6 +89,12 @@ $(".tablas").on("click", ".btnEditarUsuario", function(){
 				$(".previsualizarEditar").attr("src", "vistas/img/usuarios/default/anonymous.png");
 
 			}
+                        
+                        if(respuesta[10] != ""){
+                            
+                            $(".previsualizarEditar").attr("src","data:image/png;base64, "+respuesta[10]);
+                            
+                        }
 
 		}
 
@@ -178,7 +186,7 @@ $("#nuevoUsuario").change(function(){
 	    processData: false,
 	    dataType: "json",
 	    success:function(respuesta){
-	    	
+
 	    	if(respuesta){
 
 	    		$("#nuevoUsuario").parent().after('<div class="alert alert-warning">Este usuario ya existe en la base de datos</div>');
@@ -221,7 +229,3 @@ $(".tablas").on("click", ".btnEliminarUsuario", function(){
   })
 
 })
-
-
-
-

@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * Copyright (C) 2021 julio
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,5 +23,4 @@ CONST BD_HOST = "127.0.0.1";
 CONST BD_PUERTO= "3306";
 CONST BD_NOMBRE= "pos";
 CONST BD_USUARIO = "root";
-CONST BD_CONTRA = "";
-
+CONST BD_CONTRA = "root2021";
