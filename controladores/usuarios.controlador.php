@@ -329,7 +329,7 @@ class ControladorUsuarios{
 
 		$respuesta = ModeloUsuarios::MdlMostrarUsuarios($tabla, $item, $valor);
 
-		
+
 
 		return $respuesta;
 	}
@@ -350,78 +350,57 @@ class ControladorUsuarios{
 
 				$ruta = $_POST["fotoActual"];
 
-				if(isset($_FILES["editarFoto"]["tmp_name"]) && !empty($_FILES["editarFoto"]["tmp_name"])){
 
-					list($ancho, $alto) = getimagesize($_FILES["editarFoto"]["tmp_name"]);
 
-					$nuevoAncho = 500;
-					$nuevoAlto = 500;
+								if(isset($_FILES["editarFoto"]["tmp_name"]) && $_FILES["editarFoto"]["tmp_name"]!=""){
 
-					/*=============================================
-					CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
-					=============================================*/
 
-					$directorio = "vistas/img/usuarios/".$_POST["editarUsuario"];
 
-					/*=============================================
-					PRIMERO PREGUNTAMOS SI EXISTE OTRA IMAGEN EN LA BD
-					=============================================*/
+									if($_FILES["editarFoto"]["type"] !=  "image/png"){
 
-					if(!empty($_POST["fotoActual"])){
+										echo'<script>
 
-						unlink($_POST["fotoActual"]);
+									 swal({
+											 type: "error",
+											 title: "Solo se permite formato PNG",
+											 showConfirmButton: true,
+											 confirmButtonText: "Cerrar"
+											 }).then(function(result) {
+													 if (result.value) {
 
-					}else{
+													 window.location = "usuarios";
 
-						mkdir($directorio, 0755);
+													 }
+												 })
 
-					}
+									 </script>';
+										return;
 
-					/*=============================================
-					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
-					=============================================*/
+									}
 
-					if($_FILES["editarFoto"]["type"] == "image/jpeg"){
+									if($_FILES["editarFoto"]["type"] == "image/png"){
 
-						/*=============================================
-						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
-						=============================================*/
+										/*=============================================
+										GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+										=============================================*/
+										if ((isset($_FILES['editarFoto'])) && ($_FILES['editarFoto'] != '')) {
 
-						$aleatorio = mt_rand(100,999);
+							        $file = fopen($_FILES['editarFoto']['tmp_name'], "rb");
 
-						$ruta = "vistas/img/usuarios/".$_POST["editarUsuario"]."/".$aleatorio.".jpg";
+							        $fileName = "";
+							        $fileExtension = "";
 
-						$origen = imagecreatefromjpeg($_FILES["editarFoto"]["tmp_name"]);
+									    } else {
+									        $file = "";
+									    }
 
-						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
-						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+									}
 
-						imagejpeg($destino, $ruta);
+								}
 
-					}
 
-					if($_FILES["editarFoto"]["type"] == "image/png"){
 
-						/*=============================================
-						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
-						=============================================*/
-
-						$aleatorio = mt_rand(100,999);
-
-						$ruta = "vistas/img/usuarios/".$_POST["editarUsuario"]."/".$aleatorio.".png";
-
-						$origen = imagecreatefrompng($_FILES["editarFoto"]["tmp_name"]);
-
-						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
-
-						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
-
-						imagepng($destino, $ruta);
-
-					}
-
-				}
 
 				$tabla = "usuarios";
 
@@ -464,7 +443,17 @@ class ControladorUsuarios{
 							   "usuario" => $_POST["editarUsuario"],
 							   "password" => $encriptar,
 							   "perfil" => $_POST["editarPerfil"],
-							   "foto" => $ruta);
+							   "foto" => $ruta,
+								 "archivoFoto" => $file
+
+							 );
+
+
+
+
+
+
+			
 
 				$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
 
