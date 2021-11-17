@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 10-08-2021 a las 18:38:39
--- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 7.4.15
+-- Tiempo de generación: 17-11-2021 a las 17:06:30
+-- Versión del servidor: 10.4.21-MariaDB
+-- Versión de PHP: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -499,17 +499,18 @@ CREATE TABLE `usuarios` (
   `estado` int(11) DEFAULT NULL,
   `ultimo_login` datetime DEFAULT NULL,
   `fecha` timestamp NULL DEFAULT current_timestamp(),
-  `intentos` int(11) DEFAULT NULL
+  `intentos` int(11) DEFAULT NULL,
+  `archivoFoto` longblob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `intentos`) VALUES
-(1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, 'vistas/img/usuarios/admin/489.jpg', 1, '2021-08-10 10:05:53', '2020-04-27 20:20:56', 1),
-(60, 'asd', 'asd', '$2a$07$asxx54ahjppf45sd87a5aurxwsuKZ45wFSbiNfdS6xl.3y0E2/122', 4, '', 1, '2020-05-12 14:53:50', '2020-04-27 20:29:34', NULL),
-(61, 'ddd', 'ddd', '$2a$07$asxx54ahjppf45sd87a5au9qtysTmqpbi0CLW8d4EUxFv9d7FCNLi', 1, '', NULL, NULL, '2020-07-18 18:45:03', NULL);
+INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `intentos`, `archivoFoto`) VALUES
+(1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, 'vistas/img/usuarios/admin/489.jpg', 1, '2021-08-10 10:05:53', '2020-04-27 20:20:56', 1, NULL),
+(60, 'asd', 'asd', '$2a$07$asxx54ahjppf45sd87a5aurxwsuKZ45wFSbiNfdS6xl.3y0E2/122', 4, '', 1, '2020-05-12 14:53:50', '2020-04-27 20:29:34', NULL, NULL),
+(61, 'ddd', 'ddd', '$2a$07$asxx54ahjppf45sd87a5au9qtysTmqpbi0CLW8d4EUxFv9d7FCNLi', 1, '', NULL, NULL, '2020-07-18 18:45:03', NULL, NULL);
 
 -- --------------------------------------------------------
 
