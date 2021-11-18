@@ -84,7 +84,7 @@ if($_SESSION["usuarios"] == "off"){
                   <td>'.$value["nombre"].'</td>
                   <td>'.$value["usuario"].'</td>';
 
-                  if($value["foto"] != ""){
+                  if($value["archivoFoto"] == ""){
 
                     echo '<td><img src="'.$value["foto"].'" class="img-thumbnail" width="40px"></td>';
 

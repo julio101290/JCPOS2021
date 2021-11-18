@@ -48,6 +48,7 @@ class ControladorUsuarios{
 						$_SESSION["foto"] = $respuesta["foto"];
 						$_SESSION["perfil"] = $respuesta["perfil"];
 						$_SESSION["descripcionPerfil"] = $acceso["descripcion"];
+						$_SESSION["archivoFoto"] = $respuesta["archivoFoto"];
 
 						//DERECHOS MENU CONFIGURACION
 						$_SESSION["menuConfiguraciones"] = $acceso["menuConfiguraciones"];
@@ -56,7 +57,7 @@ class ControladorUsuarios{
 						$_SESSION["perfiles"] = $acceso["perfiles"];
 						$_SESSION["configuracionCorreo"] = $acceso["configuracionCorreo"];
 						$_SESSION["bitacora"] = $acceso["bitacora"];
-                                                $_SESSION["actualizar"] = $acceso["actualizar"];
+            $_SESSION["actualizar"] = $acceso["actualizar"];
 
 						//DERECHOS CATALOGOS
 						$_SESSION["clientes"] = $acceso["clientes"];
@@ -453,7 +454,7 @@ class ControladorUsuarios{
 
 
 
-			
+
 
 				$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
 

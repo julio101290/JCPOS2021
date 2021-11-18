@@ -38,20 +38,20 @@
         <ul class="nav navbar-nav hidden-xs">
 
             <?php
-            
-            
+
+
             //COTIZACIONES
-            
+
             if ($_SESSION["administrarCotizaciones"] == "on") {
                 echo '<li> <a href="administrarcotizaciones"><i class="fa fa-tty"></i>  Administrar Cotizaciones<span class="sr-only">(current)</span></a></li>';
             }
-            
-            
+
+
             if ($_SESSION["administrarVentas"] == "on") {
                 echo '<li> <a href="ventas"> <i class="fa  fa-cart-plus"></i>  Administrar Ventas<span class="sr-only">(current)</span></a></li>';
             }
-            
-            
+
+
             ?>
 
 
@@ -80,9 +80,9 @@ if ($_SESSION["clientes"] == "on") {
                     <!-- <li><a href="#">One more separated link</a></li>-->
                 </ul>
             </li>
-            
+
             <?php
-        echo '<li> <a href="acercaDe"><i class="fa fa-info-circle"></i>  Acerca de<span class="sr-only">(current)</span></a></li>';     
+        echo '<li> <a href="acercaDe"><i class="fa fa-info-circle"></i>  Acerca de<span class="sr-only">(current)</span></a></li>';
             ?>
         </ul>
 
@@ -101,7 +101,15 @@ if ($_SESSION["clientes"] == "on") {
 <?php
 if ($_SESSION["foto"] != "") {
 
+    if($_SESSION["archivoFoto"]==""){
     echo '<img src="' . $_SESSION["foto"] . '" class="user-image">';
+  }else{
+    echo '<img src="data:image/png;base64, '.($_SESSION["archivoFoto"]).'" class="user-image">';
+
+  }
+
+
+
 } else {
 
 
@@ -122,7 +130,19 @@ if ($_SESSION["foto"] != "") {
                     <?php
                     if ($_SESSION["foto"] != "") {
 
-                        echo '<img src="' . $_SESSION["foto"] . '" class="img-circle" alt="User Image">';
+
+                        if($_SESSION["archivoFoto"]==""){
+
+                          echo '<img src="' . $_SESSION["foto"] . '" class="img-circle" alt="User Image">';
+
+                      }else{
+
+                        echo '<img  src="data:image/png;base64, '.($_SESSION["archivoFoto"]).'" class="img-circle" alt="User Image">';
+
+                      }
+
+
+
                     } else {
 
 
