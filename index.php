@@ -16,6 +16,7 @@ require_once "controladores/perfiles.controlador.php";
 require_once "controladores/CorreoSaliente.controlador.php";
 require_once "controladores/pagos.controlador.php";
 require_once "controladores/bitacora.controlador.php";
+require_once "controladores/caja.controlador.php";
 
 
 require_once "modelos/usuarios.modelo.php";
@@ -28,6 +29,7 @@ require_once "modelos/correo.modelo.php";
 require_once "modelos/perfiles.modelo.php";
 require_once "modelos/pagos.modelo.php";
 require_once "modelos/bitacora.modelo.php";
+require_once "modelos/caja.modelo.php";
 require_once "extensiones/vendor/autoload.php";
 
 $plantilla = new ControladorPlantilla();

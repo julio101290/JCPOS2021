@@ -2,7 +2,7 @@
 
 class ControladorPerfiles{
 
-	
+
 	/*=============================================
 	REGISTRO DE PERFILES
 	=============================================*/
@@ -11,10 +11,10 @@ class ControladorPerfiles{
 		echo $_POST["nuevoDescripcionPerfil"];
 		if(isset($_POST["nuevoDescripcionPerfil"])){
 
-			
 
-		
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoDescripcionPerfil"]) 
+
+
+			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoDescripcionPerfil"])
 			   ){
 
 				$tabla = "perfiles";
@@ -63,13 +63,14 @@ class ControladorPerfiles{
 
 							   ,"costoProductos" => $_POST["smCostoProductos"]
 							   ,"stock" => $_POST["stock"]
-                                                           ,"actualizar" => $_POST["actualizar"]
+                 ,"actualizar" => $_POST["actualizar"]
+								 ,"cajas" => $_POST["cajas"]
 							);
 
-				
+
 
 				$respuesta = ModeloPerfiles::mdlIngresarPerfil($tabla, $datos);
-			
+
 				if($respuesta == "ok"){
 
 					echo '<script>
@@ -84,18 +85,18 @@ class ControladorPerfiles{
 					}).then(function(result){
 
 						if(result.value){
-						
+
 							window.location = "perfiles";
 
 						}
 
 					});
-				
+
 
 					</script>';
 
 
-				}	
+				}
 
 
 			}else{
@@ -112,13 +113,13 @@ class ControladorPerfiles{
 					}).then(function(result){
 
 						if(result.value){
-						
+
 							window.location = "perfiles";
 
 						}
 
 					});
-				
+
 
 				</script>';
 
@@ -153,7 +154,7 @@ class ControladorPerfiles{
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["idPerfil"])){
 
-				
+
 				$tabla = "perfiles";
 
 				$datos = array("perfil" => $_POST["idPerfil"]
@@ -189,7 +190,7 @@ class ControladorPerfiles{
 							   ,"graficoGanancias" => $_POST["editarGraficoGanancias"]
    							   ,"productosMasVendidos" => $_POST["editarProductosMasVendidos"]
 							   ,"productosAgregadosRecientemente" => $_POST["editarroductosAgregadosRecienteMente"]
-							   ,"bitacora" => $_POST["editarsmBitacora"] 
+							   ,"bitacora" => $_POST["editarsmBitacora"]
 
   							   ,"pagos" => $_POST["smEditarPagos"]
 							   ,"historicoPagos" => $_POST["smEditarHistoricoPagos"]
@@ -198,7 +199,8 @@ class ControladorPerfiles{
 
 							   ,"costoProductos" => $_POST["editarsmCostoProductos"]
 							   ,"stock" => $_POST["editarStock"]
-                                                           ,"actualizar" => $_POST["editarActualizar"]
+                 ,"actualizar" => $_POST["editarActualizar"]
+								 ,"cajas" => $_POST["editarCajas"]
 
 
 								);
@@ -287,7 +289,7 @@ class ControladorPerfiles{
 
 				</script>';
 
-			}		
+			}
 
 		}
 
@@ -295,6 +297,3 @@ class ControladorPerfiles{
 
 
 }
-	
-
-

@@ -15,10 +15,10 @@ class ModeloPagos{
 			$stmt = Conexion::conectar()->prepare("select id
                                                             ,idVenta
                                                             ,importePagado
-                                                            ,importeDevuelto 
+                                                            ,importeDevuelto
                                                             ,fechaPago
                                                             ,tipoPago
-                                                            from $tabla 
+                                                            from $tabla
                                                             where idVenta=".$valor["idVenta"]);
 
 
@@ -35,17 +35,57 @@ class ModeloPagos{
 				return $arr[2];
 			}
 
-			
 
 
-			
+
+
 
 		}
-		
+
 
 
 	}
 
+	/*=============================================
+		TOTAL PAGOS POR CAJA
+		=============================================*/
+
+		static public function mdlMostrarPagosCaja($caja){
+
+
+
+			$stmt = Conexion::conectar()->prepare("select sum(
+														 ifnull(importePagado,0)-
+														ifnull(importeDevuelto,0)
+														) as totalVentaCaja
+
+														from pagos
+														where idCaja=".$caja);
+
+
+			if($stmt->execute()){
+				return $stmt -> fetch();
+				$stmt -> close();
+
+				$stmt = null;
+
+			}
+			else{
+				$arr = $stmt ->errorInfo();
+				$arr[3]="ERROR";
+				return $arr[2];
+			}
+
+
+
+
+
+
+
+
+
+
+		}
 
 
 	/*=============================================
@@ -58,7 +98,7 @@ class ModeloPagos{
 		if($valor["idPago"]!= null){
 
 			$stmt = Conexion::conectar()->prepare("delete
-														from $tabla 
+														from $tabla
 														where id=".$valor["idPago"]);
 
 
@@ -71,13 +111,13 @@ class ModeloPagos{
 				return $arr[2];
 			}
 
-			
 
 
-			
+
+
 
 		}
-		
+
 
 
 	}
@@ -94,10 +134,10 @@ class ModeloPagos{
 			$stmt = Conexion::conectar()->prepare("select id
 														,idVenta
 														,importePagado
-														,importeDevuelto 
+														,importeDevuelto
 														,fechaPago
 														,tipoPago
-														from $tabla 
+														from $tabla
 														where id=".$valor["idPago"]);
 
 
@@ -114,13 +154,13 @@ class ModeloPagos{
 				return $arr[2];
 			}
 
-			
 
 
-			
+
+
 
 		}
-		
+
 
 
 	}
@@ -143,7 +183,7 @@ class ModeloPagos{
 					from pagos c
 					where c.idVenta=b.codigo
 					),0))) as PendientePorPagar
-		            
+
 				,sum(b.total) as totalVentas
 		        ,sum(ifnull((select sum(ifnull(importePagado,0)-ifnull(importeDevuelto,0))
 					from pagos c
@@ -167,10 +207,10 @@ class ModeloPagos{
 				return $arr[2];
 			}
 
-			
 
 
-			
+
+
 
 
 
@@ -189,7 +229,7 @@ class ModeloPagos{
 
 
 			$stmt = Conexion::conectar()->prepare("SELECT max(id)
-													FROM pagos 
+													FROM pagos
 
 													");
 			$stmt -> execute();
@@ -215,13 +255,14 @@ class ModeloPagos{
 			, importeDevuelto
 			, fechaPago
 			, tipoPago
-			) 
+			, idCaja
+			)
 			VALUES (:idVenta
 			, :importePagado
 			, :importeDevuelto
 			, :fechaPago
 			, :tipoPago
-
+			, :idCaja
 
 		)");
 
@@ -230,7 +271,7 @@ class ModeloPagos{
 		$stmt->bindParam(":importeDevuelto", $datos["importeDevuelto"], PDO::PARAM_STR);
 		$stmt->bindParam(":fechaPago", $datos["fechaPago"], PDO::PARAM_STR);
 		$stmt->bindParam(":tipoPago", $datos["tipoPago"], PDO::PARAM_STR);
-
+		$stmt->bindParam(":idCaja", $datos["idCaja"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 
@@ -241,8 +282,8 @@ class ModeloPagos{
 			$arr = $stmt ->errorInfo();
 			$arr[3]="ERROR";
 			return $arr[2];
-		
-		
+
+
 		}
 
 		$stmt->close();
@@ -256,21 +297,21 @@ class ModeloPagos{
 
 	static public function mdlEditarVenta($tabla, $datos){
 
-		
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla 
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla
 												SET  id_cliente = :id_cliente
 												, id_vendedor = :id_vendedor
 												, productos = :productos
 												, impuesto = :impuesto
 												, neto = :neto
 												, total= :total
-												, metodo_pago = :metodo_pago 
+												, metodo_pago = :metodo_pago
 
-												, Tipo_Venta = :tipo_venta 
-												, FechaVencimiento = :FechaVencimiento 
+												, Tipo_Venta = :tipo_venta
+												, FechaVencimiento = :FechaVencimiento
 												, cotizarA = :CotizarA
-												, Observaciones = :Observaciones  
-												, plazoEntrega = :plazoEntrega 
+												, Observaciones = :Observaciones
+												, plazoEntrega = :plazoEntrega
 												WHERE codigo = :codigo");
 
 
@@ -284,7 +325,7 @@ class ModeloPagos{
 		$stmt->bindParam(":neto", $datos["neto"], PDO::PARAM_STR);
 		$stmt->bindParam(":total", $datos["total"], PDO::PARAM_STR);
 		$stmt->bindParam(":metodo_pago", $datos["metodo_pago"], PDO::PARAM_STR);
-		
+
 		$stmt->bindParam(":tipo_venta", $datos["tipoVenta"], PDO::PARAM_STR);
 		$stmt->bindParam(":FechaVencimiento", $datos["FechaVencimiento"], PDO::PARAM_STR);
 		$stmt->bindParam(":Observaciones", $datos["Observaciones"], PDO::PARAM_STR);
@@ -299,7 +340,7 @@ class ModeloPagos{
 			$arr = $stmt ->errorInfo();
 			$arr[3]="ERROR";
 			return $arr[2];
-		
+
 		}
 
 		$stmt->close();
@@ -320,10 +361,10 @@ class ModeloPagos{
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 
@@ -333,16 +374,16 @@ class ModeloPagos{
 
 	}
 
-	
+
 	/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
 	static public function mdlRangoFechasVentas($tabla, $fechaInicial, $fechaFinal,$tipoDocumento){
 
 		if($fechaInicial == null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * 
+			$stmt = Conexion::conectar()->prepare("SELECT *
 													,(
 
 															case when a.Tipo_Venta='COT' then
@@ -351,8 +392,8 @@ class ModeloPagos{
 																		else
 																		'GENERAR VENTA'
 																end
-																
-															end	
+
+															end
 																) as codigoVenta1
 													FROM $tabla a
 													where Tipo_Venta='".$tipoDocumento."'
@@ -360,12 +401,12 @@ class ModeloPagos{
 
 			$stmt -> execute();
 
-			return $stmt -> fetchAll();	
+			return $stmt -> fetchAll();
 
 
 		}else if($fechaInicial == $fechaFinal){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * 
+			$stmt = Conexion::conectar()->prepare("SELECT *
 															,(
 
 															case when a.Tipo_Venta='COT' then
@@ -374,8 +415,8 @@ class ModeloPagos{
 																		else
 																		'GENERAR VENTA'
 																end
-																
-															end	
+
+															end
 															) as codigoVenta1
 														FROM $tabla a
 														WHERE fecha like '%$fechaFinal%' and Tipo_Venta='$tipoDocumento'");
@@ -398,7 +439,7 @@ class ModeloPagos{
 
 			if($fechaFinalMasUno == $fechaActualMasUno){
 
-				$stmt = Conexion::conectar()->prepare("SELECT * 
+				$stmt = Conexion::conectar()->prepare("SELECT *
 															,(
 
 															case when a.Tipo_Venta='COT' then
@@ -407,24 +448,24 @@ class ModeloPagos{
 																		else
 																		'GENERAR VENTA'
 																end
-																
-															end	
+
+															end
 															) as codigoVenta1
 														FROM $tabla  a
-														WHERE a.fecha 
-														BETWEEN '$fechaInicial' AND '$fechaFinalMasUno' 
+														WHERE a.fecha
+														BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
 														and a.Tipo_Venta='$tipoDocumento'");
 
 			}else{
 
 
-				$stmt = Conexion::conectar()->prepare("SELECT * 
+				$stmt = Conexion::conectar()->prepare("SELECT *
 
 
 					FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' and Tipo_Venta='$tipoDocumento'");
 
 			}
-		
+
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -436,7 +477,7 @@ class ModeloPagos{
 
 		/*=============================================
 	RANGO FECHAS
-	=============================================*/	
+	=============================================*/
 
 	static public function mdlRangoFechasVentasCotizaciones($tabla, $fechaInicial, $fechaFinal){
 
@@ -446,7 +487,7 @@ class ModeloPagos{
 
 			$stmt -> execute();
 
-			return $stmt -> fetchAll();	
+			return $stmt -> fetchAll();
 
 
 		}else if($fechaInicial == $fechaFinal){
@@ -479,7 +520,7 @@ class ModeloPagos{
 				$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
 
 			}
-		
+
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
@@ -492,7 +533,7 @@ class ModeloPagos{
 	SUMAR EL TOTAL DE VENTAS
 	=============================================*/
 
-	static public function mdlSumaTotalVentas($tabla){	
+	static public function mdlSumaTotalVentas($tabla){
 
 		$stmt = Conexion::conectar()->prepare("SELECT SUM(neto) as total FROM $tabla where tipo_venta='VEN'");
 
@@ -509,7 +550,7 @@ class ModeloPagos{
 	INICIAR TRANSACCION
 	=============================================*/
 
-	static public function mdlTransaccion(){	
+	static public function mdlTransaccion(){
 
 		$stmt = Conexion::conectar()->prepare("START TRANSACTION;;");
 
@@ -524,7 +565,7 @@ class ModeloPagos{
 	 COMMIT
 	=============================================*/
 
-	static public function mdlCommit(){	
+	static public function mdlCommit(){
 
 		$stmt = Conexion::conectar()->prepare("COMMIT;");
 
@@ -540,7 +581,7 @@ class ModeloPagos{
 	INICIAR ROLLBACK
 	=============================================*/
 
-	static public function mdlRollback(){	
+	static public function mdlRollback(){
 
 		$stmt = Conexion::conectar()->prepare("ROLLBACK;");
 
@@ -551,5 +592,5 @@ class ModeloPagos{
 
 	}
 
-	
+
 }

@@ -2,7 +2,47 @@
 
 
 class ControladorPagos{
-	
+
+	/*=============================================
+		TOTAL PAGOS POR CAJA
+		=============================================*/
+
+		static public function mdlMostrarPagosCaja($caja){
+
+
+
+			$stmt = Conexion::conectar()->prepare("select sum(
+														 ifnull(importePagado,0)-
+														ifnull(importeDevuelto,0)
+														) as totalVentaCaja
+
+														from pagos
+														where idCaja=".$caja);
+
+
+			if($stmt->execute()){
+				return $stmt -> fetch();
+				$stmt -> close();
+
+				$stmt = null;
+
+			}
+			else{
+				$arr = $stmt ->errorInfo();
+				$arr[3]="ERROR";
+				return $arr[2];
+			}
+
+
+
+
+
+
+
+
+
+
+		}
 
 
 	/*=============================================
@@ -67,16 +107,16 @@ class ControladorPagos{
 
 
 	if(isset($_POST["codigoVenta"]) ){
-			
 
-		
+
+
 
 
 
 
 			/*=============================================
 			GUARDAR EL PAGO
-			=============================================*/	
+			=============================================*/
 
 
 			//ASIGNAMOS EL VALOR A LA VARIABLES
@@ -166,9 +206,9 @@ class ControladorPagos{
 
 
 	static public function ctrEliminarPago(){
-		
+
 		if(isset($_GET["idPagoEliminar"])){
-			
+
 			$idPago=$_GET["idPagoEliminar"];
 
 			if($idPago>0){
@@ -177,7 +217,7 @@ class ControladorPagos{
 
 				$respuesta = ModeloPagos::mdlEliminarPago("pagos", $datos);
 
-				
+
 				if($respuesta=="ok"){
 
 					echo'<script>
@@ -208,14 +248,22 @@ class ControladorPagos{
 	}
 
 if(isset($_POST["codigoVenta"])){
-	
+
 	require_once "../modelos/pagos.modelo.php";
 
 
 	$guardarPago= new ControladorPagos();
 	$guardarPago -> ctrCrearPago();
-	
+
 
 }
 
 
+if(isset($_POST["idCajaBuscar"])){
+	require_once "../modelos/pagos.modelo.php";
+	$guardarPago= new ModeloPagos();
+	$totalCaja=$guardarPago -> mdlMostrarPagosCaja($_POST["idCajaBuscar"]);
+
+	echo json_encode($totalCaja);
+
+}

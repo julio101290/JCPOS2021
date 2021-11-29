@@ -201,6 +201,7 @@ class ControladorVentas {
                 "plazoEntrega" => $_POST["plazoEntrega"],
                 "codigoVenta" => esCero($_POST["origenCotizacion"]),
                 "UUID" => $_POST["UUID"],
+                "idCaja"=>esCero($_POST["nuevoCaja"]),
                 "metodo_pago" => $_POST["listaMetodoPago"]);
 
             $respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
@@ -222,17 +223,17 @@ class ControladorVentas {
 
 
                 //ASIGNAMOS EL VALOR A LA VARIABLES
-              
+
                 $importeTotalVenta = $_POST["totalVenta"];
-                
+
                 $fechaPago = $_POST["fechaPago"];
                 $metodoPago = $_POST["nuevoMetodoPago"];
-                
+
                 if($_POST["nuevoValorEfectivo"] !="undefined"){
-                    
+
                     $importePagado = $_POST["nuevoValorEfectivo"];
                 }else{
-                
+
                       $importePagado = 0;
                 }
 
@@ -251,6 +252,7 @@ class ControladorVentas {
                         "importeDevuelto" => $importeDevuelto,
                         "fechaPago" => $fechaPago,
                         "tipoPago" => $metodoPago,
+                        "idCaja"=>esCero($_POST["nuevoCaja"]),
                     );
 
                     $respuestaPago = ModeloPagos::mdlIngresarPago("pagos", $datosPagos);
@@ -592,7 +594,7 @@ class ControladorVentas {
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
 								if (result.value) {
-								
+
 								window.location = "' . $tipoVenta . '";
 
 								}
@@ -604,7 +606,7 @@ class ControladorVentas {
                 echo'<script>
 
 
-			
+
 
 				swal({
 					  type: "error",
@@ -613,7 +615,7 @@ class ControladorVentas {
 					  confirmButtonText: "Cerrar"
 					  }).then(function(result){
 								if (result.value) {
-								
+
 								window.location = "' . $tipoVenta . '";
 
 								}
@@ -829,7 +831,7 @@ class ControladorVentas {
             , $cliente = "n"
             , $filtros = "n"
             , $busqueda = ""
-   
+
     ) {
 
         $tabla = "ventas";
@@ -842,7 +844,7 @@ class ControladorVentas {
                         , $soloCobrado
                         , $cliente
                         , $filtros
-                        , $busqueda 
+                        , $busqueda
         );
 
         return $respuesta;
@@ -912,19 +914,19 @@ class ControladorVentas {
             header('Content-Disposition:; filename="' . $Name . '"');
             header("Content-Transfer-Encoding: binary");
 
-            echo utf8_decode("<table border='0'> 
+            echo utf8_decode("<table border='0'>
 
-					<tr> 
-					<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO</td> 
+					<tr>
+					<td style='font-weight:bold; border:1px solid #eee;'>CÓDIGO</td>
 					<td style='font-weight:bold; border:1px solid #eee;'>CLIENTE</td>
 					<td style='font-weight:bold; border:1px solid #eee;'>VENDEDOR</td>
 					<td style='font-weight:bold; border:1px solid #eee;'>CANTIDAD</td>
 					<td style='font-weight:bold; border:1px solid #eee;'>PRODUCTOS</td>
 					<td style='font-weight:bold; border:1px solid #eee;'>IMPUESTO</td>
-					<td style='font-weight:bold; border:1px solid #eee;'>NETO</td>		
-					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>		
-					<td style='font-weight:bold; border:1px solid #eee;'>METODO DE PAGO</td	
-					<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>		
+					<td style='font-weight:bold; border:1px solid #eee;'>NETO</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>TOTAL</td>
+					<td style='font-weight:bold; border:1px solid #eee;'>METODO DE PAGO</td
+					<td style='font-weight:bold; border:1px solid #eee;'>FECHA</td>
 					</tr>");
 
             foreach ($ventas as $row => $item) {
@@ -933,7 +935,7 @@ class ControladorVentas {
                 $vendedor = ControladorUsuarios::ctrMostrarUsuarios("id", $item["id_vendedor"]);
 
                 echo utf8_decode("<tr>
-			 			<td style='border:1px solid #eee;'>" . $item["codigo"] . "</td> 
+			 			<td style='border:1px solid #eee;'>" . $item["codigo"] . "</td>
 			 			<td style='border:1px solid #eee;'>" . $cliente["nombre"] . "</td>
 			 			<td style='border:1px solid #eee;'>" . $vendedor["nombre"] . "</td>
 			 			<td style='border:1px solid #eee;'>");
@@ -954,10 +956,10 @@ class ControladorVentas {
 
                 echo utf8_decode("</td>
 					<td style='border:1px solid #eee;'>$ " . number_format($item["impuesto"], 2) . "</td>
-					<td style='border:1px solid #eee;'>$ " . number_format($item["neto"], 2) . "</td>	
+					<td style='border:1px solid #eee;'>$ " . number_format($item["neto"], 2) . "</td>
 					<td style='border:1px solid #eee;'>$ " . number_format($item["total"], 2) . "</td>
 					<td style='border:1px solid #eee;'>" . $item["metodo_pago"] . "</td>
-					<td style='border:1px solid #eee;'>" . substr($item["fecha"], 0, 10) . "</td>		
+					<td style='border:1px solid #eee;'>" . substr($item["fecha"], 0, 10) . "</td>
 		 			</tr>");
             }
 

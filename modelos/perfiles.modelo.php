@@ -16,11 +16,11 @@ class ModeloPerfiles{
                                                                         ,descripcion
 
                                                                          ,(case when menuConfiguraciones='on' then 'on'
-                                                                                       else 'off' 
+                                                                                       else 'off'
                                                                                        end) as menuConfiguraciones
 
                                                                          ,(case when datosEmpresa='on' then 'on'
-                                                                                       else 'off' 
+                                                                                       else 'off'
                                                                                        end ) as datosEmpresa
 
                                                                          ,(case when usuarios='on' then 'on'
@@ -31,35 +31,35 @@ class ModeloPerfiles{
                                                                                         else 'off'
                                                                                         end) as perfiles
 
-                                                                         ,(case when configuracionCorreo='on' then 'on' else 'off' 
+                                                                         ,(case when configuracionCorreo='on' then 'on' else 'off'
                                                                                        end )as configuracionCorreo
 
 
 
 
-                                                                         ,(case when clientes='on' then 'on' else 'off' 
+                                                                         ,(case when clientes='on' then 'on' else 'off'
                                                                                        end )as clientes
 
-                                                                         ,(case when productos='on' then 'on' else 'off' 
+                                                                         ,(case when productos='on' then 'on' else 'off'
                                                                                         end )as productos
 
-                                                                         ,(case when categorias='on' then 'on' else 'off' 
+                                                                         ,(case when categorias='on' then 'on' else 'off'
                                                                                          end )as categorias
 
 
-                                                                       ,(case when menuCotizaciones='on' then 'on' else 'off' 
+                                                                       ,(case when menuCotizaciones='on' then 'on' else 'off'
                                                                                        end )as menuCotizaciones
 
-                                                                         ,(case when cotizaciones='on' then 'on' else 'off' 
+                                                                         ,(case when cotizaciones='on' then 'on' else 'off'
                                                                                        end )as cotizaciones
 
-                                                                         ,(case when administrarCotizaciones='on' then 'on' else 'off' 
+                                                                         ,(case when administrarCotizaciones='on' then 'on' else 'off'
                                                                                         end )as administrarCotizaciones
 
-                                                                         ,(case when modificarCotizaciones='on' then 'on' else 'off' 
+                                                                         ,(case when modificarCotizaciones='on' then 'on' else 'off'
                                                                                          end )as modificarCotizaciones
 
-                                                                         ,(case when eliminarCotizaciones='on' then 'on' else 'off' 
+                                                                         ,(case when eliminarCotizaciones='on' then 'on' else 'off'
                                                                                          end )as eliminarCotizaciones
 
 
@@ -67,77 +67,80 @@ class ModeloPerfiles{
 
 
 
-                                                                       ,(case when menuVentas='on' then 'on' else 'off' 
+                                                                       ,(case when menuVentas='on' then 'on' else 'off'
                                                                                         end )as menuVentas
 
-                                                                       ,(case when ventas='on' then 'on' else 'off' 
+                                                                       ,(case when ventas='on' then 'on' else 'off'
                                                                                          end )as ventas
 
 
-                                                                       ,(case when administrarVentas='on' then 'on' else 'off' 
+                                                                       ,(case when administrarVentas='on' then 'on' else 'off'
                                                                                        end )as administrarVentas
 
-                                                                         ,(case when modificarVentas='on' then 'on' else 'off' 
+                                                                         ,(case when modificarVentas='on' then 'on' else 'off'
                                                                                        end )as modificarVentas
 
-                                                                         ,(case when eliminarVentas='on' then 'on' else 'off' 
+                                                                         ,(case when eliminarVentas='on' then 'on' else 'off'
                                                                                         end )as eliminarVentas
 
-                                                                         ,(case when facturacionElectronica='on' then 'on' else 'off' 
+                                                                         ,(case when facturacionElectronica='on' then 'on' else 'off'
                                                                                          end )as facturacionElectronica
 
-                                                                         ,(case when reportesVentas='on' then 'on' else 'off' 
+                                                                         ,(case when reportesVentas='on' then 'on' else 'off'
                                                                                          end )as reportesVentas
 
 
 
 
-                                                                         ,(case when cajasSuperiores='on' then 'on' else 'off' 
+                                                                         ,(case when cajasSuperiores='on' then 'on' else 'off'
                                                                                        end )as cajasSuperiores
 
-                                                                         ,(case when graficoGanancias='on' then 'on' else 'off' 
+                                                                         ,(case when graficoGanancias='on' then 'on' else 'off'
                                                                                         end )as graficoGanancias
 
-                                                                         ,(case when productosMasVendidos='on' then 'on' else 'off' 
+                                                                         ,(case when productosMasVendidos='on' then 'on' else 'off'
                                                                                          end )as productosMasVendidos
 
-                                                                         ,(case when productosAgregadosRecientemente='on' then 'on' else 'off' 
+                                                                         ,(case when productosAgregadosRecientemente='on' then 'on' else 'off'
                                                                                          end )as productosAgregadosRecientemente
 
 
 
-                                                                         ,(case when bitacora='on' then 'on' else 'off' 
+                                                                         ,(case when bitacora='on' then 'on' else 'off'
                                                                                          end )as bitacora
 
 
-                                                                         ,(case when pagos='on' then 'on' else 'off' 
+                                                                         ,(case when pagos='on' then 'on' else 'off'
                                                                                         end )as pagos
 
-                                                                         ,(case when historicoPagos='on' then 'on' else 'off' 
+                                                                         ,(case when historicoPagos='on' then 'on' else 'off'
                                                                                          end )as historicoPagos
 
-                                                                         ,(case when imprimirPagos='on' then 'on' else 'off' 
+                                                                         ,(case when imprimirPagos='on' then 'on' else 'off'
                                                                                          end )as imprimirPagos
 
 
 
-                                                                         ,(case when eliminarPagos='on' then 'on' else 'off' 
+                                                                         ,(case when eliminarPagos='on' then 'on' else 'off'
                                                                                          end )as eliminarPagos
 
 
-                                                                         ,(case when costoProductos='on' then 'on' else 'off' 
+                                                                         ,(case when costoProductos='on' then 'on' else 'off'
                                                                                          end )as costoProductos
 
-                                                                         ,(case when stock='on' then 'on' else 'off' 
+                                                                         ,(case when stock='on' then 'on' else 'off'
                                                                                          end )as stock
 
 
-                                                                        ,(case when actualizar='on' then 'on' else 'off' 
+                                                                        ,(case when actualizar='on' then 'on' else 'off'
                                                                                          end ) as actualizar
 
+																																				,(case when cajas='on' then 'on' else 'off'
+	                                                                                        end ) as cajas
 
 
-                                                               FROM $tabla 
+
+                                                               FROM $tabla
 
                                                                WHERE $item = :$item");
 
@@ -153,11 +156,11 @@ class ModeloPerfiles{
                                                                     ,descripcion
 
                                                                     ,(case when menuConfiguraciones='on' then 'on'
-                                                                                  else 'off' 
+                                                                                  else 'off'
                                                                                   end) as menuConfiguraciones
 
                                                                     ,(case when datosEmpresa='on' then 'on'
-                                                                                  else 'off' 
+                                                                                  else 'off'
                                                                                   end ) as datosEmpresa
 
                                                                     ,(case when usuarios='on' then 'on'
@@ -168,108 +171,111 @@ class ModeloPerfiles{
                                                                                    else 'off'
                                                                                    end) as perfiles
 
-                                                                    ,(case when configuracionCorreo='on' then 'on' else 'off' 
+                                                                    ,(case when configuracionCorreo='on' then 'on' else 'off'
                                                                                   end )as configuracionCorreo
 
 
 
-                                                                    ,(case when clientes='on' then 'on' else 'off' 
+                                                                    ,(case when clientes='on' then 'on' else 'off'
                                                                                   end )as clientes
 
-                                                                    ,(case when productos='on' then 'on' else 'off' 
+                                                                    ,(case when productos='on' then 'on' else 'off'
                                                                                    end )as productos
 
-                                                                    ,(case when categorias='on' then 'on' else 'off' 
+                                                                    ,(case when categorias='on' then 'on' else 'off'
                                                                                     end )as categorias
 
 
-                                                                  ,(case when menuCotizaciones='on' then 'on' else 'off' 
+                                                                  ,(case when menuCotizaciones='on' then 'on' else 'off'
                                                                                   end )as menuCotizaciones
 
-                                                                    ,(case when cotizaciones='on' then 'on' else 'off' 
+                                                                    ,(case when cotizaciones='on' then 'on' else 'off'
                                                                                   end )as cotizaciones
 
-                                                                    ,(case when administrarCotizaciones='on' then 'on' else 'off' 
+                                                                    ,(case when administrarCotizaciones='on' then 'on' else 'off'
                                                                                    end )as administrarCotizaciones
 
-                                                                    ,(case when modificarCotizaciones='on' then 'on' else 'off' 
+                                                                    ,(case when modificarCotizaciones='on' then 'on' else 'off'
                                                                                     end )as modificarCotizaciones
 
-                                                                    ,(case when eliminarCotizaciones='on' then 'on' else 'off' 
+                                                                    ,(case when eliminarCotizaciones='on' then 'on' else 'off'
                                                                                     end )as eliminarCotizaciones
 
 
 
 
-                                                                  ,(case when menuVentas='on' then 'on' else 'off' 
+                                                                  ,(case when menuVentas='on' then 'on' else 'off'
                                                                                    end )as menuVentas
 
-                                                                  ,(case when ventas='on' then 'on' else 'off' 
+                                                                  ,(case when ventas='on' then 'on' else 'off'
                                                                                     end )as ventas
 
 
-                                                                  ,(case when administrarVentas='on' then 'on' else 'off' 
+                                                                  ,(case when administrarVentas='on' then 'on' else 'off'
                                                                                   end )as administrarVentas
 
-                                                                    ,(case when modificarVentas='on' then 'on' else 'off' 
+                                                                    ,(case when modificarVentas='on' then 'on' else 'off'
                                                                                   end )as modificarVentas
 
-                                                                    ,(case when eliminarVentas='on' then 'on' else 'off' 
+                                                                    ,(case when eliminarVentas='on' then 'on' else 'off'
                                                                                    end )as eliminarVentas
 
-                                                                    ,(case when facturacionElectronica='on' then 'on' else 'off' 
+                                                                    ,(case when facturacionElectronica='on' then 'on' else 'off'
                                                                                     end )as facturacionElectronica
 
-                                                                    ,(case when reportesVentas='on' then 'on' else 'off' 
+                                                                    ,(case when reportesVentas='on' then 'on' else 'off'
                                                                                     end )as reportesVentas
 
 
 
-                                                                    ,(case when cajasSuperiores='on' then 'on' else 'off' 
+                                                                    ,(case when cajasSuperiores='on' then 'on' else 'off'
                                                                                   end )as cajasSuperiores
 
-                                                                    ,(case when graficoGanancias='on' then 'on' else 'off' 
+                                                                    ,(case when graficoGanancias='on' then 'on' else 'off'
                                                                                    end )as graficoGanancias
 
-                                                                    ,(case when productosMasVendidos='on' then 'on' else 'off' 
+                                                                    ,(case when productosMasVendidos='on' then 'on' else 'off'
                                                                                     end )as productosMasVendidos
 
-                                                                    ,(case when productosAgregadosRecientemente='on' then 'on' else 'off' 
+                                                                    ,(case when productosAgregadosRecientemente='on' then 'on' else 'off'
                                                                                     end )as productosAgregadosRecientemente
 
-                                                                    ,(case when bitacora='on' then 'on' else 'off' 
+                                                                    ,(case when bitacora='on' then 'on' else 'off'
                                                                                     end )as bitacora
 
 
-                                                                    ,(case when bitacora='on' then 'on' else 'off' 
+                                                                    ,(case when bitacora='on' then 'on' else 'off'
                                                                                     end )as bitacora
 
 
-                                                                    ,(case when pagos='on' then 'on' else 'off' 
+                                                                    ,(case when pagos='on' then 'on' else 'off'
                                                                                    end )as pagos
 
-                                                                    ,(case when historicoPagos='on' then 'on' else 'off' 
+                                                                    ,(case when historicoPagos='on' then 'on' else 'off'
                                                                                     end )as historicoPagos
 
-                                                                    ,(case when imprimirPagos='on' then 'on' else 'off' 
+                                                                    ,(case when imprimirPagos='on' then 'on' else 'off'
                                                                                     end )as imprimirPagos
 
 
 
-                                                                    ,(case when eliminarPagos='on' then 'on' else 'off' 
+                                                                    ,(case when eliminarPagos='on' then 'on' else 'off'
                                                                                     end )as eliminarPagos
 
 
-                                                                    ,(case when costoProductos='on' then 'on' else 'off' 
+                                                                    ,(case when costoProductos='on' then 'on' else 'off'
                                                                                     end )as costoProductos
 
-                                                                    ,(case when stock='on' then 'on' else 'off' 
+                                                                    ,(case when stock='on' then 'on' else 'off'
                                                                                     end )as stock
-                                                                                    
-                                                                    ,(case when actualizar='on' then 'on' else 'off' 
+
+                                                                    ,(case when actualizar='on' then 'on' else 'off'
                                                                                          end ) as actualizar
 
-                                                     FROM 
+																																	 ,(case when cajas='on' then 'on' else 'off'
+																																											end ) as cajas
+
+                                                     FROM
                                                      $tabla");
 
 			$stmt -> execute();
@@ -277,7 +283,7 @@ class ModeloPerfiles{
 			return $stmt -> fetchAll();
 
 		}
-		
+
 
 		$stmt -> close();
 
@@ -292,7 +298,7 @@ class ModeloPerfiles{
 	static public function mdlIngresarPerfil($tabla, $datos){
 
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(descripcion
-																
+
                                                                         ,menuConfiguraciones
                                                                         ,datosEmpresa
                                                                         ,usuarios
@@ -321,19 +327,19 @@ class ModeloPerfiles{
                                                                         ,cajasSuperiores
                                                                         ,graficoGanancias
                                                                         ,productosMasVendidos
-                                                                        ,productosAgregadosRecientemente			
-                                                                        ,bitacora	
+                                                                        ,productosAgregadosRecientemente
+                                                                        ,bitacora
 
                                                                         ,pagos
                                                                         ,historicoPagos
-                                                                        ,imprimirPagos			
-                                                                        ,eliminarPagos	
-                                                                        ,costoProductos	
-                                                                        ,stock	
+                                                                        ,imprimirPagos
+                                                                        ,eliminarPagos
+                                                                        ,costoProductos
+                                                                        ,stock
                                                                         ,actualizar
+																																				,cajas
 
-
-                                                                        ) 
+                                                                        )
                                                         VALUES (:descripcion
 
                                                                         ,:menuConfiguraciones
@@ -363,21 +369,21 @@ class ModeloPerfiles{
                                                                         ,:cajasSuperiores
                                                                         ,:graficoGanancias
                                                                         ,:productosMasVendidos
-                                                                        ,:productosAgregadosRecientemente	
+                                                                        ,:productosAgregadosRecientemente
                                                                         ,:bitacora
 
                                                                         ,:pagos
                                                                         ,:historicoPagos
-                                                                        ,:imprimirPagos	
-                                                                        ,:eliminarPagos	
-                                                                        ,:costoProductos	
+                                                                        ,:imprimirPagos
+                                                                        ,:eliminarPagos
+                                                                        ,:costoProductos
                                                                         ,:stock
                                                                         ,:actualizar
-
+																																				,:cajas
                                                                 )");
 
 		$stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
-		
+
 		$stmt->bindParam(":menuConfiguraciones", $datos["menuConfiguraciones"], PDO::PARAM_STR);
 		$stmt->bindParam(":datosEmpresa", $datos["datosEmpresa"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuarios", $datos["usuarios"], PDO::PARAM_STR);
@@ -415,21 +421,21 @@ class ModeloPerfiles{
 		$stmt->bindParam(":eliminarPagos", $datos["eliminarPagos"], PDO::PARAM_STR);
 		$stmt->bindParam(":costoProductos", $datos["costoProductos"], PDO::PARAM_STR);
 		$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
-                $stmt->bindParam(":actualizar", $datos["actualizar"], PDO::PARAM_STR);
-
+    $stmt->bindParam(":actualizar", $datos["actualizar"], PDO::PARAM_STR);
+		$stmt->bindParam(":cajas", $datos["cajas"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
-			return "ok";	
+			return "ok";
 
 		}else{
 
 			return "error";
-		
+
 		}
 
 		$stmt->close();
-		
+
 		$stmt = null;
 
 	}
@@ -439,8 +445,8 @@ class ModeloPerfiles{
 	=============================================*/
 
 	static public function mdlEditarPerfil($tabla, $datos){
-	
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla 
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla
                                                             SET descripcion = :descripcion
 
                                                                     ,menuConfiguraciones = :menuConfiguraciones
@@ -482,11 +488,11 @@ class ModeloPerfiles{
                                                                     ,costoProductos= :costoProductos
                                                                     ,stock= :stock
                                                                     ,actualizar= :actualizar
-
+																																		,cajas= :cajas
                                                             WHERE perfil = :perfil"
                                                             );
 
-		
+
 		$stmt -> bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 		$stmt -> bindParam(":perfil", $datos["perfil"], PDO::PARAM_STR);
 		$stmt->bindParam(":menuConfiguraciones", $datos["menuConfiguraciones"], PDO::PARAM_STR);
@@ -499,7 +505,7 @@ class ModeloPerfiles{
 		$stmt->bindParam(":productos", $datos["productos"], PDO::PARAM_STR);
 		$stmt->bindParam(":categorias", $datos["categorias"], PDO::PARAM_STR);
 
-		
+
 		$stmt->bindParam(":menuCotizaciones", $datos["menuCotizaciones"], PDO::PARAM_STR);
 		$stmt->bindParam(":cotizaciones", $datos["cotizaciones"], PDO::PARAM_STR);
 		$stmt->bindParam(":administrarCotizaciones", $datos["administrarCotizaciones"], PDO::PARAM_STR);
@@ -526,16 +532,16 @@ class ModeloPerfiles{
 		$stmt->bindParam(":eliminarPagos", $datos["eliminarPagos"], PDO::PARAM_STR);
 		$stmt->bindParam(":costoProductos", $datos["costoProductos"], PDO::PARAM_STR);
 		$stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_STR);
-                $stmt->bindParam(":actualizar", $datos["actualizar"], PDO::PARAM_STR);
-
+    $stmt->bindParam(":actualizar", $datos["actualizar"], PDO::PARAM_STR);
+		$stmt->bindParam(":cajas", $datos["cajas"], PDO::PARAM_STR);
 
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 
@@ -545,7 +551,7 @@ class ModeloPerfiles{
 
 	}
 
-	
+
 	/*=============================================
 	BORRAR PERFIL
 	=============================================*/
@@ -559,10 +565,10 @@ class ModeloPerfiles{
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 

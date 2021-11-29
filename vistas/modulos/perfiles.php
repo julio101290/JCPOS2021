@@ -16,19 +16,19 @@ if($_SESSION["perfiles"] == "off"){
 <div class="content-wrapper">
 
   <section class="content-header">
-    
+
     <h1>
-      
+
       Administrar Perfiles
-    
+
     </h1>
 
     <ol class="breadcrumb">
-      
+
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
+
       <li class="active">Administrar Perfiles</li>
-    
+
     </ol>
 
   </section>
@@ -38,9 +38,9 @@ if($_SESSION["perfiles"] == "off"){
     <div class="box">
 
       <div class="box-header with-border">
-  
+
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
-          
+
           Agregar Perfil
 
         </button>
@@ -48,19 +48,19 @@ if($_SESSION["perfiles"] == "off"){
       </div>
 
       <div class="box-body">
-        
+
        <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
-         
+
         <thead>
-         
+
          <tr>
-           
+
            <th style="width:10px">#</th>
            <th>Descripcion</th>
 
            <th>Acciones</th>
 
-         </tr> 
+         </tr>
 
         </thead>
 
@@ -74,21 +74,21 @@ if($_SESSION["perfiles"] == "off"){
         $usuarios = ControladorPerfiles::ctrMostrarPerfiles($item, $valor);
 
        foreach ($usuarios as $key => $value){
-         
+
           echo ' <tr>
                   <td>'.$value["perfil"].'</td>
                   <td>'.$value["descripcion"].'</td>';
-                  
+
             echo '
                   <td>
 
                     <div class="btn-group">
-                        
+
                       <button class="btn btn-warning btnEditarPerfil" idPerfil="'.$value["perfil"].'" data-toggle="modal" data-target="#modalEditarPerfil"><i class="fa fa-pencil"></i></button>
 
                       <button class="btn btn-danger btnEliminarPerfil" idPerfil="'.$value["perfil"].'" ><i class="fa fa-times"></i></button>
 
-                    </div>  
+                    </div>
 
                   </td>
 
@@ -96,7 +96,7 @@ if($_SESSION["perfiles"] == "off"){
         }
 
 
-        ?> 
+        ?>
 
         </tbody>
 
@@ -115,7 +115,7 @@ MODAL AGREGAR PERFIL
 ======================================-->
 
 <div id="modalAgregarUsuario" class="modal fade" role="dialog">
-  
+
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -143,12 +143,12 @@ MODAL AGREGAR PERFIL
           <div class="box-body">
 
             <!-- ENTRADA PARA DESCRIPCION DEL PERFIL -->
-            
+
             <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
                 <input type="text" class="form-control input-lg" name="nuevoDescripcionPerfil" placeholder="Ingresar descripcion perfil" required>
 
@@ -161,11 +161,11 @@ MODAL AGREGAR PERFIL
 
  <!-- EMPEZAMMOS CON LAS PESTAÑAS -->
 <ul class="nav nav-tabs">
- 
+
   <li class="active"><a data-toggle="tab" href="#configuraciones">Configuraciones</a></li>
- 
+
   <li><a data-toggle="tab" href="#Catalogos">Catalogos</a></li>
- 
+
   <li><a data-toggle="tab" href="#Cotizaciones">Cotizaciones</a></li>
 
   <li><a data-toggle="tab" href="#Ventas">Ventas</a></li>
@@ -184,9 +184,9 @@ MODAL AGREGAR PERFIL
     <h3>Configuraciones</h3>
 
     <p>
-      
+
    <!-- Check Configuraciones -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -205,7 +205,7 @@ MODAL AGREGAR PERFIL
     </div>
 
        <!-- Check datos empresa -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -223,11 +223,11 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
    <!-- Check Usuarios -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -245,11 +245,11 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
        <!-- Check Perfiles -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -267,11 +267,11 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
    <!-- Configuracion de correo -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -289,11 +289,11 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
      <!-- Bitacora -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -311,13 +311,13 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
-     
-     
-     
+
+
+
           <!-- Actualizar -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -335,25 +335,25 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
 
     </p>
   </div>
-  
+
 
 
   <!-- CATALOGOS -->
   <div id="Catalogos" class="tab-pane fade">
-    
+
     <h3>Catalogos</h3>
-    
+
     <p>
 
 
    <!-- Catalogo de clientes -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -371,12 +371,12 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
 
        <!-- Catalogo de productos -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -394,11 +394,11 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
       <!-- PERMITE EDITAR STOCK -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -416,14 +416,14 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
 
 
 
        <!-- Permite ver costo del producto-->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -441,12 +441,12 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
 
        <!-- Catalogo de Categorias -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -464,24 +464,46 @@ MODAL AGREGAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
+
+    <!-- Cajas -->
+
+ <div class="form-group">
+
+   <div class="input-group">
+
+     <div class="checkbox">
+
+       <label>
+
+         <input type="checkbox" data-toggle="toggle" name="cajas" data-on="Si" data-off="No">
+
+         Cajas
+
+       </label>
+
+     </div>
+
+   </div>
+
+ </div>
 
     </p>
 
   </div>
-  
+
 
 <!-- Pestaña Cotizaciones -->
   <div id="Cotizaciones" class="tab-pane fade">
-    
+
     <h3>Cotizaciones </h3>
-    
+
       <p>
 
 
        <!-- Menu de Cotizaciones -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -499,11 +521,11 @@ MODAL AGREGAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
-       
+
        <!-- Forma de Cotizaciones -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -521,12 +543,12 @@ MODAL AGREGAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
 
-        
+
        <!-- Administrar cotizaciones -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -548,7 +570,7 @@ MODAL AGREGAR PERFIL
 
 
         <!-- Modificar Cotizaciones -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -569,7 +591,7 @@ MODAL AGREGAR PERFIL
         </div>
 
         <!-- Eliminar Cotizaciones -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -595,10 +617,10 @@ MODAL AGREGAR PERFIL
 
   <div id="Ventas" class="tab-pane fade">
     <h3>Ventas</h3>
-    <p>       
+    <p>
 
         <!-- Menu de Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -616,14 +638,14 @@ MODAL AGREGAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
 
 
 
 
       <!-- Forma de Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -641,12 +663,12 @@ MODAL AGREGAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
 
-        
+
        <!-- Administrar Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -668,7 +690,7 @@ MODAL AGREGAR PERFIL
 
 
         <!-- Modificar Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -689,7 +711,7 @@ MODAL AGREGAR PERFIL
         </div>
 
         <!-- Eliminar Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -711,7 +733,7 @@ MODAL AGREGAR PERFIL
 
 
         <!-- BOTON PARA HACER PAGOS -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -722,7 +744,7 @@ MODAL AGREGAR PERFIL
 
                 <input type="checkbox" data-toggle="toggle" name="smPagos" data-on="Si" data-off="No">
 
-               Hacer pago 
+               Hacer pago
 
               </label>
 
@@ -735,7 +757,7 @@ MODAL AGREGAR PERFIL
 
 
         <!-- HISTORICO DE PAGOS -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -746,7 +768,7 @@ MODAL AGREGAR PERFIL
 
                 <input type="checkbox" data-toggle="toggle" name="smHistoricoPagos" data-on="Si" data-off="No">
 
-               Historico de pagos 
+               Historico de pagos
 
               </label>
 
@@ -756,7 +778,7 @@ MODAL AGREGAR PERFIL
         </div>
 
         <!-- IMPRIMIR PAGO -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -767,7 +789,7 @@ MODAL AGREGAR PERFIL
 
                 <input type="checkbox" data-toggle="toggle" name="smImprimirPagos" data-on="Si" data-off="No">
 
-               Imprimir Pago 
+               Imprimir Pago
 
               </label>
 
@@ -778,7 +800,7 @@ MODAL AGREGAR PERFIL
 
 
         <!-- ELIMINAR PAGO -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -789,7 +811,7 @@ MODAL AGREGAR PERFIL
 
                 <input type="checkbox" data-toggle="toggle" name="smEliminarPagos" data-on="Si" data-off="No">
 
-               Eliminar Pago 
+               Eliminar Pago
 
               </label>
 
@@ -801,7 +823,7 @@ MODAL AGREGAR PERFIL
 
 
         <!-- Facturación Electronica -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -822,7 +844,7 @@ MODAL AGREGAR PERFIL
         </div>
 
         <!-- Reportes de Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -850,10 +872,10 @@ MODAL AGREGAR PERFIL
     <h3>Reportes</h3>
 
       <p>
-      
+
 
       <!--Cajas Superiores -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -872,10 +894,10 @@ MODAL AGREGAR PERFIL
 
           </div>
         </div>
-      
+
 
         <!--Grafico de Ganancias -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -897,7 +919,7 @@ MODAL AGREGAR PERFIL
         </div>
 
         <!--Productos Mas Vendidos -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -915,11 +937,11 @@ MODAL AGREGAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
 
         <!--Productos Agregados Recientemente-->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -937,13 +959,13 @@ MODAL AGREGAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
 
       </p>
 
   </div>
-      
+
   </div>
 
 
@@ -992,7 +1014,7 @@ MODAL EDITAR PERFIL
 ======================================-->
 
 <div id="modalEditarPerfil" class="modal fade" role="dialog">
-  
+
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -1020,12 +1042,12 @@ MODAL EDITAR PERFIL
           <div class="box-body">
 
             <!-- ENTRADA PARA LA DESCRIPCION -->
-            
+
             <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
                 <input type="text" class="form-control input-lg" id="editarDescripcion" name="editarDescripcion" value="" required>
 
@@ -1035,12 +1057,12 @@ MODAL EDITAR PERFIL
 
 
               <!-- ENTRADA PARA EL ID DEL PERFIL -->
-            
+
             <div class="form-group" hidden>
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
                 <input type="text" class="form-control input-lg" id="idPerfil" name="idPerfil" value="" required>
 
@@ -1054,11 +1076,11 @@ MODAL EDITAR PERFIL
 
  <!-- EMPEZAMMOS CON LAS PESTAÑAS -->
 <ul class="nav nav-tabs">
- 
+
   <li class="active"><a data-toggle="tab" href="#editarConfiguraciones">Configuraciones</a></li>
- 
+
   <li><a data-toggle="tab" href="#editarCatalogos">Catalogos</a></li>
- 
+
   <li><a data-toggle="tab" href="#editarCotizaciones">Cotizaciones</a></li>
 
   <li><a data-toggle="tab" href="#editarVentas">Ventas</a></li>
@@ -1077,9 +1099,9 @@ MODAL EDITAR PERFIL
     <h3>Configuraciones</h3>
 
     <p>
-      
+
    <!-- Check Configuraciones -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1098,7 +1120,7 @@ MODAL EDITAR PERFIL
     </div>
 
        <!-- Check datos empresa -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1116,11 +1138,11 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
    <!-- Check Usuarios -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1138,11 +1160,11 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
        <!-- Check Perfiles -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1160,11 +1182,11 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
    <!-- Configuracion de correo -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1182,13 +1204,13 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
 
 
        <!-- EDITAR DERECHO BITACORA-->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1206,13 +1228,13 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
-       
-       
-       
+
+
+
     <!-- EDITAR DERECHO ACTUALIZAR-->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1230,26 +1252,26 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
 
 
     </p>
   </div>
-  
+
 
 
   <!-- CATALOGOS -->
   <div id="editarCatalogos" class="tab-pane fade">
-    
+
     <h3>Catalogos</h3>
-    
+
     <p>
 
 
    <!-- Catalogo de clientes -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1267,12 +1289,12 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
 
        <!-- Catalogo de productos -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1290,11 +1312,11 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
            <!-- Permite Modificar stock -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1312,12 +1334,12 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
 
        <!-- Permite ver costos de producto -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1335,12 +1357,12 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
 
 
        <!-- Catalogo de Categorias -->
-    
+
     <div class="form-group">
 
       <div class="input-group">
@@ -1358,23 +1380,46 @@ MODAL EDITAR PERFIL
         </div>
 
       </div>
-      
+
     </div>
+
+
+    <!-- Catalogo de Categorias -->
+
+ <div class="form-group">
+
+   <div class="input-group">
+
+     <div class="checkbox">
+
+       <label>
+
+         <input type="checkbox" data-toggle="toggle" name="editarCajas" id="editarCajas" data-on="Si" data-off="No">
+
+         Editar Cajas
+
+       </label>
+
+     </div>
+
+   </div>
+
+ </div>
 
     </p>
 
   </div>
-  
+
 
 <!-- Pestaña Cotizaciones -->
   <div id="editarCotizaciones" class="tab-pane fade">
-    
+
     <h3>Cotizaciones </h3>
-    
+
       <p>
 
        <!-- Menu Cotizaciones -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1392,11 +1437,11 @@ MODAL EDITAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
-       
+
        <!-- Forma de Cotizaciones -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1414,12 +1459,12 @@ MODAL EDITAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
 
-        
+
        <!-- Administrar cotizaciones -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1441,7 +1486,7 @@ MODAL EDITAR PERFIL
 
 
         <!-- Modificar Cotizaciones -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1462,7 +1507,7 @@ MODAL EDITAR PERFIL
         </div>
 
         <!-- Eliminar Cotizaciones -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1488,10 +1533,10 @@ MODAL EDITAR PERFIL
 
   <div id="editarVentas" class="tab-pane fade">
     <h3>Ventas</h3>
-    <p>    
+    <p>
 
       <!-- Menu de Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1509,11 +1554,11 @@ MODAL EDITAR PERFIL
             </div>
 
           </div>
-          
-        </div>   
+
+        </div>
 
       <!-- Forma de Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1531,12 +1576,12 @@ MODAL EDITAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
 
-        
+
        <!-- Administrar Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1558,7 +1603,7 @@ MODAL EDITAR PERFIL
 
 
         <!-- Modificar Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1579,7 +1624,7 @@ MODAL EDITAR PERFIL
         </div>
 
         <!-- Eliminar Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1603,7 +1648,7 @@ MODAL EDITAR PERFIL
 
 
         <!-- BOTON PARA HACER PAGOS -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1614,7 +1659,7 @@ MODAL EDITAR PERFIL
 
                 <input type="checkbox" data-toggle="toggle" name="smEditarPagos"  id="smEditarPagos" data-on="Si" data-off="No">
 
-               Hacer pago 
+               Hacer pago
 
               </label>
 
@@ -1627,7 +1672,7 @@ MODAL EDITAR PERFIL
 
 
         <!-- HISTORICO DE PAGOS -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1638,7 +1683,7 @@ MODAL EDITAR PERFIL
 
                 <input type="checkbox" data-toggle="toggle" name="smEditarHistoricoPagos" id="smEditarHistoricoPagos" data-on="Si" data-off="No">
 
-               Historico de pagos 
+               Historico de pagos
 
               </label>
 
@@ -1648,7 +1693,7 @@ MODAL EDITAR PERFIL
         </div>
 
         <!-- IMPRIMIR PAGO -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1659,7 +1704,7 @@ MODAL EDITAR PERFIL
 
                 <input type="checkbox" data-toggle="toggle" name="smEditarImprimirPagos"  id="smEditarImprimirPagos" data-on="Si" data-off="No">
 
-               Imprimir Pago 
+               Imprimir Pago
 
               </label>
 
@@ -1670,7 +1715,7 @@ MODAL EDITAR PERFIL
 
 
         <!-- ELIMINAR PAGO -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1681,7 +1726,7 @@ MODAL EDITAR PERFIL
 
                 <input type="checkbox" data-toggle="toggle" name="smEditarEliminarPagos" id="smEditarEliminarPagos" data-on="Si" data-off="No">
 
-               Eliminar Pago 
+               Eliminar Pago
 
               </label>
 
@@ -1693,7 +1738,7 @@ MODAL EDITAR PERFIL
 
 
         <!-- Facturacion Electronica -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1714,7 +1759,7 @@ MODAL EDITAR PERFIL
         </div>
 
         <!-- Reportes de Ventas -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1742,10 +1787,10 @@ MODAL EDITAR PERFIL
     <h3>Reportes</h3>
 
       <p>
-      
+
 
       <!--Cajas Superiores -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1764,10 +1809,10 @@ MODAL EDITAR PERFIL
 
           </div>
         </div>
-      
+
 
         <!--Grafico de Ganancias -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1789,7 +1834,7 @@ MODAL EDITAR PERFIL
         </div>
 
         <!--Productos Mas Vendidos -->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1807,11 +1852,11 @@ MODAL EDITAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
 
         <!--Productos Agregados Recientemente-->
-    
+
         <div class="form-group">
 
           <div class="input-group">
@@ -1829,13 +1874,13 @@ MODAL EDITAR PERFIL
             </div>
 
           </div>
-          
+
         </div>
 
       </p>
 
   </div>
-      
+
   </div>
 
 
@@ -1868,7 +1913,7 @@ MODAL EDITAR PERFIL
           $editarPerfil = new ControladorPerfiles();
           $editarPerfil -> ctrEditarPerfil();
 
-        ?> 
+        ?>
 
       </form>
 
@@ -1883,6 +1928,4 @@ MODAL EDITAR PERFIL
   $borrarPerfil = new ControladorPerfiles();
   $borrarPerfil-> ctrBorrarPerfil();
 
-?> 
-
-
+?>

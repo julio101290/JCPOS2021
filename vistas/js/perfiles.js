@@ -4,9 +4,9 @@ EDITAR PERFIL
 $(".tablas").on("click", ".btnEditarPerfil", function(){
 
 	var idPerfil= $(this).attr("idPerfil");
-	
 
-	
+
+
 	var datos = new FormData();
 	datos.append("idPerfil", idPerfil);
 
@@ -23,7 +23,7 @@ $(".tablas").on("click", ".btnEditarPerfil", function(){
 		dataType: "json",
 		success: function(respuesta){
 
-			
+
 			$("#editarDescripcion").val(respuesta["descripcion"]);
 			$("#idPerfil").val(respuesta["perfil"]);
 
@@ -65,7 +65,8 @@ $(".tablas").on("click", ".btnEditarPerfil", function(){
 			$('#editarsmCostoProductos').bootstrapToggle(respuesta["costoProductos"]);
 
 			$('#editarStock').bootstrapToggle(respuesta["stock"]);
-                        $('#editarActualizar').bootstrapToggle(respuesta["actualizar"]);
+      $('#editarActualizar').bootstrapToggle(respuesta["actualizar"]);
+		  $('#editarCajas').bootstrapToggle(respuesta["cajas"]);
 
 
 
@@ -104,7 +105,3 @@ $(".tablas").on("click", ".btnEliminarPerfil", function(){
   })
 
 })
-
-
-
-

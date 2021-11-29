@@ -149,6 +149,20 @@
 						</li>';
 					}
 
+
+
+				if($_SESSION["cajas"] == "on" ){
+					echo '<li>
+
+						<a href="cajadiaria">
+
+							<i class="fa fa-circle-o"></i>
+							<span>Cajas</span>
+
+						</a>
+						</li>';
+					}
+
 				if($_SESSION["facturacionElectronica"] == "on" ){
 						echo '<li>
 							<a href="facturacionElectronica">

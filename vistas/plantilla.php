@@ -204,6 +204,7 @@ CUERPO DOCUMENTO
          $_GET["ruta"] == "bodegas" ||
          $_GET["ruta"] == "actualizar" ||
          $_GET["ruta"] == "acercaDe" ||
+         $_GET["ruta"] == "cajadiaria" ||
 
          $_GET["ruta"] == "salir"){
 
@@ -250,6 +251,7 @@ CUERPO DOCUMENTO
 <script src="vistas/js/perfiles.js"></script>
 <script src="vistas/js/bitacora.js"></script>
 <script src="vistas/js/bodegas.js"></script>
+<script src="vistas/js/cajas.js"></script>
 
 
 </body>

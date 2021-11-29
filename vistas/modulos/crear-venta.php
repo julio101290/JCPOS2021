@@ -14,10 +14,10 @@ if($_SESSION["ventas"] == "off"){
 
 
 //FECHA ACTUAL
-  
+
 $fecha_actual = date("Y/m/d");
 //sumo 1 día
-$dteFechaVencimiento =date("Y/m/d",strtotime($fecha_actual."+ 30 days")); 
+$dteFechaVencimiento =date("Y/m/d",strtotime($fecha_actual."+ 30 days"));
 //resto 1 día
 $item=null;
 $valor=null;
@@ -25,24 +25,55 @@ $valor=null;
 $Empresa= new ControladorEmpresa();
 $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
+$caja=new ModeloCaja();
+
+
+$cajaAbierta=$caja->mdlVerificaCajaUsuario($_SESSION["id"]);
+
+
+if(esCero($cajaAbierta["id"])==0){
+    echo '<script>
+
+          swal({
+
+            type: "error",
+            title: "¡No hay cajas abiertas'.$cajaAbierta["id"].'",
+            showConfirmButton: true,
+            confirmButtonText: "Cerrar"
+
+          }).then(function(result){
+
+            if(result.value){
+
+              window.location = "inicio";
+
+            }
+
+          });
+
+
+        </script>';
+
+}
+
 ?>
 
 <div class="content-wrapper">
 
   <section class="content-header">
-    
+
     <h1>
-      
+
       Crear venta
-    
+
     </h1>
 
     <ol class="breadcrumb">
-      
+
       <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
+
       <li class="active">Crear venta</li>
-    
+
     </ol>
 
   </section>
@@ -54,17 +85,17 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
       <!--=====================================
       EL FORMULARIO
       ======================================-->
-      
+
       <div class="col-lg-7 col-xs-12">
-        
+
         <div class="box box-success">
-          
+
           <div class="box-header with-border"></div>
 
           <form role="form" method="post" class="formularioVenta">
 
             <div class="box-body">
-  
+
               <div class="box">
 
                  <?php
@@ -86,7 +117,7 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
                     $cliente = ControladorClientes::ctrMostrarClientes($itemCliente, $valorCliente);
 
-                    
+
                     if($venta["neto"]>0){
                         $porcentajeImpuesto = $venta["impuesto"] * 100 / $venta["neto"];
                     }
@@ -95,14 +126,32 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                 ?>
 
                 <!--=====================================
+                 ENTRADA DE LA CAJA
+                 ======================================-->
+
+                               <div class="form-group" hidden>
+
+                                 <div class="input-group">
+
+                                   <span class="input-group-addon"><i class="fa fa-user"></i></span>
+
+                                   <input type="text" class="form-control" id="nuevoCaja" value="<?php echo $cajaAbierta["id"]; ?>" readonly>
+
+
+
+                                 </div>
+
+                               </div>
+
+                <!--=====================================
                 ENTRADA DEL VENDEDOR
                 ======================================-->
-            
+
                 <div class="form-group">
-                
+
                   <div class="input-group">
-                    
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
                     <input type="text" class="form-control" id="nuevoVendedor" value="<?php echo $_SESSION["nombre"]; ?>" readonly>
 
@@ -110,49 +159,49 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
                   </div>
 
-                </div> 
+                </div>
 
                 <!--=====================================
                 TIPO VENTA
                 ======================================-->
-            
+
                 <div class="form-group" hidden>
-                
+
                   <div class="input-group">
-                    
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
 
                     <input type="text" name="TipoVenta" id="TipoVenta" value="VEN">
 
                   </div>
 
-                </div> 
+                </div>
 
                 <!--=====================================
                 ORIGEN COTIZACION
                 ======================================-->
-            
+
                 <div class="form-group" hidden>
-                
+
                   <div class="input-group">
-                    
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
 
                     <input type="text" name="origenCotizacion" id="origenCotizacion" value="<?php echo $venta["codigo"]; ?>">
 
                   </div>
 
-                </div> 
+                </div>
 
-               
+
                 <!--=====================================
                 FECHA
-                ======================================--> 
+                ======================================-->
                <div class="form-group">
                <div class="input-group date" data-provide="datepicker"  data-date-format="yyyy/mm/dd">
-                  
+
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
@@ -164,12 +213,12 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
                 <!--=====================================
                 ENTRADA DEL CÓDIGO
-                ======================================--> 
+                ======================================-->
 
                 <div class="form-group">
-                  
+
                   <div class="input-group">
-                    
+
                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
                     <?php
@@ -184,46 +233,46 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                       $codigo = $ventas["UltimoFolio"] + 1;
 
                       echo '<input type="text" class="form-control" id="nuevaVenta" name="nuevaVenta" value="'.$codigo.'" readonly>';
-                  
-                    
+
+
 
                     ?>
-                    
-                    
+
+
                   </div>
-                
+
                 </div>
 
                   <!--=====================================
                 ORIGEN COTIZACION
                 ======================================-->
-            
+
                 <div class="form-group" hidden>
-                
+
                   <div class="input-group">
-                    
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
 
                     <input type="text" name="origenCotizacion" id="origenCotizacion" value="<?echo $venta["codigo"]; ?>">
 
                   </div>
 
-                </div> 
+                </div>
 
                 <!--=====================================
                 ENTRADA DEL CLIENTE
-                ======================================--> 
+                ======================================-->
 
                 <div class="form-group">
-                  
+
                   <div class="input-group">
-                    
+
                     <span class="input-group-addon"><i class="fa fa-users"></i></span>
-                    
+
                     <select class="form-control select2" id="seleccionarCliente" name="seleccionarCliente" required style="width: 100%;">
 
-            
+
 
                     <?php
 
@@ -245,9 +294,9 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                     ?>
 
                     </select>
-                    
-                    
-                  
+
+
+
                   </div>
                 <span class="input-group-addon"><button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#modalAgregarCliente" data-dismiss="modal">Agregar cliente</button></span>
                 </div>
@@ -255,28 +304,28 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                   <!--=====================================
                 COTIZAR A
                 ======================================-->
-            
-                <div class="form-group" hidden >
-                
-                  <div class="input-group">
-                    
-                    <span class="input-group-addon"><i class="fa fa-commenting"></i></span> 
 
-                    <input type="text" class="form-control pull-right" value="" name="cotizarA" id="cotizarA" placeholder="Cotiza a:" 
+                <div class="form-group" hidden >
+
+                  <div class="input-group">
+
+                    <span class="input-group-addon"><i class="fa fa-commenting"></i></span>
+
+                    <input type="text" class="form-control pull-right" value="" name="cotizarA" id="cotizarA" placeholder="Cotiza a:"
                   value=""
                     >
 
                   </div>
 
-                </div> 
+                </div>
 
 
                 <!--=====================================
                 FECHA VENCIMIENTO
-                ======================================--> 
+                ======================================-->
                <div class="form-group">
                <div class="input-group date" data-provide="datepicker" data-date-format="yyyy/mm/dd" required>
-                  
+
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
@@ -290,18 +339,18 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                 <!--=====================================
                 OBSERVACIONES
                 ======================================-->
-            
+
                 <div class="form-group" >
-                
+
                   <div class="input-group">
-                    
-                    <span class="input-group-addon"><i class="fa fa-commenting"></i></span> 
+
+                    <span class="input-group-addon"><i class="fa fa-commenting"></i></span>
 
                     <input type="text" class="form-control pull-right" value="<?php echo $venta["Observaciones"]; ?>" name="Observaciones" placeholder="observaciones" >
 
                   </div>
 
-                </div> 
+                </div>
 
 
                <!--=====================================
@@ -315,35 +364,35 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                 $UUID = $UUID["generaUUID"];
 
                 ?>
-            
+
                 <div class="form-group" hidden>
-                
+
                   <div class="input-group">
-                    
-                    <span class="input-group-addon"><i class="fa fa-commenting"></i></span> 
+
+                    <span class="input-group-addon"><i class="fa fa-commenting"></i></span>
 
                     <input type="text" class="form-control pull-right" name="UUID" id="UUID" placeholder="UUID" value="<?php echo $UUID; ?>" >
 
                   </div>
 
-                </div> 
+                </div>
 
 
                 <!--=====================================
                 TIEMPO ESTIMADO DE ENTREGA
                 ======================================-->
-            
+
                 <div class="form-group" >
-                
+
                   <div class="input-group">
-                    
-                    <span class="input-group-addon"><i class="fa fa-hourglass-2"></i></span> 
+
+                    <span class="input-group-addon"><i class="fa fa-hourglass-2"></i></span>
 
                     <input type="text" class="form-control pull-right" name="plazoEntrega" id="plazoEntrega" placeholder="Tiempo estimado de entrega" value="<?php echo $datosEmpresa[0]["diasEntrega"]; ?>">
 
                   </div>
 
-                </div> 
+                </div>
 
 
                                 <div class="row">
@@ -351,22 +400,22 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                   <!--=====================================
                   ENCABEZADO
                   ======================================-->
-                  
+
                   <div class="col-xs-12 pull-right">
-                    
+
                     <table class="table">
 
                       <thead>
-                        <th style="width: 16.66666667%"></th>  
-                          <th style="width: 25%">Descripcion</th>      
-                          <th style="width: 16.66666667%">Cantidad</th>    
-                          <th style="width: 16.66666667%">Precio</th>    
-                          <th style="width: 16.66666667%">Total</th> 
+                        <th style="width: 16.66666667%"></th>
+                          <th style="width: 25%">Descripcion</th>
+                          <th style="width: 16.66666667%">Cantidad</th>
+                          <th style="width: 16.66666667%">Precio</th>
+                          <th style="width: 16.66666667%">Total</th>
                         </tr>
 
                       </thead>
 
-                     
+
                     </table>
 
                   </div>
@@ -375,7 +424,7 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
                 <!--=====================================
                 ENTRADA PARA AGREGAR PRODUCTO
-                ======================================--> 
+                ======================================-->
 
                 <div class="form-group row nuevoProducto">
 
@@ -395,15 +444,15 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                     $respuesta = ControladorProductos::ctrMostrarProductos($item, $valor, $orden);
 
                     $stockAntiguo = $respuesta["stock"] + $value["cantidad"];
-                    
+
                     echo '<div class="row" style="padding:5px 15px">
                         <div class="'.$value["id"].'" id="renglonProducto">
 
 
                           <div class="col-xs-1" style="padding-right:0px">
-              
+
                             <div class="input-group">
-  
+
                               <button   class="btn btn-danger  quitarProducto" idProducto="'.$value["id"].'"><strong>X</strong></button>
                             </div>
 
@@ -411,12 +460,12 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                           </div>
 
 
-                        
+
                           <div class="col-xs-4" style="padding-right:0px">
-              
+
                             <div class="input-group">
-                  
-          
+
+
                               <input type="text" class="form-control nuevaDescripcionProducto" idProducto="'.$value["id"].'" name="agregarProducto" id="agregarProducto" renglon="'.$value["renglon"].'" value="'.$value["descripcion"].'" required>
 
                             </div>
@@ -424,7 +473,7 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                           </div>
 
                           <div class="col-xs-2">
-                
+
                             <input type="number" step="any" class="form-control nuevaCantidadProducto" name="nuevaCantidadProducto" id="nuevaCantidadProducto" min="1" value="'.$value["cantidad"].'" stock="'.$stockAntiguo.'" nuevoStock="'.$value["stock"].'" required>
 
                           </div>
@@ -434,12 +483,12 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
                           <div class="col-xs-2">
 
-                          
+
 
                            <input type="text" class="form-control nuevoPrecioUnitarioProducto" name="nuevoPrecioUnitarioProducto"  value="'.$value["precio"].'" required>
-                                 
-              
-                             
+
+
+
                           </div>
 
                           <div class="col-xs-2 ingresoPrecio" style="padding-left:0px">
@@ -447,16 +496,16 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                             <div class="input-group">
 
                               <span class="input-group-addon"><i class="ion ion-social-usd"></i></span>
-                     
+
                               <input type="text" class="form-control nuevoPrecioProducto" precioReal="'.$respuesta["precio_venta"].'" name="nuevoPrecioProducto" value="'.$value["total"].'" readonly required>
-     
+
                             </div>
-                 
+
                          </div>
 
 
-                         
-                         
+
+
                           </div>
 
 
@@ -466,11 +515,11 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
                         ;
                   }
-                }  
+                }
 
                 ?>
 
-                
+
 
                 </div>
 
@@ -491,9 +540,9 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                   <!--=====================================
                   ENTRADA IMPUESTOS Y TOTAL
                   ======================================-->
-                  
+
                   <div class="col-xs-12 pull-right">
-                    
+
                     <table class="table">
 
                       <thead>
@@ -501,25 +550,25 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
                         <tr>
                           <th></th>
                           <th></th>
-                          <th></th>      
+                          <th></th>
                         </tr>
 
                       </thead>
 
                       <tbody>
-                      
+
                         <tr>
-                          
+
                           <td style="width: 30%">
-                            
+
 
 
                           </td>
 
 
                            <td style="width: 30%">
-                            
-                           
+
+
 
                           </td>
 
@@ -535,30 +584,30 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
                                <input type="hidden" name="nuevoPrecioNeto" id="nuevoPrecioNeto" value="<?php echo $venta["neto"]; ?>" required>
 
-                             
-                        
+
+
                             </div>
 
                              <div class="input-group">
-                           
+
                               <span class="input-group-addon"> <strong>Sub Total:</strong> <i ></i></span>
 
                               <input type="text" class="form-control input-lg" id="nuevoSubTotalVenta" name="nuevoSubTotalVenta" total="" placeholder="00000" value="<?php echo $venta["neto"]; ?>" readonly required>
 
                               <input type="hidden" name="subTotalVenta" id="subTotalVenta" value="<?php echo $venta["neto"]; ?>">
-                              
-                        
+
+
                             </div>
-                            
+
                             <div class="input-group">
-                           
+
                               <span class="input-group-addon"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total: </strong>       <i class="ion ion-social-usd"></i></span>
 
                               <input type="text" class="form-control input-lg" id="nuevoTotalVenta" name="nuevoTotalVenta" total="<?php echo $venta["total"]; ?>" value="<?php echo $venta["total"]; ?>" placeholder="00000" readonly required>
 
                               <input type="hidden" name="totalVenta" id="totalVenta" value="<?php echo $venta["total"]; ?>">
-                              
-                        
+
+
                             </div>
 
                           </td>
@@ -579,7 +628,7 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
 
                 <br>
-      
+
               </div>
 
           </div>
@@ -589,7 +638,7 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
             <button type="button" class="btn btn-primary pull-left " data-toggle="modal" data-target="#modalAgregarProducto" data-dismiss="modal">Nuevo Producto</button>
 
             <button type="button" class="btn btn-primary pull-right " data-toggle="modal" data-target="#modalMetodoDePago" data-dismiss="modal"  >Guardar venta</button>
-            
+
 
           </div>
 
@@ -599,11 +648,11 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
 
           //$guardarVenta = new ControladorVentas();
           //$guardarVenta -> ctrCrearVenta();
-          
+
         ?>
 
         </div>
-            
+
       </div>
 
       <!--=====================================
@@ -611,38 +660,38 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
       ======================================-->
 
       <div class="col-lg-5 hidden-md hidden-xs">
-        
+
         <div class="box box-warning">
 
 
 
 
           <div class="box-header with-border">
-            
+
                             <!--=====================================
                 OBSERVACIONES
                 ======================================-->
-            
+
                 <div class="form-group" >
-                
+
                   <div class="input-group">
-                    
-                    <span class="input-group-addon"><i class="fa fa-barcode"></i></span> 
+
+                    <span class="input-group-addon"><i class="fa fa-barcode"></i></span>
 
                     <input type="text" class="form-control pull-right" value="" name="CodigoDeBarras" id="CodigoDeBarras" placeholder="Codigo de barras" >
 
                   </div>
 
-                </div> 
+                </div>
 
 
 
           </div>
 
           <div class="box-body">
-            
+
             <table class="table table-bordered table-striped dt-responsive tablaVentas">
-              
+
                <thead>
 
                  <tr>
@@ -666,7 +715,7 @@ $datosEmpresa= $Empresa->ctrMostrarEmpresas($item,$valor);
       </div>
 
     </div>
-   
+
   </section>
 
 </div>
@@ -679,7 +728,7 @@ MODAL AGREGAR PRODUCTO
 ======================================-->
 
 <div id="modalAgregarProducto" class="modal fade" role="dialog">
-  
+
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -710,13 +759,13 @@ MODAL AGREGAR PRODUCTO
             <!-- ENTRADA PARA SELECCIONAR CATEGORÍA -->
 
             <div class="form-group" >
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-th"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-th"></i></span>
 
                 <select class="form-control input-lg select2" id="nuevaCategoria" name="nuevaCategoria" required style="width: 100%;">
-                  
+
                   <option value="">Selecionar categoría</option>
 
                   <?php
@@ -727,12 +776,12 @@ MODAL AGREGAR PRODUCTO
                   $categorias = ControladorCategorias::ctrMostrarCategorias($item, $valor);
 
                   foreach ($categorias as $key => $value) {
-                    
+
                     echo '<option value="'.$value["id"].'">'.$value["categoria"].'</option>';
                   }
 
                   ?>
-  
+
                 </select>
 
               </div>
@@ -744,12 +793,12 @@ MODAL AGREGAR PRODUCTO
 
 
             <!-- ENTRADA PARA EL CÓDIGO -->
-            
+
             <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-code"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-code"></i></span>
 
                 <input type="text" class="form-control input-lg" id="nuevoCodigo" name="nuevoCodigo" placeholder="Ingresar código" readonly required>
 
@@ -760,10 +809,10 @@ MODAL AGREGAR PRODUCTO
             <!-- ENTRADA PARA LA DESCRIPCIÓN -->
 
              <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-product-hunt"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-product-hunt"></i></span>
 
                 <input type="text" class="form-control input-lg" name="nuevaDescripcion" id="nuevaDescripcion" placeholder="Ingresar descripción" required>
 
@@ -774,10 +823,10 @@ MODAL AGREGAR PRODUCTO
              <!-- ENTRADA PARA STOCK -->
 
              <div class="form-group" >
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-check"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-check"></i></span>
 
                 <input type="number" class="form-control input-lg" name="nuevoStock" id="nuevoStock"  value="1" placeholder="Stock">
 
@@ -790,10 +839,10 @@ MODAL AGREGAR PRODUCTO
              <div class="form-group row">
 
                 <div class="col-xs-6">
-                
+
                   <div class="input-group">
-                  
-                    <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span> 
+
+                    <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
 
                     <input type="number" class="form-control input-lg" id="nuevoPrecioCompra" name="nuevoPrecioCompra" step="any" min="0" placeholder="Precio de compra" required>
 
@@ -804,25 +853,25 @@ MODAL AGREGAR PRODUCTO
                 <!-- ENTRADA PARA PRECIO VENTA -->
 
                 <div class="col-xs-6">
-                
+
                   <div class="input-group">
-                  
-                    <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span> 
+
+                    <span class="input-group-addon"><i class="fa fa-arrow-down"></i></span>
 
                     <input type="number" class="form-control input-lg" id="nuevoPrecioVenta" name="nuevoPrecioVenta" step="any" min="0" placeholder="Precio de venta" required>
 
                   </div>
-                
+
                   <br>
 
                   <!-- CHECKBOX PARA PORCENTAJE -->
 
                   <div class="col-xs-6">
-                    
+
                     <div class="form-group">
-                      
+
                       <label>
-                        
+
                         <input type="checkbox" class="minimal porcentaje" checked>
                         Utilizar procentaje
                       </label>
@@ -834,9 +883,9 @@ MODAL AGREGAR PRODUCTO
                   <!-- ENTRADA PARA PORCENTAJE -->
 
                   <div class="col-xs-6" style="padding:0">
-                    
+
                     <div class="input-group">
-                      
+
                       <input type="number" class="form-control input-lg nuevoPorcentaje" min="0" value="40" required>
 
                       <span class="input-group-addon"><i class="fa fa-percent"></i></span>
@@ -852,7 +901,7 @@ MODAL AGREGAR PRODUCTO
             <!-- ENTRADA PARA SUBIR FOTO -->
 
              <div class="form-group">
-              
+
               <div class="panel">SUBIR IMAGEN</div>
 
               <input type="file" class="nuevaImagen" name="nuevaImagen" id="nuevaImagen">
@@ -886,7 +935,7 @@ MODAL AGREGAR PRODUCTO
           //$crearProducto = new ControladorProductos();
           //$crearProducto -> ctrCrearProducto("cotizaciones");
 
-        ?>  
+        ?>
 
     </div>
 
@@ -902,7 +951,7 @@ MODAL METODO DE PAGO
 ======================================-->
 
 <div id="modalMetodoDePago" class="modal fade metodoPago"  role="dialog">
-  
+
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -937,10 +986,10 @@ MODAL METODO DE PAGO
 
             <!--=====================================
                 FECHA
-                ======================================--> 
+                ======================================-->
                <div class="form-group">
                <div class="input-group date" data-provide="datepicker"  data-date-format="yyyy/mm/dd">
-                  
+
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
@@ -955,18 +1004,18 @@ MODAL METODO DE PAGO
                 ======================================-->
 
                 <div class="form-group row">
-                  
+
                   <div class="col-xs-4" style="padding-right:0px">
-                    
+
                      <div class="input-group">
-                  
+
                       <select class="form-control" id="nuevoMetodoPago" name="nuevoMetodoPago" required>
                         <option value="">Seleccione método de pago</option>
                         <option value="Efectivo">Efectivo</option>
                         <option value="TC">Tarjeta Crédito</option>
-                        <option value="TD">Tarjeta Débito</option>    
-                        <option value="CR">Venta a Credito</option>                 
-                      </select>    
+                        <option value="TD">Tarjeta Débito</option>
+                        <option value="CR">Venta a Credito</option>
+                      </select>
 
                     </div>
 
@@ -998,12 +1047,12 @@ MODAL METODO DE PAGO
 
 
 
-        ?>  
+        ?>
 
 
       </form>
 
-       
+
     </div>
 
   </div>
@@ -1017,17 +1066,17 @@ MODAL METODO DE PAGO
 
       <div class="col-lg-2 modal fade" id="tabladeproductos2"  role="dialog" width="50%">
 
-        
+
         <div class="box box-warning">
 
           <div class="box-header with-border"></div>
 
           <div class="box-body">
-            
+
             <table class="table table-bordered table-striped dt-responsive tablaVentas" width="100%">
 
-      
-              
+
+
                <thead>
 
                  <tr>
@@ -1063,7 +1112,7 @@ MODAL AGREGAR CLIENTE
 ======================================-->
 
 <div id="modalAgregarCliente" class="modal fade" role="dialog">
-  
+
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -1091,12 +1140,12 @@ MODAL AGREGAR CLIENTE
           <div class="box-body">
 
             <!-- ENTRADA PARA EL NOMBRE -->
-            
+
             <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
                 <input type="text" class="form-control input-lg" name="nuevoCliente" id="nuevoCliente" placeholder="Ingresar nombre" required>
 
@@ -1105,12 +1154,12 @@ MODAL AGREGAR CLIENTE
             </div>
 
             <!-- ENTRADA PARA LA PERSONA O CONTACTO -->
-            
+
             <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-key"></i></span>
 
                 <input type="text"  class="form-control input-lg" name="nuevoDocumentoId" id="nuevoDocumentoId" placeholder="Persona o contacto" >
 
@@ -1119,12 +1168,12 @@ MODAL AGREGAR CLIENTE
             </div>
 
             <!-- ENTRADA PARA EL EMAIL -->
-            
+
             <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-envelope"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 
                 <input type="email" class="form-control input-lg" name="nuevoEmail" id="nuevoEmail" placeholder="Ingresar email" >
 
@@ -1133,12 +1182,12 @@ MODAL AGREGAR CLIENTE
             </div>
 
             <!-- ENTRADA PARA EL TELÉFONO -->
-            
+
             <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
 
                 <input type="text" class="form-control input-lg" name="nuevoTelefono" id="nuevoTelefono" placeholder="Ingresar teléfono" data-inputmask="'mask':'(999) 999-9999'" data-mask >
 
@@ -1147,12 +1196,12 @@ MODAL AGREGAR CLIENTE
             </div>
 
             <!-- ENTRADA PARA LA DIRECCIÓN -->
-            
+
             <div class="form-group">
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
 
                 <input type="text" class="form-control input-lg" name="nuevaDireccion" id="nuevaDireccion" placeholder="Ingresar dirección" >
 
@@ -1161,19 +1210,19 @@ MODAL AGREGAR CLIENTE
             </div>
 
              <!-- ENTRADA PARA LA FECHA DE NACIMIENTO -->
-            
+
             <div class="form-group" >
-              
+
               <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
+
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 
                 <input type="text" class="form-control input-lg" name="nuevaFechaNacimiento" id="nuevaFechaNacimiento" placeholder="Ingresar fecha nacimiento" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask value="1900/01/01">
 
               </div>
 
             </div>
-  
+
           </div>
 
         </div>
@@ -1184,7 +1233,7 @@ MODAL AGREGAR CLIENTE
 
         <div class="modal-footer">
 
-          
+
           <button type="button" class="btn btn-default pull-left " data-dismiss="modal">Salir</button>
 
           <button type="button" class="btn btn-primary btnGuardarClienteAjax" data-dismiss="modal">Guardar cliente</button>
@@ -1209,7 +1258,7 @@ MODAL AGREGAR CLIENTE
 </div>
 
 <script type="text/javascript">
-  
+
 
 
 
@@ -1228,7 +1277,7 @@ $(".modal-footer").on("click", ".btnGuardarProductoAjax", function(){
   var nuevoStock= $("#nuevoStock").val();
   var nuevoPrecioCompra= $("#nuevoPrecioCompra").val();
   var nuevoPrecioVenta= $("#nuevoPrecioVenta").val();
- 
+
   var idClienteModal= $("#idClienteModal").val();
   var nuevaImagen= $("#nuevaImagen").val();
   var crearProducto= "crearProducto";
@@ -1258,7 +1307,7 @@ $.ajax({
         success:function(respuesta){
           console.log("respuesta",respuesta);
           if (respuesta.match(/correctamente.*/)){
-            
+
 
 
             swal({
@@ -1267,10 +1316,10 @@ $.ajax({
                 showConfirmButton: true,
                 confirmButtonText: "Cerrar"
                 }).then(function(result){
-                    
-                  
 
-            
+
+
+
             }
                   )
           }else{
@@ -1286,8 +1335,8 @@ $.ajax({
 
               }
             })
-            
-              
+
+
             }
 
         }
@@ -1360,10 +1409,10 @@ $("#nuevoTelefono").focus();
         processData: false,
         //dataType:"json",
         success:function(respuesta){
-       
+
 
           if (respuesta.match(/correctamente.*/)){
-              
+
 
 
 
@@ -1373,7 +1422,7 @@ $("#nuevoTelefono").focus();
                 showConfirmButton: true,
                 confirmButtonText: "Cerrar"
                 }).then(function(result){
-                    
+
               $.ajax({
 
               url:"controladores/clientes.controlador.php",
@@ -1384,14 +1433,14 @@ $("#nuevoTelefono").focus();
                 processData: false,
                 dataType:"json",
                 success:function(respuesta){
-                  
+
                   var resultado=respuesta;
                   $("#seleccionarCliente").select2({ data: resultado });
                 }
               })
-                  
 
-            
+
+
             }
                   )
           }else{
@@ -1407,8 +1456,8 @@ $("#nuevoTelefono").focus();
 
               }
             })
-            
-              
+
+
             }
 
         }
@@ -1429,7 +1478,7 @@ $("#nuevoTelefono").focus();
 GUARDAR VENTA AJAX
 =============================================*/
 $(".modal-footer").on("click", ".btnGuardarVentaAjax", function(){
-  
+
   //VARIABLES PARTA EL CONSECUTIVO
   var datosConsecutivo = new FormData();
   datosConsecutivo.append("ConsecutivoVenta", "ConsecutivoVenta");
@@ -1468,7 +1517,8 @@ $(".modal-footer").on("click", ".btnGuardarVentaAjax", function(){
   var listaMetodoPago= $("#listaMetodoPago").val();
   var nuevoValorEfectivo= $("#nuevoValorEfectivo").val();
   var fecha= $("#fecha").val();
-  
+  var nuevoCaja= $("#nuevoCaja").val();
+
   var fechaPago= $("#fechaPago").val();
   var nuevoMetodoPago= $("#nuevoMetodoPago").val();
   var UUID= $("#UUID").val();
@@ -1497,7 +1547,7 @@ $(".modal-footer").on("click", ".btnGuardarVentaAjax", function(){
   datos.append("fechaPago", fechaPago);
   datos.append("nuevoMetodoPago", nuevoMetodoPago);
   datos.append("UUID", UUID);
-  
+  datos.append("nuevoCaja", nuevoCaja);
 
   $.ajax({
 
@@ -1509,13 +1559,13 @@ $(".modal-footer").on("click", ".btnGuardarVentaAjax", function(){
         processData: false,
         //dataType:"json",
         success:function(respuesta){
-       
+
 
 
 
 
           if (respuesta.match(/correctamente.*/)){
-              
+
 
             //DATOS PARA VER QUE ID LE CORRESPONDE A LA VENTA CREADA
             var datosNuevaVenta = new FormData();
@@ -1544,7 +1594,7 @@ $(".modal-footer").on("click", ".btnGuardarVentaAjax", function(){
             })
 
 
-            
+
             swal({
                 type: "success",
                 title: "La venta ha sido guardada correctamente",
@@ -1557,7 +1607,7 @@ $(".modal-footer").on("click", ".btnGuardarVentaAjax", function(){
 
                 }
             })
-                  
+
           }else{
           swal({
               type: "error",
@@ -1571,8 +1621,8 @@ $(".modal-footer").on("click", ".btnGuardarVentaAjax", function(){
 
               }
             })
-            
-              
+
+
             }
 
         }
@@ -1589,9 +1639,9 @@ $(".modal-footer").on("click", ".btnGuardarVentaAjax", function(){
 
 
 
-window.onload=function() {    
+window.onload=function() {
   listarProductos();
-  $('#nuevaCantidadProducto').trigger("change"); 
+  $('#nuevaCantidadProducto').trigger("change");
 
 }
 
@@ -1610,15 +1660,15 @@ $(document).ready(function(){
   $("#CodigoDeBarras").keydown(function(event){
 
     var term = $(this).val();
-    
+
 
     if(event.which==13){
-      
+
 
       agregarProductoCodigoBarras($("#CodigoDeBarras").val());
 
-    } 
-  }); 
+    }
+  });
 });
 
 

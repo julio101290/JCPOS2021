@@ -282,7 +282,7 @@ class ModeloVentas{
 			, Observaciones
 			, fecha
 			, UUID
-
+			, idCaja
 
 			)
 			VALUES (:codigo
@@ -302,6 +302,7 @@ class ModeloVentas{
 			, :Observaciones
 			, :fecha
 			, :UUID
+			, :idCaja
 
 		)");
 
@@ -322,6 +323,8 @@ class ModeloVentas{
 		$stmt->bindParam(":Observaciones", ($datos["Observaciones"]), PDO::PARAM_STR);
 		$stmt->bindParam(":fecha", ($datos["fecha"]), PDO::PARAM_STR);
 		$stmt->bindParam(":UUID", ($datos["UUID"]), PDO::PARAM_STR);
+
+		$stmt->bindParam(":idCaja", $datos["idCaja"], PDO::PARAM_INT);
 
 		if($stmt->execute()){
 

@@ -65,6 +65,7 @@ class ControladorUsuarios{
 						$_SESSION["categorias"] = $acceso["categorias"];
 						$_SESSION["costoProductos"] = $acceso["costoProductos"];
 						$_SESSION["permiteModificarStock"] = $acceso["stock"];
+						$_SESSION["cajas"] = $acceso["cajas"];
 
 						//DERECHOS COTIZACIONES
 						$_SESSION["menuCotizaciones"] = $acceso["menuCotizaciones"];
