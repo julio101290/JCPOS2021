@@ -6,21 +6,12 @@
 
 		    <div class="user-panel">
 		<div class="pull-left image">
-
+		 
 			  <?php
 
 			if($_SESSION["foto"] != ""){
 
-				if(	$_SESSION["archivoFoto"] == ""){
-
-					echo '<img src="'.$_SESSION["foto"].'" class="img-circle" alt="User Image">';
-
-
-				}else{
-
-						echo '<img src="data:image/png;base64, '.($_SESSION["archivoFoto"]).'"  class="img-circle" alt="User Image">';
-
-				}
+				echo '<img src="'.$_SESSION["foto"].'" class="img-circle" alt="User Image">';
 
 			}else{
 
@@ -30,8 +21,8 @@
 			}
 
 			?>
-
-
+			  
+			  
 		</div>
 		<div class="pull-left info">
 		  <p><?php  echo $_SESSION["nombre"]; ?></p>
@@ -44,23 +35,23 @@
 		  <input type="text" name="search" id="search" class="form-control search-menu-box" placeholder="Buscar...">
 		</div>
 	      </form>
-
+		
 		<?php
 
-
+				
 		//MENU COTIZACONES
-
+		
 		if($_SESSION["menuCotizaciones"] == "on"){
 			echo '<li '.strMenuActivo($_GET["ruta"],"crearcotizacion").strMenuActivo($_GET["ruta"],"administrarcotizaciones").' class="treeview">
 
 					<a href="#">
 
 						<i class="fa fa-tty"></i>
-
+						
 						<span>Cotizaciones</span>
-
+						
 						<span class="pull-right-container">
-
+						
 							<i class="fa fa-angle-left pull-right"></i>
 
 						</span>
@@ -73,7 +64,7 @@
 					echo '<li>
 
 						<a href="crearcotizacion" accesskey="c">
-
+							
 							<i class="fa fa-file"></i>
 							<span>Nueva Cotización</span>
 
@@ -86,7 +77,7 @@
 					echo '	<li>
 
 							<a href="administrarcotizaciones" accesskey="x">
-
+								
 								<i class="fa fa-check-circle"></i>
 								<span>Ver cotizaciones</span>
 
@@ -95,9 +86,9 @@
 						</li>';
 				}
 
-			echo '
+			echo '	
 			</ul>
-
+	
 	</li>
 			';
 		}
@@ -109,11 +100,11 @@
 				<a href="#">
 
 					<i class="fa fa-cart-plus"></i>
-
+					
 					<span>Ventas</span>
-
+					
 					<span class="pull-right-container">
-
+					
 						<i class="fa fa-angle-left pull-right"></i>
 
 					</span>
@@ -121,12 +112,12 @@
 				</a>
 
 				<ul class="treeview-menu">';
-
+					
 				if($_SESSION["administrarVentas"] == "on" ){
 					echo	'<li>
 
 							<a href="ventas">
-
+								
 								<i class="fa fa-circle-o"></i>
 								<span>Administrar ventas</span>
 
@@ -136,37 +127,23 @@
 
 				}
 
-
+					
 				if($_SESSION["ventas"] == "on" ){
 					echo '<li>
 
 						<a href="crear-venta">
-
+							
 							<i class="fa fa-circle-o"></i>
 							<span>Crear venta</span>
 
 						</a>
 						</li>';
 					}
-
-
-
-				if($_SESSION["cajas"] == "on" ){
-					echo '<li>
-
-						<a href="cajadiaria">
-
-							<i class="fa fa-circle-o"></i>
-							<span>Cajas</span>
-
-						</a>
-						</li>';
-					}
-
+						
 				if($_SESSION["facturacionElectronica"] == "on" ){
 						echo '<li>
 							<a href="facturacionElectronica">
-
+							
 							<i class="fa fa-circle-o"></i>
 							<span>Facturación Electronica</span>
 
@@ -179,7 +156,7 @@
 				if("on" == "on" ){
 						echo '<li>
 							<a href="ventasProductos">
-
+							
 							<i class="fa fa-circle-o"></i>
 							<span>Rep Ventas por producto</span>
 
@@ -193,7 +170,7 @@
 					echo '<li>
 
 						<a href="reportes">
-
+							
 							<i class="fa fa-circle-o"></i>
 							<span>Reporte de ventas</span>
 
@@ -203,13 +180,13 @@
 
 					}
 
-
+				
 
 				echo '</ul>
 
 			</li>';
 		}
-
+		
 
 
 
@@ -243,7 +220,7 @@
 			</li>';
 		}
 
-
+	
 
 		if($_SESSION["clientes"] == "on"){
 
@@ -265,11 +242,11 @@
 
 					<a href="#">
 
-						<i class="fa fa-cogs"></i>
+						<i class="fa fa-cogs"></i> 
 						<span>Configuraciones</span>
-
+						
 						<span class="pull-right-container">
-
+						
 							<i class="fa fa-angle-left pull-right"></i>
 
 						</span>
@@ -288,7 +265,7 @@
 								<i class="fa fa-building-o"></i>
 								<span>Datos Empresa</span>
 							</a>
-
+						
 						</li>';
 				}
 
@@ -310,10 +287,10 @@
 
 				}
 
-
+				
 				if($_SESSION["perfiles"] == "on"){
 					echo '
-
+					
 
 					<li '.strMenuActivo($_GET["ruta"],"perfiles").'>
 
@@ -341,11 +318,11 @@
 
 					</li>';
 				}
-
-
-
-
-                        if($_SESSION["actualizar"]== "on"){
+                                
+     
+                                
+                                
+                        if($_SESSION["actualizar"]== "on"){	
 				echo '
 					 <li '.strMenuActivo($_GET["ruta"],"bitacora").'>
 
@@ -359,7 +336,7 @@
 					</li>';
 				}
 
-			if($_SESSION["bitacora"] == "on"){
+			if($_SESSION["bitacora"] == "on"){	
 				echo '
 					 <li '.strMenuActivo($_GET["ruta"],"bitacora").'>
 
@@ -376,7 +353,7 @@
 				echo '
 				</ul>' ;
 
-
+		
 		}
 
 
@@ -389,23 +366,25 @@
 
 </aside>
 
-<script>
+<script> 
 
 
 	$(document).ready(function () {
 
 
 	$("#search").on("keyup", function () {
-	if (this.value.length > 0) {
+	if (this.value.length > 0) {   
 	  $(".sidebar-menu li").hide().filter(function () {
 	    return $(this).text().toLowerCase().indexOf($("#search").val().toLowerCase()) != -1;
-	  }).show();
-	}
-	else {
+	  }).show(); 
+	}  
+	else { 
 	  $(".sidebar-menu li").show();
 	}
-	});
+	}); 
 
 	});
 
-</script>
+</script> 
+
+

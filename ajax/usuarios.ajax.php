@@ -7,7 +7,7 @@ class AjaxUsuarios{
 
 	/*=============================================
 	EDITAR USUARIO
-	=============================================*/
+	=============================================*/	
 
 	public $idUsuario;
 
@@ -16,11 +16,7 @@ class AjaxUsuarios{
 		$item = "id";
 		$valor = $this->idUsuario;
 
-
-
 		$respuesta = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
-
-		$respuesta["archivoFoto"] = "";
 
 		echo json_encode($respuesta);
 
@@ -28,7 +24,7 @@ class AjaxUsuarios{
 
 	/*=============================================
 	ACTIVAR USUARIO
-	=============================================*/
+	=============================================*/	
 
 	public $activarUsuario;
 	public $activarId;
@@ -50,7 +46,7 @@ class AjaxUsuarios{
 
 	/*=============================================
 	VALIDAR NO REPETIR USUARIO
-	=============================================*/
+	=============================================*/	
 
 	public $validarUsuario;
 
@@ -79,7 +75,7 @@ if(isset($_POST["idUsuario"])){
 
 /*=============================================
 ACTIVAR USUARIO
-=============================================*/
+=============================================*/	
 
 if(isset($_POST["activarUsuario"])){
 

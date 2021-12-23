@@ -12,19 +12,9 @@ class ModeloUsuarios{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT id
-                                                                    ,nombre
-                                                                    ,usuario
-                                                                    ,password
-                                                                    ,perfil
-                                                                    ,foto
-                                                                    ,estado
-                                                                    ,ultimo_login
-                                                                    ,fecha
-                                                                    ,intentos
-                                                                    ,(to_base64(archivoFoto)) as archivoFoto
+			$stmt = Conexion::conectar()->prepare("SELECT * 
 
-													,(select b.descripcion
+													,(select b.descripcion 
 														from perfiles b
 														where b.perfil=a.perfil
 
@@ -39,9 +29,9 @@ class ModeloUsuarios{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT *
+			$stmt = Conexion::conectar()->prepare("SELECT * 
 
-													,(select b.descripcion
+													,(select b.descripcion 
 														from perfiles b
 														where b.perfil=a.perfil
 
@@ -54,7 +44,7 @@ class ModeloUsuarios{
 			return $stmt -> fetchAll();
 
 		}
-
+		
 
 		$stmt -> close();
 
@@ -68,43 +58,28 @@ class ModeloUsuarios{
 
 	static public function mdlIngresarUsuario($tabla, $datos){
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre
-																															, usuario
-																															, password
-																															, perfil
-																															, foto
-																															, archivoFoto
-																														)
-																															VALUES (:nombre
-																																, :usuario
-																																, :password
-																																, :perfil
-																																, :foto
-																																, :archivoFoto
-
-																															)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, usuario, password, perfil, foto) VALUES (:nombre, :usuario, :password, :perfil, :foto)");
 
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
 		$stmt->bindParam(":perfil", $datos["perfil"], PDO::PARAM_INT);
 		$stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
-		$stmt->bindParam(":archivoFoto", $datos["archivoFoto"], PDO::PARAM_LOB);
 
 		if($stmt->execute()){
 
-			return "ok";
+			return "ok";	
 
 		}else{
 
 			$arr = $stmt ->errorInfo();
 			$arr[3]="ERROR";
 			return $arr[2];
-
+		
 		}
 
 		$stmt->close();
-
+		
 		$stmt = null;
 
 	}
@@ -114,32 +89,22 @@ class ModeloUsuarios{
 	=============================================*/
 
 	static public function mdlEditarUsuario($tabla, $datos){
-
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla
-																						SET nombre = :nombre
-																						, password = :password
-																						, perfil = :perfil
-																						, foto = :foto
-																						, archivoFoto = :archivoFoto
-																						WHERE usuario = :usuario
-
-																						");
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, password = :password, perfil = :perfil, foto = :foto WHERE usuario = :usuario");
 
 		$stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt -> bindParam(":password", $datos["password"], PDO::PARAM_STR);
 		$stmt -> bindParam(":perfil", $datos["perfil"], PDO::PARAM_STR);
 		$stmt -> bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
 		$stmt -> bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
-		$stmt -> bindParam(":archivoFoto", $datos["archivoFoto"], PDO::PARAM_LOB);
 
-		try {
+		if($stmt -> execute()){
 
-			$stmt -> execute();
 			return "ok";
-			
-		} catch(Exception $e){
+		
+		}else{
 
-			return $e->getMessage();
+			return "error";	
 
 		}
 
@@ -148,21 +113,21 @@ class ModeloUsuarios{
 		$stmt = null;
 
 	}
-
-
+        
+        
         	/*=============================================
 	EDITAR CONTRA
 	=============================================*/
 
 	static public function mdlEditarContra($tabla, $datos){
-
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET
+	
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET 
                                                                          password = :password
-
-                                                                        , foto = :foto
+                                                                      
+                                                                        , foto = :foto 
                                                                         WHERE usuario = :usuario");
 
-
+		
 		$stmt -> bindParam(":password", $datos["password"], PDO::PARAM_STR);
 		$stmt -> bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
 		$stmt -> bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
@@ -170,10 +135,10 @@ class ModeloUsuarios{
 		if($stmt -> execute()){
 
 			return "ok";
-
+		
 		}else{
 
-			return "error";
+			return "error";	
 
 		}
 
@@ -198,10 +163,10 @@ class ModeloUsuarios{
 		if($stmt -> execute()){
 
 			return "ok";
-
+		
 		}else{
 
-			return "error";
+			return "error";	
 
 		}
 
@@ -224,10 +189,10 @@ class ModeloUsuarios{
 		if($stmt -> execute()){
 
 			return "ok";
-
+		
 		}else{
 
-			return "error";
+			return "error";	
 
 		}
 

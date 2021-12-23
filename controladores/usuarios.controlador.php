@@ -32,7 +32,7 @@ class ControladorUsuarios{
 
 					if($intentos>5){
 						$respuesta = ModeloUsuarios::mdlActualizarUsuario("usuarios","estado",0,"id",$respuesta["id"]);
-
+						
 					}
 				}
 
@@ -48,7 +48,6 @@ class ControladorUsuarios{
 						$_SESSION["foto"] = $respuesta["foto"];
 						$_SESSION["perfil"] = $respuesta["perfil"];
 						$_SESSION["descripcionPerfil"] = $acceso["descripcion"];
-						$_SESSION["archivoFoto"] = $respuesta["archivoFoto"];
 
 						//DERECHOS MENU CONFIGURACION
 						$_SESSION["menuConfiguraciones"] = $acceso["menuConfiguraciones"];
@@ -57,7 +56,6 @@ class ControladorUsuarios{
 						$_SESSION["perfiles"] = $acceso["perfiles"];
 						$_SESSION["configuracionCorreo"] = $acceso["configuracionCorreo"];
 						$_SESSION["bitacora"] = $acceso["bitacora"];
-            $_SESSION["actualizar"] = $acceso["actualizar"];
 
 						//DERECHOS CATALOGOS
 						$_SESSION["clientes"] = $acceso["clientes"];
@@ -65,7 +63,6 @@ class ControladorUsuarios{
 						$_SESSION["categorias"] = $acceso["categorias"];
 						$_SESSION["costoProductos"] = $acceso["costoProductos"];
 						$_SESSION["permiteModificarStock"] = $acceso["stock"];
-						$_SESSION["cajas"] = $acceso["cajas"];
 
 						//DERECHOS COTIZACIONES
 						$_SESSION["menuCotizaciones"] = $acceso["menuCotizaciones"];
@@ -84,13 +81,13 @@ class ControladorUsuarios{
 						$_SESSION["reportesVentas"] = $acceso["reportesVentas"];
 
 
-						//REPORTES
+						//REPORTES 
 						$_SESSION["cajasSuperiores"] = $acceso["cajasSuperiores"];
 						$_SESSION["graficoGanancias"] = $acceso["graficoGanancias"];
 						$_SESSION["productosMasVendidos"] = $acceso["productosMasVendidos"];
 						$_SESSION["productosAgregadosRecientemente"] = $acceso["productosAgregadosRecientemente"];
 
-						//PAGOS
+						//PAGOS 
 						$_SESSION["pagos"] = $acceso["pagos"];
 						$_SESSION["historicoPagos"] = $acceso["historicoPagos"];
 						$_SESSION["imprimirPagos"] = $acceso["imprimirPagos"];
@@ -104,7 +101,7 @@ class ControladorUsuarios{
 						REGISTRAR FECHA PARA SABER EL ÚLTIMO LOGIN
 						=============================================*/
 
-
+						
 
 						$fecha = date('Y-m-d');
 						$hora = date('H:i:s');
@@ -127,14 +124,14 @@ class ControladorUsuarios{
 
 							</script>';
 
-						}
-
+						}				
+						
 					}else{
 
 						echo '<br>
 							<div class="alert alert-danger">El usuario aún no está activado</div>';
 
-					}
+					}		
 
 				}else{
 
@@ -142,7 +139,7 @@ class ControladorUsuarios{
 
 				}
 
-			}
+			}	
 
 		}
 
@@ -158,7 +155,7 @@ class ControladorUsuarios{
 		if(isset($_POST["nuevoUsuario"])){
 
 
-
+	
 
 			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoNombre"]) &&
 			   preg_match('/^[a-zA-Z0-9]+$/', $_POST["nuevoUsuario"]) &&
@@ -190,18 +187,18 @@ class ControladorUsuarios{
 					/*=============================================
 					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
 					=============================================*/
-					/*
+
 					if($_FILES["nuevaFoto"]["type"] == "image/jpeg"){
-*/
+
 						/*=============================================
 						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
 						=============================================*/
-/*
+
 						$aleatorio = mt_rand(100,999);
 
 						$ruta = "vistas/img/usuarios/".$_POST["nuevoUsuario"]."/".$aleatorio.".jpg";
 
-						$origen = imagecreatefromjpeg($_FILES["nuevaFoto"]["tmp_name"]);
+						$origen = imagecreatefromjpeg($_FILES["nuevaFoto"]["tmp_name"]);						
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
@@ -210,38 +207,31 @@ class ControladorUsuarios{
 						imagejpeg($destino, $ruta);
 
 					}
-					*/
-
-					if($_FILES["nuevaFoto"]["type"] !=  "image/png"){
-
-						echo "Error en Imagen";
-						return;
-
-					}
 
 					if($_FILES["nuevaFoto"]["type"] == "image/png"){
 
 						/*=============================================
 						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
 						=============================================*/
-						if ((isset($_FILES['nuevaFoto'])) && ($_FILES['nuevaFoto'] != '')) {
 
-			        $file = fopen($_FILES['nuevaFoto']['tmp_name'], "rb");
+						$aleatorio = mt_rand(100,999);
 
-			        $fileName = "";
-			        $fileExtension = "";
+						$ruta = "vistas/img/usuarios/".$_POST["nuevoUsuario"]."/".$aleatorio.".png";
 
-					    } else {
-					        $file = "";
-					    }
+						$origen = imagecreatefrompng($_FILES["nuevaFoto"]["tmp_name"]);						
 
+						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+						imagepng($destino, $ruta);
 
 					}
 
 				}
 
 
-				$ruta ="";
+
 				$tabla = "usuarios";
 
 				$encriptar = crypt($_POST["nuevoPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
@@ -250,16 +240,14 @@ class ControladorUsuarios{
 					           "usuario" => $_POST["nuevoUsuario"],
 					           "password" => $encriptar,
 					           "perfil" => $_POST["nuevoPerfil"],
-					           "foto"=>$ruta,
-										 "archivoFoto" => $file
-									 	);
+					           "foto"=>$ruta);
 
-
+				
 
 
 				$respuesta = ModeloUsuarios::mdlIngresarUsuario($tabla, $datos);
-
-
+				
+				
 
 				if($respuesta == "ok"){
 
@@ -275,18 +263,18 @@ class ControladorUsuarios{
 					}).then(function(result){
 
 						if(result.value){
-
+						
 							window.location = "usuarios";
 
 						}
 
 					});
-
+				
 
 					</script>';
 
 
-				}
+				}	
 
 
 			}else{
@@ -303,13 +291,13 @@ class ControladorUsuarios{
 					}).then(function(result){
 
 						if(result.value){
-
+						
 							window.location = "usuarios";
 
 						}
 
 					});
-
+				
 
 				</script>';
 
@@ -331,8 +319,6 @@ class ControladorUsuarios{
 
 		$respuesta = ModeloUsuarios::MdlMostrarUsuarios($tabla, $item, $valor);
 
-
-
 		return $respuesta;
 	}
 
@@ -352,57 +338,78 @@ class ControladorUsuarios{
 
 				$ruta = $_POST["fotoActual"];
 
+				if(isset($_FILES["editarFoto"]["tmp_name"]) && !empty($_FILES["editarFoto"]["tmp_name"])){
 
+					list($ancho, $alto) = getimagesize($_FILES["editarFoto"]["tmp_name"]);
 
-								if(isset($_FILES["editarFoto"]["tmp_name"]) && $_FILES["editarFoto"]["tmp_name"]!=""){
+					$nuevoAncho = 500;
+					$nuevoAlto = 500;
 
+					/*=============================================
+					CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
+					=============================================*/
 
+					$directorio = "vistas/img/usuarios/".$_POST["editarUsuario"];
 
-									if($_FILES["editarFoto"]["type"] !=  "image/png"){
+					/*=============================================
+					PRIMERO PREGUNTAMOS SI EXISTE OTRA IMAGEN EN LA BD
+					=============================================*/
 
-										echo'<script>
+					if(!empty($_POST["fotoActual"])){
 
-									 swal({
-											 type: "error",
-											 title: "Solo se permite formato PNG",
-											 showConfirmButton: true,
-											 confirmButtonText: "Cerrar"
-											 }).then(function(result) {
-													 if (result.value) {
+						unlink($_POST["fotoActual"]);
 
-													 window.location = "usuarios";
+					}else{
 
-													 }
-												 })
+						mkdir($directorio, 0755);
 
-									 </script>';
-										return;
+					}	
 
-									}
+					/*=============================================
+					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
+					=============================================*/
 
-									if($_FILES["editarFoto"]["type"] == "image/png"){
+					if($_FILES["editarFoto"]["type"] == "image/jpeg"){
 
-										/*=============================================
-										GUARDAMOS LA IMAGEN EN EL DIRECTORIO
-										=============================================*/
-										if ((isset($_FILES['editarFoto'])) && ($_FILES['editarFoto'] != '')) {
+						/*=============================================
+						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+						=============================================*/
 
-							        $file = fopen($_FILES['editarFoto']['tmp_name'], "rb");
+						$aleatorio = mt_rand(100,999);
 
-							        $fileName = "";
-							        $fileExtension = "";
+						$ruta = "vistas/img/usuarios/".$_POST["editarUsuario"]."/".$aleatorio.".jpg";
 
-									    } else {
-									        $file = "";
-									    }
+						$origen = imagecreatefromjpeg($_FILES["editarFoto"]["tmp_name"]);						
 
+						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
-									}
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
 
-								}
+						imagejpeg($destino, $ruta);
 
+					}
 
+					if($_FILES["editarFoto"]["type"] == "image/png"){
 
+						/*=============================================
+						GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+						=============================================*/
+
+						$aleatorio = mt_rand(100,999);
+
+						$ruta = "vistas/img/usuarios/".$_POST["editarUsuario"]."/".$aleatorio.".png";
+
+						$origen = imagecreatefrompng($_FILES["editarFoto"]["tmp_name"]);						
+
+						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+						imagepng($destino, $ruta);
+
+					}
+
+				}
 
 				$tabla = "usuarios";
 
@@ -445,17 +452,7 @@ class ControladorUsuarios{
 							   "usuario" => $_POST["editarUsuario"],
 							   "password" => $encriptar,
 							   "perfil" => $_POST["editarPerfil"],
-							   "foto" => $ruta,
-								 "archivoFoto" => $file
-
-							 );
-
-
-
-
-
-
-
+							   "foto" => $ruta);
 
 				$respuesta = ModeloUsuarios::mdlEditarUsuario($tabla, $datos);
 
@@ -546,13 +543,13 @@ class ControladorUsuarios{
 
 				</script>';
 
-			}
+			}		
 
 		}
 
 	}
-
-
+        
+        
         /*=============================================
 	EDITAR USUARIO
 	=============================================*/
@@ -594,7 +591,7 @@ class ControladorUsuarios{
 
 						mkdir($directorio, 0755);
 
-					}
+					}	
 
 					/*=============================================
 					DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
@@ -610,7 +607,7 @@ class ControladorUsuarios{
 
 						$ruta = "vistas/img/usuarios/".$_POST["editarUsuario"]."/".$aleatorio.".jpg";
 
-						$origen = imagecreatefromjpeg($_FILES["editarFoto"]["tmp_name"]);
+						$origen = imagecreatefromjpeg($_FILES["editarFoto"]["tmp_name"]);						
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
@@ -630,7 +627,7 @@ class ControladorUsuarios{
 
 						$ruta = "vistas/img/usuarios/".$_POST["editarUsuario"]."/".$aleatorio.".png";
 
-						$origen = imagecreatefrompng($_FILES["editarFoto"]["tmp_name"]);
+						$origen = imagecreatefrompng($_FILES["editarFoto"]["tmp_name"]);						
 
 						$destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
 
@@ -678,11 +675,11 @@ class ControladorUsuarios{
 					$encriptar = $_POST["passwordActual"];
 
 				}
-
-
-
+                                
+                                
+                                
                                 $usuario = $_SESSION["usuario"];
-
+                                
 				$datos = array("nombre" => $_POST["nombre"],
 							   "usuario" => $usuario,
 							   "password" => $encriptar,
@@ -739,3 +736,6 @@ class ControladorUsuarios{
 
 
 }
+	
+
+

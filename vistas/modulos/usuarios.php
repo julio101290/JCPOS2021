@@ -16,19 +16,19 @@ if($_SESSION["usuarios"] == "off"){
 <div class="content-wrapper">
 
   <section class="content-header">
-
+    
     <h1>
-
+      
       Administrar usuarios
-
+    
     </h1>
 
     <ol class="breadcrumb">
-
+      
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-
+      
       <li class="active">Administrar usuarios</li>
-
+    
     </ol>
 
   </section>
@@ -38,9 +38,9 @@ if($_SESSION["usuarios"] == "off"){
     <div class="box">
 
       <div class="box-header with-border">
-
+  
         <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
-
+          
           Agregar usuario
 
         </button>
@@ -48,13 +48,13 @@ if($_SESSION["usuarios"] == "off"){
       </div>
 
       <div class="box-body">
-
+        
        <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
-
+         
         <thead>
-
+         
          <tr>
-
+           
            <th style="width:10px">#</th>
            <th>Nombre</th>
            <th>Usuario</th>
@@ -64,7 +64,7 @@ if($_SESSION["usuarios"] == "off"){
            <th>Último login</th>
            <th>Acciones</th>
 
-         </tr>
+         </tr> 
 
         </thead>
 
@@ -78,30 +78,12 @@ if($_SESSION["usuarios"] == "off"){
         $usuarios = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
 
        foreach ($usuarios as $key => $value){
-
+         
           echo ' <tr>
-                  <td></td>
+                  <td>'.($key+1).'</td>
                   <td>'.$value["nombre"].'</td>
                   <td>'.$value["usuario"].'</td>';
 
-                  if($value["archivoFoto"] == ""){
-
-                    echo '<td><img src="'.$value["foto"].'" class="img-thumbnail" width="40px"></td>';
-
-                  }
-                  else{
-
-
-                    if($value["archivoFoto"]==""){
-
-                        echo '<td><img src="vistas/img/usuarios/default/anonymous.png" class="img-thumbnail" width="40px"></td>';
-
-                    }else{
-
-                      echo '<td><img src="data:image/png;base64, '.base64_encode($value["archivoFoto"]).'" class="img-thumbnail" width="40px"></td>';
-                    }
-                  }
-                  /*
                   if($value["foto"] != ""){
 
                     echo '<td><img src="'.$value["foto"].'" class="img-thumbnail" width="40px"></td>';
@@ -111,7 +93,7 @@ if($_SESSION["usuarios"] == "off"){
                     echo '<td><img src="vistas/img/usuarios/default/anonymous.png" class="img-thumbnail" width="40px"></td>';
 
                   }
-*/
+
                   echo '<td>'.$value["nombrePerfil"].'</td>';
 
                   if($value["estado"] != 0){
@@ -122,18 +104,18 @@ if($_SESSION["usuarios"] == "off"){
 
                     echo '<td><button class="btn btn-danger btn-xs btnActivar" idUsuario="'.$value["id"].'" estadoUsuario="1">Desactivado</button></td>';
 
-                  }
+                  }             
 
                   echo '<td>'.$value["ultimo_login"].'</td>
                   <td>
 
                     <div class="btn-group">
-
+                        
                       <button class="btn btn-warning btnEditarUsuario" idUsuario="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarUsuario"><i class="fa fa-pencil"></i></button>
 
                       <button class="btn btn-danger btnEliminarUsuario" idUsuario="'.$value["id"].'" fotoUsuario="'.$value["foto"].'" usuario="'.$value["usuario"].'"><i class="fa fa-times"></i></button>
 
-                    </div>
+                    </div>  
 
                   </td>
 
@@ -141,7 +123,7 @@ if($_SESSION["usuarios"] == "off"){
         }
 
 
-        ?>
+        ?> 
 
         </tbody>
 
@@ -160,7 +142,7 @@ MODAL AGREGAR USUARIO
 ======================================-->
 
 <div id="modalAgregarUsuario" class="modal fade" role="dialog">
-
+  
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -188,12 +170,12 @@ MODAL AGREGAR USUARIO
           <div class="box-body">
 
             <!-- ENTRADA PARA EL NOMBRE -->
-
+            
             <div class="form-group">
-
+              
               <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="nuevoNombre" placeholder="Ingresar nombre" required>
 
@@ -204,10 +186,10 @@ MODAL AGREGAR USUARIO
             <!-- ENTRADA PARA EL USUARIO -->
 
              <div class="form-group">
-
+              
               <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
                 <input type="text" class="form-control input-lg" name="nuevoUsuario" placeholder="Ingresar usuario" id="nuevoUsuario" required>
 
@@ -218,10 +200,10 @@ MODAL AGREGAR USUARIO
             <!-- ENTRADA PARA LA CONTRASEÑA -->
 
              <div class="form-group">
-
+              
               <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+              
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
 
                 <input type="password" class="form-control input-lg" name="nuevoPassword" placeholder="Ingresar contraseña" required>
 
@@ -232,16 +214,16 @@ MODAL AGREGAR USUARIO
             <!-- ENTRADA PARA SELECCIONAR SU PERFIL -->
 
             <div class="form-group">
-
+              
               <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-users"></i></span>
+              
+                <span class="input-group-addon"><i class="fa fa-users"></i></span> 
 
                 <select class="form-control input-lg" name="nuevoPerfil" id="nuevoPerfil">
-
+                  
                   <option value="">Selecionar perfil</option>
 
-
+                      
                     <?php
                       $item = null;
                       $valor = null;
@@ -265,7 +247,7 @@ MODAL AGREGAR USUARIO
             <!-- ENTRADA PARA SUBIR FOTO -->
 
              <div class="form-group">
-
+              
               <div class="panel">SUBIR FOTO</div>
 
               <input type="file" class="nuevaFoto" name="nuevaFoto">
@@ -312,7 +294,7 @@ MODAL EDITAR USUARIO
 ======================================-->
 
 <div id="modalEditarUsuario" class="modal fade" role="dialog">
-
+  
   <div class="modal-dialog">
 
     <div class="modal-content">
@@ -340,12 +322,12 @@ MODAL EDITAR USUARIO
           <div class="box-body">
 
             <!-- ENTRADA PARA EL NOMBRE -->
-
+            
             <div class="form-group">
-
+              
               <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+              
+                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
 
                 <input type="text" class="form-control input-lg" id="editarNombre" name="editarNombre" value="" required>
 
@@ -356,10 +338,10 @@ MODAL EDITAR USUARIO
             <!-- ENTRADA PARA EL USUARIO -->
 
              <div class="form-group">
-
+              
               <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+              
+                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
 
                 <input type="text" class="form-control input-lg" id="editarUsuario" name="editarUsuario" value="" readonly>
 
@@ -370,10 +352,10 @@ MODAL EDITAR USUARIO
             <!-- ENTRADA PARA LA CONTRASEÑA -->
 
              <div class="form-group">
-
+              
               <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+              
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
 
                 <input type="password" class="form-control input-lg" name="editarPassword" placeholder="Escriba la nueva contraseña">
 
@@ -386,14 +368,14 @@ MODAL EDITAR USUARIO
             <!-- ENTRADA PARA SELECCIONAR SU PERFIL -->
 
             <div class="form-group">
-
+              
               <div class="input-group">
-
-                <span class="input-group-addon"><i class="fa fa-users"></i></span>
+              
+                <span class="input-group-addon"><i class="fa fa-users"></i></span> 
 
                 <select class="form-control input-lg" name="editarPerfil"id="editarPerfil">
-
-
+                  
+                
 
                   <?php
                       $item = null;
@@ -418,7 +400,7 @@ MODAL EDITAR USUARIO
             <!-- ENTRADA PARA SUBIR FOTO -->
 
              <div class="form-group">
-
+              
               <div class="panel">SUBIR FOTO</div>
 
               <input type="file" class="nuevaFoto" name="editarFoto">
@@ -452,7 +434,7 @@ MODAL EDITAR USUARIO
           $editarUsuario = new ControladorUsuarios();
           $editarUsuario -> ctrEditarUsuario();
 
-        ?>
+        ?> 
 
       </form>
 
@@ -467,4 +449,6 @@ MODAL EDITAR USUARIO
   $borrarUsuario = new ControladorUsuarios();
   $borrarUsuario -> ctrBorrarUsuario();
 
-?>
+?> 
+
+
