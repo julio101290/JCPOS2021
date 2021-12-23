@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-12-2021 a las 01:12:17
--- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 7.4.15
+-- Tiempo de generación: 23-12-2021 a las 07:19:26
+-- Versión del servidor: 10.4.21-MariaDB
+-- Versión de PHP: 8.0.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `JCPOS2021`
+-- Base de datos: `pos`
 --
 
 -- --------------------------------------------------------
@@ -197,7 +197,9 @@ CREATE TABLE `caja` (
 --
 
 INSERT INTO `caja` (`id`, `idUsuario`, `fecha_apertura`, `fecha_cierre`, `total_ventas`, `diferencia`, `observaciones`, `importe_apertura`) VALUES
-(5, 1, '2021-11-28 05:23:06', '2021-11-28 00:00:00', '1363.00', '11363.00', '', '50000.00');
+(5, 1, '2021-11-28 05:23:06', '2021-11-28 00:00:00', '1363.00', '11363.00', '', '50000.00'),
+(6, 1, '2021-12-22 10:54:50', NULL, NULL, NULL, NULL, '234.00'),
+(7, 60, '2021-12-22 10:58:14', NULL, NULL, NULL, NULL, '10.00');
 
 -- --------------------------------------------------------
 
@@ -309,15 +311,16 @@ CREATE TABLE `datosempresa` (
   `RFC` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
   `Telefono` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   `correoElectronico` varchar(250) COLLATE utf8_spanish_ci NOT NULL,
-  `diasEntrega` int(11) DEFAULT NULL
+  `diasEntrega` int(11) DEFAULT NULL,
+  `caja` varchar(5) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `datosempresa`
 --
 
-INSERT INTO `datosempresa` (`NombreEmpresa`, `DireccionEmpresa`, `RFC`, `Telefono`, `correoElectronico`, `diasEntrega`) VALUES
-('JCLEYVA SOFTWARE', 'LOS MOCHIS', 'RFC', '6688612348', 'JULIOCESARLEYVARODRIGUEZ@HOTMAIL.COM', 30);
+INSERT INTO `datosempresa` (`NombreEmpresa`, `DireccionEmpresa`, `RFC`, `Telefono`, `correoElectronico`, `diasEntrega`, `caja`) VALUES
+('JCLEYVA SOFTWARE', 'LOS MOCHIS', 'RFC', '6688612348', 'JULIOCESARLEYVARODRIGUEZ@HOTMAIL.COM', 30, NULL);
 
 -- --------------------------------------------------------
 
@@ -543,7 +546,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `intentos`) VALUES
-(1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, 'vistas/img/usuarios/admin/489.jpg', 1, '2021-12-22 17:09:48', '2020-04-27 20:20:56', 1),
+(1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, 'vistas/img/usuarios/admin/489.jpg', 1, '2021-12-22 22:52:52', '2020-04-27 20:20:56', 1),
 (60, 'asd', 'asd', '$2a$07$asxx54ahjppf45sd87a5aurxwsuKZ45wFSbiNfdS6xl.3y0E2/122', 4, '', 1, '2020-05-12 14:53:50', '2020-04-27 20:29:34', NULL),
 (61, 'ddd', 'ddd', '$2a$07$asxx54ahjppf45sd87a5au9qtysTmqpbi0CLW8d4EUxFv9d7FCNLi', 1, '', NULL, NULL, '2020-07-18 18:45:03', NULL);
 
@@ -1471,7 +1474,7 @@ ALTER TABLE `bitacora`
 -- AUTO_INCREMENT de la tabla `caja`
 --
 ALTER TABLE `caja`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
