@@ -17,7 +17,7 @@ class ControladorEmpresa{
 	}
 
 	/*=============================================
-	EDITAR EMPRESA 
+	EDITAR EMPRESA
 	=============================================*/
 
 	static public function ctrEditarEmpresa(){
@@ -33,7 +33,10 @@ class ControladorEmpresa{
 							   "RFC" => $_POST["editarRFC"],
 							   "telefonoEmpresa" => $_POST["editarTelefonoEmpresa"],
 							   "diasEntrega" => $_POST["editarDiasEntrega"],
-							   "correoElectronicoEmpresa" => $_POST["editarCorreoElectronicoEmpresa"]);
+								 "caja" => $_POST["caja"],
+							   "correoElectronicoEmpresa" => $_POST["editarCorreoElectronicoEmpresa"]
+
+							 	);
 
 				$respuesta = ModeloEmpresas::mdlEditarEmpresa($tabla, $datos);
 
@@ -84,6 +87,3 @@ class ControladorEmpresa{
 
 	}
 }
-	
-
-

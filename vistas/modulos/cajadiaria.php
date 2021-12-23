@@ -136,19 +136,42 @@ MODAL ABRIR CAJA
 
             <!-- ENTRADA PARA EL USUARIO -->
 
-           <div class="form-group">
-                Usuario:
-                  <div class="input-group">
 
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
 
-                    <input type="text" class="form-control" id="usuario"  value="<?php echo $_SESSION["nombre"]; ?>" readonly="">
+            <div class="form-group">
 
-                    <input type="hidden" name="idVendedor" value="<?php echo $_SESSION["id"]; ?>" id="idVendedor">
+              <div class="input-group">
 
-                  </div>
+                <span class="input-group-addon"><i class="fa fa-users"></i></span>
 
-                </div>
+                <select class="form-control select2" id="idVendedor" name="idVendedor" required style="width: 100%;">
+
+
+
+                <?php
+
+
+
+                  $item = null;
+                  $valor = null;
+
+                  $usuarios = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+
+                   foreach ($usuarios as $key => $value) {
+
+                     echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+
+                   }
+
+                ?>
+
+                </select>
+
+
+
+              </div>
+
+            </div>
 
 
              <!-- ENTRADA PARA LA FECHA DE APERTURA -->

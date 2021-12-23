@@ -23,17 +23,17 @@ $(".tablas").on("click", ".btnEditarEmpresa", function(){
       success:function(respuesta){
 
 
-      	 
+				console.log(respuesta);
          $("#editarNombreEmpresa").val(respuesta[0]["NombreEmpresa"]);
 	       $("#editarDireccionEmpresa").val(respuesta[0]["DireccionEmpresa"]);
 	       $("#editarRFC").val(respuesta[0]["RFC"]);
 	       $("#editarTelefonoEmpresa").val(respuesta[0]["Telefono"]);
 	       $("#editarCorreoElectronicoEmpresa").val(respuesta[0]["correoElectronico"]);
          $("#editarDiasEntrega").val(respuesta[0]["diasEntrega"]);
-         
+				 $('#caja').bootstrapToggle(respuesta[0]["caja"]);
+
 	  }
 
   	})
 
 })
-

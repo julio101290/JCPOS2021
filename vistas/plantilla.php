@@ -164,19 +164,20 @@ CUERPO DOCUMENTO
     /*=============================================
     CONTENIDO
     =============================================*/
+    if(DEBUG){
+          if (!strpos($_SERVER["REQUEST_URI"],'&')){
+          if(!isset($_GET["ruta"]) ){
+              $_GET["ruta"] = str_replace("/", "",$_SERVER['PATH_INFO']);
+          }else{
+              $_GET["ruta"] = "inicio";
+          }
 
-        if (!strpos($_SERVER["REQUEST_URI"],'&')){
-        if(!isset($_GET["ruta"]) ){
-            $_GET["ruta"] = str_replace("/", "",$_SERVER['PATH_INFO']);
-        }else{
-            $_GET["ruta"] = "inicio";
-        }
+          if($_GET["ruta"]==""){
 
-        if($_GET["ruta"]==""){
+               $_GET["ruta"] = "inicio";
 
-             $_GET["ruta"] = "inicio";
-
-        }
+          }
+      }
     }
 
 

@@ -30,32 +30,32 @@ $caja=new ModeloCaja();
 
 $cajaAbierta=$caja->mdlVerificaCajaUsuario($_SESSION["id"]);
 
+if($datosEmpresa[0]["caja"] == "on"){
+  if(esCero($cajaAbierta["id"])==0){
+      echo '<script>
 
-if(esCero($cajaAbierta["id"])==0){
-    echo '<script>
+            swal({
 
-          swal({
+              type: "error",
+              title: "¡No hay cajas abiertas'.$cajaAbierta["id"].'",
+              showConfirmButton: true,
+              confirmButtonText: "Cerrar"
 
-            type: "error",
-            title: "¡No hay cajas abiertas'.$cajaAbierta["id"].'",
-            showConfirmButton: true,
-            confirmButtonText: "Cerrar"
+            }).then(function(result){
 
-          }).then(function(result){
+              if(result.value){
 
-            if(result.value){
+                window.location = "inicio";
 
-              window.location = "inicio";
+              }
 
-            }
-
-          });
+            });
 
 
-        </script>';
+          </script>';
 
+  }
 }
-
 ?>
 
 <div class="content-wrapper">

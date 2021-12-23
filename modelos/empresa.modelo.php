@@ -12,7 +12,18 @@ class ModeloEmpresas{
 
 		if($item != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM datosempresa ");
+			$stmt = Conexion::conectar()->prepare("SELECT NombreEmpresa
+																									,DireccionEmpresa
+																									,RFC
+																									,Telefono
+																									,correoElectronico
+																									,diasEntrega
+				,(case when caja='on' then 'on'
+											else 'off'
+											end) as caja
+
+
+				FROM datosempresa ");
 
 			//$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
@@ -22,14 +33,26 @@ class ModeloEmpresas{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM datosempresa");
+			$stmt = Conexion::conectar()->prepare("SELECT
+
+				NombreEmpresa
+ 																									,DireccionEmpresa
+ 																									,RFC
+ 																									,Telefono
+ 																									,correoElectronico
+ 																									,diasEntrega
+ 				,(case when caja='on' then 'on'
+ 											else 'off'
+ 											end) as caja
+
+				FROM datosempresa");
 
 			$stmt -> execute();
 
 			return $stmt -> fetchAll();
 
 		}
-		
+
 
 		$stmt -> close();
 
@@ -42,15 +65,15 @@ class ModeloEmpresas{
 	=============================================*/
 
 	static public function mdlEditarEmpresa($tabla, $datos){
-	
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla 
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla
 												SET NombreEmpresa = :NombreEmpresa
 												, DireccionEmpresa = :DireccionEmpresa
 												, RFC = :RFC
 												, Telefono = :Telefono
 												, correoElectronico=:correoElectronico
 												, diasEntrega=:diasEntrega
-
+												, caja=:caja
 
 												"
 
@@ -62,14 +85,15 @@ class ModeloEmpresas{
 		$stmt -> bindParam(":Telefono", $datos["telefonoEmpresa"], PDO::PARAM_STR);
 		$stmt -> bindParam(":correoElectronico", $datos["correoElectronicoEmpresa"], PDO::PARAM_STR);
 		$stmt -> bindParam(":diasEntrega", $datos["diasEntrega"], PDO::PARAM_STR);
+		$stmt -> bindParam(":caja", $datos["caja"], PDO::PARAM_STR);
 
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 
@@ -93,10 +117,10 @@ class ModeloEmpresas{
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 
