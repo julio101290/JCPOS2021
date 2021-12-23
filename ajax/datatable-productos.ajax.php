@@ -16,11 +16,11 @@ class TablaProductos {
         $item = null;
         $valor = null;
         $orden = "id";
-        
+
         $request=$_REQUEST;
-        
+
         $totalRenglones= ModeloProductos::mdlMostrarNumRegistros($request);
-          
+
 
         if ($totalRenglones["totalRenglones"] == 0) {
 
@@ -28,14 +28,14 @@ class TablaProductos {
 
             return;
         }
-        
+
         $productos = ModeloProductos::mdlMostrarProductosServerSide("productos",$item, $request, $orden);
 
         $datosJson = '{
             "draw": '.intval($request["draw"]).',
 		"recordsTotal":'.intval($totalRenglones["totalRenglones"]).',
 		"recordsFiltered": '.intval($totalRenglones["totalRenglones"]).',
-                    
+
 		  "data": [';
 
         for ($i = 0; $i < count($productos); $i++) {
@@ -44,7 +44,7 @@ class TablaProductos {
               TRAEMOS LA IMAGEN
               ============================================= */
 
-            $imagen = "<img src='" . $productos[$i]["imagen"] . "' width='40px'>";
+            $imagen = "<img src='" . $productos[$i]["imagen"] . "' data-action='zoom'  width='40px'>";
 
             /* =============================================
               TRAEMOS LA CATEGORÍA
@@ -98,7 +98,7 @@ class TablaProductos {
 
         $datosJson = substr($datosJson, 0, -1);
 
-        $datosJson .= '] 
+        $datosJson .= ']
 
 		 }';
 
@@ -112,4 +112,3 @@ class TablaProductos {
   ============================================= */
 $activarProductos = new TablaProductos();
 $activarProductos->mostrarTablaProductos();
-

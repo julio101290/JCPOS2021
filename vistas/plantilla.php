@@ -42,6 +42,9 @@ session_start();
   <!-- AdminLTE Skins -->
   <link rel="stylesheet" href="vistas/dist/css/skins/_all-skins.min.css">
 
+  <!-- ZOOM Image -->
+  <link rel="stylesheet" href="vistas/dist/css/zoom.css">
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
@@ -81,11 +84,15 @@ session_start();
   <!-- Bootstrap 3.3.7 -->
   <script src="vistas/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+  <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+
   <!-- FastClick -->
   <script src="vistas/bower_components/fastclick/lib/fastclick.js"></script>
 
   <!-- AdminLTE App -->
   <script src="vistas/dist/js/adminlte.min.js"></script>
+
+
 
   <!-- DataTables -->
   <script src="vistas/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -253,6 +260,7 @@ CUERPO DOCUMENTO
 <script src="vistas/js/bitacora.js"></script>
 <script src="vistas/js/bodegas.js"></script>
 <script src="vistas/js/cajas.js"></script>
+<script src="vistas/js/zoom.js"></script>
 
 
 </body>

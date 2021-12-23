@@ -1,3 +1,7 @@
+$('.modal-dialog').draggable({
+	 handle: ".modal-header"
+ });
+
 /*=============================================
 SideBar Menu
 =============================================*/
@@ -82,10 +86,10 @@ $(document).ready(function(){
 });
 
 //PARA CERRARLO AUTOMATICAMENTE
-$.fn.datepicker.defaults.autoclose = true; 
+$.fn.datepicker.defaults.autoclose = true;
 
 /*=============================================
-CORRECCIÓN BOTONERAS OCULTAS BACKEND	
+CORRECCIÓN BOTONERAS OCULTAS BACKEND
 =============================================*/
 
 
@@ -94,10 +98,10 @@ $(document).ready(function(){
 });
 
 //PARA CERRARLO AUTOMATICAMENTE
-$.fn.datepicker.defaults.autoclose = true; 
+$.fn.datepicker.defaults.autoclose = true;
 
 if(window.matchMedia("(max-width:767px)").matches){
-	
+
 	$("body").removeClass('sidebar-collapse');
 
 }else{
