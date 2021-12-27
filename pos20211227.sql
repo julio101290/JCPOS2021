@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-12-2021 a las 07:19:26
--- Versión del servidor: 10.4.21-MariaDB
--- Versión de PHP: 8.0.12
+-- Tiempo de generación: 27-12-2021 a las 18:20:23
+-- Versión del servidor: 10.4.17-MariaDB
+-- Versión de PHP: 7.4.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -235,6 +235,36 @@ CREATE TABLE `clases` (
   `id` int(11) NOT NULL,
   `clase` varchar(250) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `clases`
+--
+
+INSERT INTO `clases` (`id`, `clase`) VALUES
+(1, 'controladores/plantilla.controlador.php'),
+(2, 'controladores/usuarios.controlador.php'),
+(3, 'controladores/categorias.controlador.php'),
+(4, 'controladores/productos.controlador.php'),
+(5, 'controladores/clientes.controlador.php'),
+(6, 'controladores/ventas.controlador.php'),
+(7, 'controladores/utilerias.controlador.php'),
+(8, 'controladores/empresa.controlador.php'),
+(9, 'controladores/perfiles.controlador.php'),
+(10, 'controladores/CorreoSaliente.controlador.php'),
+(11, 'controladores/pagos.controlador.php'),
+(12, 'controladores/caja.controlador.php'),
+(13, 'modelos/usuarios.modelo.php'),
+(14, 'modelos/categorias.modelo.php'),
+(15, 'modelos/productos.modelo.php'),
+(16, 'modelos/clientes.modelo.php'),
+(17, 'modelos/ventas.modelo.php'),
+(18, 'modelos/empresa.modelo.php'),
+(19, 'modelos/correo.modelo.php'),
+(20, 'modelos/perfiles.modelo.php'),
+(21, 'modelos/pagos.modelo.php'),
+(22, 'modelos/bitacora.modelo.php'),
+(23, 'modelos/caja.modelo.php'),
+(24, 'extensiones/vendor/autoload.php');
 
 -- --------------------------------------------------------
 
@@ -546,7 +576,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `password`, `perfil`, `foto`, `estado`, `ultimo_login`, `fecha`, `intentos`) VALUES
-(1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, 'vistas/img/usuarios/admin/489.jpg', 1, '2021-12-22 22:52:52', '2020-04-27 20:20:56', 1),
+(1, 'Administrador', 'admin', '$2a$07$asxx54ahjppf45sd87a5auXBm1Vr2M1NV5t/zNQtGHGpS5fFirrbG', 1, 'vistas/img/usuarios/admin/489.jpg', 1, '2021-12-27 10:09:21', '2020-04-27 20:20:56', 1),
 (60, 'asd', 'asd', '$2a$07$asxx54ahjppf45sd87a5aurxwsuKZ45wFSbiNfdS6xl.3y0E2/122', 4, '', 1, '2020-05-12 14:53:50', '2020-04-27 20:29:34', NULL),
 (61, 'ddd', 'ddd', '$2a$07$asxx54ahjppf45sd87a5au9qtysTmqpbi0CLW8d4EUxFv9d7FCNLi', 1, '', NULL, NULL, '2020-07-18 18:45:03', NULL);
 
@@ -1423,6 +1453,12 @@ ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `clases`
+--
+ALTER TABLE `clases`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `clientes`
 --
 ALTER TABLE `clientes`
@@ -1481,6 +1517,12 @@ ALTER TABLE `caja`
 --
 ALTER TABLE `categorias`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `clases`
+--
+ALTER TABLE `clases`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
