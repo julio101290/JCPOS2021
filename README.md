@@ -8,3 +8,8 @@ https://cesarsystems.com.mx/tag/jcpos
 
 Para resolución de problemas comunes del punto de venta les dejo el siguiente foro
 http://foro.cesarsystems.com.mx/
+
+Continuaremos esta version en JCPOS Ultimate en el siguiente enlace
+https://github.com/julio101290/jcposUltimate
+
+Saludos
